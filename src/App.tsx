@@ -1,5 +1,6 @@
 import './App.scss';
-import { Header } from './pages/Header/Header';
+import { Footer } from './pages/Footer';
+import { Header } from './pages/Header';
 
 export const App = () => (
   <>
@@ -8,5 +9,7 @@ export const App = () => (
     <div className="App">
       <h1>Product Catalog</h1>
     </div>
+
+    <Footer></Footer>
   </>
 );
