@@ -15,34 +15,45 @@
     @content;
   }
 }
+
 .footer {
   position: fixed;
   bottom: 0;
+
   width: 100%;
+
   font-family: Mont, sans-serif;
   font-weight: 700;
   color: #89939a;
 
   &__container {
-    padding: 32px 16px;
-    gap: 32px;
     display: flex;
     flex-direction: column;
 
+    gap: 32px;
+
+    padding: 32px 16px;
+
     @include tablet-only {
+      display: flex;
       flex-direction: row;
-      padding: 32px 24px;
-      gap: 0;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+
+      gap: 0;
+
+      padding: 32px 24px;
     }
 
     @include desktop-up {
+      display: flex;
       flex-direction: row;
-      padding: 32px 152px;
-      gap: 0;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+
+      gap: 0;
+
+      padding: 32px 152px;
     }
   }
 
@@ -53,39 +64,32 @@
   &__info {
     display: flex;
     flex-direction: column;
+
     gap: 16px;
-
-    &-link {
-      color: #89939a;
-      font-size: 12px;
-
-      text-decoration: none;
-      text-transform: uppercase;
-    }
 
     @include tablet-only {
       flex-direction: row;
     }
-    @include desktop-up() {
+
+    @include desktop-up {
       flex-direction: row;
+    }
+
+    &-link {
+      font-size: 12px;
+
+      color: #89939a;
+      text-decoration: none;
+      text-transform: uppercase;
     }
   }
 
   &__back {
-    margin: 0 auto;
     display: flex;
-    justify-items: center;
     align-items: center;
+    justify-content: center;
 
-    &-button {
-      border: none;
-      background-color: #fff;
-    }
-
-    &-image {
-      width: 32px;
-      height: 32px;
-    }
+    margin: 0 auto;
 
     @include tablet-only {
       margin: 0;
@@ -93,6 +97,17 @@
 
     @include desktop-up {
       margin: 0;
+    }
+
+    &-button {
+      border: none;
+
+      background-color: #fff;
+    }
+
+    &-image {
+      width: 32px;
+      height: 32px;
     }
   }
 }

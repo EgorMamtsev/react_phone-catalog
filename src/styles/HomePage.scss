@@ -1,0 +1,34 @@
+@mixin mobile-only {
+  @media (max-width: 639px) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+.home-page {
+  width: 100%;
+  font-family: Mont, sans-serif;
+
+  &__container {
+    padding: 72px 16px 0;
+
+    @include tablet-up {
+      padding: 80px 24px 0;
+    }
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #313237;
+
+    @include tablet-up {
+      font-size: 48px;
+    }
+  }
+}
