@@ -1,14 +1,4 @@
-@mixin mobile-only {
-  @media (max-width: 639px) {
-    @content;
-  }
-}
-
-@mixin tablet-up {
-  @media (min-width: 640px) {
-    @content;
-  }
-}
+@import '../styles/mixins';
 
 .home-page {
   width: 100%;
@@ -17,8 +7,12 @@
   &__container {
     padding: 72px 16px 0;
 
-    @include tablet-up {
+    @include tablet-only {
       padding: 80px 24px 0;
+    }
+
+    @include desktop-up {
+      padding: 120px 32px 0;
     }
   }
 
@@ -27,8 +21,19 @@
     font-weight: 800;
     color: #313237;
 
-    @include tablet-up {
+    @include tablet-only {
       font-size: 48px;
     }
+
+    @include desktop-up {
+      font-size: 48px;
+    }
+  }
+
+  &__nav-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
   }
 }

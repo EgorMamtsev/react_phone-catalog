@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import '../../styles/Slider.scss';
+import '../Slider/Slider.scss';
 
 // import phoneBanner1 from '../../public/img/slider/BannerPhone1.p';
 import Banner1 from '../../../public/img/slider/Banner1.png';

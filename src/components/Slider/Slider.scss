@@ -1,14 +1,4 @@
-@mixin mobile-only {
-  @media (max-width: 639px) {
-    @content;
-  }
-}
-
-@mixin tablet-up {
-  @media (min-width: 640px) {
-    @content;
-  }
-}
+@import '../../styles/mixins.scss';
 
 .slider {
   display: flex;
@@ -24,8 +14,12 @@
 
     gap: 16px;
 
-    @include tablet-up {
+    @include tablet-only {
       padding: 0 24px;
+    }
+
+    @include desktop-up {
+      padding: 0 32px;
     }
   }
 
@@ -52,7 +46,11 @@
       aspect-ratio: 1 / 1;
     }
 
-    @include tablet-up {
+    @include tablet-only {
+      height: 100%;
+    }
+
+    @include desktop-up {
       height: 100%;
     }
   }
@@ -81,7 +79,26 @@
     background: none;
     cursor: pointer;
 
-    @include tablet-up {
+    @include tablet-only {
+      display: block;
+
+      width: 32px;
+
+      border: 1px solid #b4bdc3;
+      border-radius: 15px;
+
+      background-color: #fff;
+
+      align-self: stretch;
+
+      &:hover {
+        border-color: #313237;
+
+        background-color: #f5f5f5;
+      }
+    }
+
+    @include desktop-up {
       display: block;
 
       width: 32px;

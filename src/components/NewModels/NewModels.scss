@@ -1,0 +1,9 @@
+.new-models {
+  &__track {
+    display: flex;
+    gap: 12px;
+  }
+  &__viewport {
+    overflow: hidden;
+  }
+}

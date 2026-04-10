@@ -1,20 +1,4 @@
-@mixin mobile-only {
-  @media (max-width: 639px) {
-    @content;
-  }
-}
-
-@mixin tablet-only {
-  @media (min-width: 640px) and (max-width: 1199px) {
-    @content;
-  }
-}
-
-@mixin desktop-up {
-  @media (min-width: 1200px) {
-    @content;
-  }
-}
+@import '../styles/mixins';
 
 @keyframes slide-in {
   from {
