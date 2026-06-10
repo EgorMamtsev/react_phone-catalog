@@ -4,9 +4,10 @@ import { Product } from '../../types/product';
 
 type Props = {
   product: Product;
+  isDiscounted: boolean;
 };
 
-export const ProductCart = ({ product }: Props) => {
+export const ProductCart = ({ product, isDiscounted }: Props) => {
   return (
     <div className="product-cart">
       <div className="product-cart__image--container">
@@ -18,10 +19,23 @@ export const ProductCart = ({ product }: Props) => {
       </div>
 
       <div className="product-cart__name">{product.name}</div>
-      <div className="product-cart__price">
+      {isDiscounted ? (
+        <div className="product-cart__price">
+          <span className="product-cart__price--current">${product.price}</span>
+          <span className="product-cart__price--full">
+            ${product.fullPrice}
+          </span>
+        </div>
+      ) : (
+        <div className="product-cart__price">
+          {/* <span className="product-cart__price--current">${product.price}</span> */}
+          <span className="product-cart__price--current">${product.price}</span>
+        </div>
+      )}
+      {/* <div className="product-cart__price">
         <span className="product-cart__price--current">${product.price}</span>
         <span className="product-cart__price--full">${product.fullPrice}</span>
-      </div>
+      </div> */}
 
       <span className="product-cart__separator"></span>
 

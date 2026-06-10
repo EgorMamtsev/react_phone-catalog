@@ -1,14 +1,29 @@
 import { Slider } from '../components/Slider/Slider';
 import '../styles/HomePage.scss';
-import { NewModels } from '../components/NewModels/NewModels';
+import { ProductSlider } from '../components/ProductSlider/ProductSlider';
 import { useEffect, useState } from 'react';
 import { Product } from '../types/product';
 import { fetchProducts } from '../utils/fetchProducts';
+import categoryPhones from '../../public/img/category-phones.webp';
+import categoryTablets from '../../public/img/category-tablets.webp';
+import categoryAccessories from '../../public/img/category-accessories.webp';
+import button from '../../public/img/icons/Slider button - Default (right).png';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [newModelsIndex, setNewModelsIndex] = useState(0);
   const [hotPricesIndex, setHotPricesIndex] = useState(0);
+
+  const hotPricesProducts = products
+    .filter(product => product.fullPrice > product.price) // тільки товари зі знижкою
+    .sort((a, b) => {
+      const discountA = a.fullPrice - a.price;
+      const discountB = b.fullPrice - b.price;
+
+      return discountB - discountA; // сортування за спаданням (найбільша знижка першою)
+    });
+
+  const brandNewProducts = [...products].sort((a, b) => b.year - a.year);
 
   useEffect(() => {
     const allProducts = fetchProducts();
@@ -16,8 +31,9 @@ export const HomePage = () => {
     setProducts(allProducts);
   }, []);
 
+  // Функції для Brand new models
   const slideNewModelsNext = () => {
-    if (newModelsIndex < products.length - 1) {
+    if (newModelsIndex < brandNewProducts.length - 1) {
       setNewModelsIndex(newModelsIndex + 1);
     }
   };
@@ -28,8 +44,9 @@ export const HomePage = () => {
     }
   };
 
+  // Функції для Hot Prices
   const slideHotPricesNext = () => {
-    if (hotPricesIndex < products.length - 1) {
+    if (hotPricesIndex < hotPricesProducts.length - 1) {
       setHotPricesIndex(hotPricesIndex + 1);
     }
   };
@@ -57,22 +74,82 @@ export const HomePage = () => {
             <button
               onClick={slideNewModelsPrev}
               className="home-page__nav-button home-page__nav-button--prev"
-            />
+            >
+              <img
+                className="home-page__nav-button-img"
+                src={button}
+                alt="Previous"
+              />
+            </button>
             <button
               onClick={slideNewModelsNext}
               className="home-page__nav-button home-page__nav-button--next"
-            />
+            >
+              <img
+                className="home-page__nav-button-img"
+                src={button}
+                alt="Next"
+              />
+            </button>
           </div>
         </div>
 
-        <NewModels
-          products={products}
+        <ProductSlider
+          FilterredProducts={brandNewProducts}
           currentIndex={newModelsIndex}
           onSlide={setNewModelsIndex}
+          isDiscounted={false}
         />
 
         <div className="home-page__title-block">
-          <h1 className="home-page__title">Categories</h1>
+          <h1 className="home-page__title">Shop by category</h1>
+          <div className="home-page__categories">
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryPhones}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Mobile phones</div>
+                <div className="home-page__category-number">
+                  number of phones*
+                </div>
+              </div>
+            </div>
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryTablets}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Tablets</div>
+                <div className="home-page__category-number">
+                  number of tablets*
+                </div>
+              </div>
+            </div>
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryAccessories}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Accessories</div>
+                <div className="home-page__category-number">
+                  number of Accessories*
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="home-page__title-block">
@@ -81,18 +158,31 @@ export const HomePage = () => {
             <button
               onClick={slideHotPricesPrev}
               className="home-page__nav-button home-page__nav-button--prev"
-            />
+            >
+              <img
+                className="home-page__nav-button-img"
+                src={button}
+                alt="Previous"
+              />
+            </button>
             <button
               onClick={slideHotPricesNext}
               className="home-page__nav-button home-page__nav-button--next"
-            />
+            >
+              <img
+                className="home-page__nav-button-img"
+                src={button}
+                alt="Next"
+              />
+            </button>
           </div>
         </div>
 
-        <NewModels
-          products={products}
+        <ProductSlider
+          FilterredProducts={hotPricesProducts}
           currentIndex={hotPricesIndex}
           onSlide={setHotPricesIndex}
+          isDiscounted={true}
         />
       </div>
     </main>

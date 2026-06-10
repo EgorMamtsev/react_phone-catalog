@@ -1,53 +1,44 @@
-import './NewModels.scss';
+import './ProductSlider.scss';
 import { ProductCart } from '../ProductCart/ProductCart';
 import { Product } from '../../types/product';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 type Props = {
-  products: Product[];
+  FilterredProducts: Product[];
   currentIndex: number;
   onSlide: (index: number) => void;
+  isDiscounted: boolean;
 };
 
-export const NewModels = ({ products, currentIndex, onSlide }: Props) => {
+export const ProductSlider = ({
+  FilterredProducts: products,
+  currentIndex,
+  onSlide,
+  isDiscounted,
+}: Props) => {
   const trackRef = useRef<HTMLDivElement>(null);
-
-  const slideNext = () => {
-    if (currentIndex < products.length - 1) {
-      onSlide(currentIndex + 1);
-    }
-  };
-
-  const slidePrev = () => {
-    if (currentIndex > 0) {
-      onSlide(currentIndex - 1);
-    }
-  };
-
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (trackRef.current?.offsetLeft || 0));
+    setScrollLeft(trackRef.current?.scrollLeft || 0);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - (trackRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 1.5;
+    if (trackRef.current) {
+      trackRef.current.scrollLeft = scrollLeft - walk;
+    }
   };
 
   const handleTouchEnd = () => {
-    const diff = touchStartX.current - touchEndX.current;
-
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        slideNext();
-      } else {
-        slidePrev();
-      }
-    }
-
-    touchStartX.current = 0;
-    touchEndX.current = 0;
+    setIsDragging(false);
   };
 
   const getTranslateX = () => {
@@ -81,7 +72,11 @@ export const NewModels = ({ products, currentIndex, onSlide }: Props) => {
               }}
             >
               {products.map(product => (
-                <ProductCart key={product.id} product={product} />
+                <ProductCart
+                  key={product.id}
+                  product={product}
+                  isDiscounted={isDiscounted}
+                />
               ))}
             </div>
           </div>

@@ -1,0 +1,17 @@
+.new-models {
+  padding: 16px 0;
+
+  &__viewport {
+    overflow: hidden; // ← залишаємо hidden
+  }
+
+  &__track {
+    display: flex;
+    gap: 12px;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}

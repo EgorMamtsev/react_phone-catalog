@@ -40,6 +40,14 @@
     font-size: 22px;
     font-weight: 800;
     margin: 0 0 8px;
+    display: flex;
+    justify-content: space-between;
+
+    &--full {
+      text-decoration: line-through;
+      color: #89939a;
+      font-weight: 600;
+    }
   }
 
   &__separator {
