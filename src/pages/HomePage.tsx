@@ -7,7 +7,7 @@ import { fetchProducts } from '../utils/fetchProducts';
 import categoryPhones from '../../public/img/category-phones.webp';
 import categoryTablets from '../../public/img/category-tablets.webp';
 import categoryAccessories from '../../public/img/category-accessories.webp';
-import button from '../../public/img/icons/Slider button - Default (right).png';
+import { NavButton } from '../components/NavButton/NavButton';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -71,26 +71,16 @@ export const HomePage = () => {
         <div className="home-page__title-block">
           <h1 className="home-page__title">Brand new models</h1>
           <div className="home-page__nav">
-            <button
+            <NavButton
+              direction="left"
+              disabled={newModelsIndex === 0}
               onClick={slideNewModelsPrev}
-              className="home-page__nav-button home-page__nav-button--prev"
-            >
-              <img
-                className="home-page__nav-button-img"
-                src={button}
-                alt="Previous"
-              />
-            </button>
-            <button
+            />
+            <NavButton
+              direction="right"
+              disabled={newModelsIndex >= brandNewProducts.length - 4}
               onClick={slideNewModelsNext}
-              className="home-page__nav-button home-page__nav-button--next"
-            >
-              <img
-                className="home-page__nav-button-img"
-                src={button}
-                alt="Next"
-              />
-            </button>
+            />
           </div>
         </div>
 
@@ -103,50 +93,50 @@ export const HomePage = () => {
 
         <div className="home-page__title-block">
           <h1 className="home-page__title">Shop by category</h1>
-          <div className="home-page__categories">
-            <div className="home-page__category">
-              <div className="home-page__category-icon">
-                <img
-                  className="home-page__category-icon-img"
-                  src={categoryPhones}
-                  alt=""
-                />
-              </div>
-              <div className="home-page__category-description">
-                <div className="home-page__category-name">Mobile phones</div>
-                <div className="home-page__category-number">
-                  number of phones*
-                </div>
+        </div>
+        <div className="home-page__categories">
+          <div className="home-page__category">
+            <div className="home-page__category-icon">
+              <img
+                className="home-page__category-icon-img"
+                src={categoryPhones}
+                alt=""
+              />
+            </div>
+            <div className="home-page__category-description">
+              <div className="home-page__category-name">Mobile phones</div>
+              <div className="home-page__category-number">
+                number of phones*
               </div>
             </div>
-            <div className="home-page__category">
-              <div className="home-page__category-icon">
-                <img
-                  className="home-page__category-icon-img"
-                  src={categoryTablets}
-                  alt=""
-                />
-              </div>
-              <div className="home-page__category-description">
-                <div className="home-page__category-name">Tablets</div>
-                <div className="home-page__category-number">
-                  number of tablets*
-                </div>
+          </div>
+          <div className="home-page__category">
+            <div className="home-page__category-icon">
+              <img
+                className="home-page__category-icon-img"
+                src={categoryTablets}
+                alt=""
+              />
+            </div>
+            <div className="home-page__category-description">
+              <div className="home-page__category-name">Tablets</div>
+              <div className="home-page__category-number">
+                number of tablets*
               </div>
             </div>
-            <div className="home-page__category">
-              <div className="home-page__category-icon">
-                <img
-                  className="home-page__category-icon-img"
-                  src={categoryAccessories}
-                  alt=""
-                />
-              </div>
-              <div className="home-page__category-description">
-                <div className="home-page__category-name">Accessories</div>
-                <div className="home-page__category-number">
-                  number of Accessories*
-                </div>
+          </div>
+          <div className="home-page__category">
+            <div className="home-page__category-icon">
+              <img
+                className="home-page__category-icon-img"
+                src={categoryAccessories}
+                alt=""
+              />
+            </div>
+            <div className="home-page__category-description">
+              <div className="home-page__category-name">Accessories</div>
+              <div className="home-page__category-number">
+                number of Accessories*
               </div>
             </div>
           </div>
@@ -155,26 +145,16 @@ export const HomePage = () => {
         <div className="home-page__title-block">
           <h1 className="home-page__title">Hot Prices</h1>
           <div className="home-page__nav">
-            <button
+            <NavButton
+              direction="left"
+              disabled={hotPricesIndex === 0}
               onClick={slideHotPricesPrev}
-              className="home-page__nav-button home-page__nav-button--prev"
-            >
-              <img
-                className="home-page__nav-button-img"
-                src={button}
-                alt="Previous"
-              />
-            </button>
-            <button
+            />
+            <NavButton
+              direction="right"
+              disabled={hotPricesIndex >= brandNewProducts.length - 4}
               onClick={slideHotPricesNext}
-              className="home-page__nav-button home-page__nav-button--next"
-            >
-              <img
-                className="home-page__nav-button-img"
-                src={button}
-                alt="Next"
-              />
-            </button>
+            />
           </div>
         </div>
 

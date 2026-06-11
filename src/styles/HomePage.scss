@@ -23,6 +23,9 @@
 
     &-block {
       padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     @include tablet-only {
@@ -34,32 +37,11 @@
     }
   }
 
-  &__nav-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    padding: 0;
-    background-color: #fff;
-
-    &-img {
-      width: 40px;
-      height: 40px;
-      padding: 0;
-    }
-
-    &--prev {
-      transform: rotate(180deg);
-    }
-    &--prev:hover {
-      border: 1px solid #0f0f11;
-      padding: 0;
-    }
-
-    &--next:hover {
-      border: 1px solid #0f0f11;
-    }
+  &__nav {
+    display: flex;
+    gap: 16px;
   }
+
   &__categories {
     @include tablet-only {
       display: flex;
