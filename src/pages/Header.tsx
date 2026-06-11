@@ -5,6 +5,8 @@ import iconBag from '../../public/img/icons/Shopping bag (Cart).png';
 import iconBurger from '../../public/img/icons/Menu.png';
 import iconClose from '../../public/img/icons/Close.png';
 
+import { Link } from 'react-router-dom';
+
 import { useState } from 'react';
 
 export const Header = () => {
@@ -36,8 +38,12 @@ export const Header = () => {
         </div>
 
         <nav className="header__nav">
-          <a className="header__nav-link">HOME</a>
-          <a className="header__nav-link">PHONES</a>
+          <Link to="/" className="header__nav-link">
+            HOME
+          </Link>
+          <Link to="/catalog" className="header__nav-link">
+            PHONES
+          </Link>
           <a className="header__nav-link">TABLETS</a>
           <a className="header__nav-link">ACCESSORIES</a>
         </nav>
@@ -63,16 +69,20 @@ export const Header = () => {
             className={`header__menu ${isClosing ? 'header__menu--closing' : ''}`}
           >
             <nav className="header__menu-nav">
-              <a className="header__menu-link" href="#" onClick={closeMenu}>
-                HOME
-              </a>
-              <a
+              <Link
+                to="/"
                 className="header__menu-link"
-                href="#"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                HOME
+              </Link>
+              <Link
+                to={'/catalog'}
+                className="header__menu-link"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 PHONES
-              </a>
+              </Link>
               <a
                 className="header__menu-link"
                 href="#"

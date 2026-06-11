@@ -1,6 +1,7 @@
 import './ProductCart.scss';
-import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 import { Product } from '../../types/product';
+
+import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 
 type Props = {
   product: Product;
@@ -28,14 +29,9 @@ export const ProductCart = ({ product, isDiscounted }: Props) => {
         </div>
       ) : (
         <div className="product-cart__price">
-          {/* <span className="product-cart__price--current">${product.price}</span> */}
           <span className="product-cart__price--current">${product.price}</span>
         </div>
       )}
-      {/* <div className="product-cart__price">
-        <span className="product-cart__price--current">${product.price}</span>
-        <span className="product-cart__price--full">${product.fullPrice}</span>
-      </div> */}
 
       <span className="product-cart__separator"></span>
 

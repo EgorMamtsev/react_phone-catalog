@@ -1,13 +1,17 @@
-import { Slider } from '../components/Slider/Slider';
 import '../styles/HomePage.scss';
-import { ProductSlider } from '../components/ProductSlider/ProductSlider';
-import { useEffect, useState } from 'react';
-import { Product } from '../types/product';
 import { fetchProducts } from '../utils/fetchProducts';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { Slider } from '../components/Slider/Slider';
+import { ProductSlider } from '../components/ProductSlider/ProductSlider';
+import { NavButton } from '../components/NavButton/NavButton';
+
+import { Product } from '../types/product';
+
 import categoryPhones from '../../public/img/category-phones.webp';
 import categoryTablets from '../../public/img/category-tablets.webp';
 import categoryAccessories from '../../public/img/category-accessories.webp';
-import { NavButton } from '../components/NavButton/NavButton';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -95,21 +99,23 @@ export const HomePage = () => {
           <h1 className="home-page__title">Shop by category</h1>
         </div>
         <div className="home-page__categories">
-          <div className="home-page__category">
-            <div className="home-page__category-icon">
-              <img
-                className="home-page__category-icon-img"
-                src={categoryPhones}
-                alt=""
-              />
-            </div>
-            <div className="home-page__category-description">
-              <div className="home-page__category-name">Mobile phones</div>
-              <div className="home-page__category-number">
-                number of phones*
+          <Link to={'/catalog'}>
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryPhones}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Mobile phones</div>
+                <div className="home-page__category-number">
+                  number of phones*
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
           <div className="home-page__category">
             <div className="home-page__category-icon">
               <img
