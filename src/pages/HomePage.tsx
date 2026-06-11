@@ -35,6 +35,7 @@ export const HomePage = () => {
     setProducts(allProducts);
   }, []);
 
+  //#region Функції для навігації слайдерів
   // Функції для Brand new models
   const slideNewModelsNext = () => {
     if (newModelsIndex < brandNewProducts.length - 1) {
@@ -60,6 +61,8 @@ export const HomePage = () => {
       setHotPricesIndex(hotPricesIndex - 1);
     }
   };
+
+  //#endregion
 
   return (
     <main className="home-page">
@@ -99,7 +102,7 @@ export const HomePage = () => {
           <h1 className="home-page__title">Shop by category</h1>
         </div>
         <div className="home-page__categories">
-          <Link to={'/catalog'}>
+          <Link to={'/phones'}>
             <div className="home-page__category">
               <div className="home-page__category-icon">
                 <img
@@ -116,36 +119,40 @@ export const HomePage = () => {
               </div>
             </div>
           </Link>
-          <div className="home-page__category">
-            <div className="home-page__category-icon">
-              <img
-                className="home-page__category-icon-img"
-                src={categoryTablets}
-                alt=""
-              />
-            </div>
-            <div className="home-page__category-description">
-              <div className="home-page__category-name">Tablets</div>
-              <div className="home-page__category-number">
-                number of tablets*
+          <Link to={'/tablets'}>
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryTablets}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Tablets</div>
+                <div className="home-page__category-number">
+                  number of tablets*
+                </div>
               </div>
             </div>
-          </div>
-          <div className="home-page__category">
-            <div className="home-page__category-icon">
-              <img
-                className="home-page__category-icon-img"
-                src={categoryAccessories}
-                alt=""
-              />
-            </div>
-            <div className="home-page__category-description">
-              <div className="home-page__category-name">Accessories</div>
-              <div className="home-page__category-number">
-                number of Accessories*
+          </Link>
+          <Link to={'/accessories'}>
+            <div className="home-page__category">
+              <div className="home-page__category-icon">
+                <img
+                  className="home-page__category-icon-img"
+                  src={categoryAccessories}
+                  alt=""
+                />
+              </div>
+              <div className="home-page__category-description">
+                <div className="home-page__category-name">Accessories</div>
+                <div className="home-page__category-number">
+                  number of Accessories*
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="home-page__title-block">

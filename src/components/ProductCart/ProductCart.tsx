@@ -4,7 +4,7 @@ import { Product } from '../../types/product';
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 
 type Props = {
-  product: Product;
+  product: Product ;
   isDiscounted: boolean;
 };
 

@@ -1,12 +1,30 @@
 import HomeIcon from '../../public/img/icons/HomeIcon.png';
 
-import { Phone } from '../types/phone';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-type Props = {
-  productsType: Phone[];
-};
+import { fetchProducts } from '../utils/fetchProducts';
+
+import { ProductCart } from '../components/ProductCart/ProductCart';
+
+import { Product } from '../types/product';
+
+type Props = {};
 
 export const Catalog = ({}: Props) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const { category } = useParams();
+
+  useEffect(() => {
+    const allProducts = fetchProducts();
+
+    setProducts(allProducts);
+  }, []);
+
+  const filteredProducts = products.filter(product => {
+    return product.category === category;
+  });
+
   return (
     <div className="catalog__container">
       <div className="catalog__nav">
@@ -15,6 +33,7 @@ export const Catalog = ({}: Props) => {
           src={HomeIcon}
           alt="Home"
         />
+        <span>{category}</span>
       </div>
 
       <div className="catalog__title">
@@ -26,7 +45,6 @@ export const Catalog = ({}: Props) => {
         <div className="catalog__filter">
           <span className="catalog__filter-text">Sort by</span>
           <select className="catalog__filter-select">
-            <option value="0">shooce your option</option>
             <option value="newest">Newest</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
@@ -42,7 +60,15 @@ export const Catalog = ({}: Props) => {
         </div>
       </div>
 
-      <div className="catalog__products"></div>
+      <div className="catalog__products">
+        {filteredProducts.map(product => (
+          <ProductCart
+            key={product.id}
+            product={product}
+            isDiscounted={false}
+          />
+        ))}
+      </div>
     </div>
   );
 };

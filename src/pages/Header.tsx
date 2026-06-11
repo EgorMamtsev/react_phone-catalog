@@ -41,11 +41,13 @@ export const Header = () => {
           <Link to="/" className="header__nav-link">
             HOME
           </Link>
-          <Link to="/catalog" className="header__nav-link">
+          <Link to="/phones" className="header__nav-link">
             PHONES
           </Link>
-          <a className="header__nav-link">TABLETS</a>
-          <a className="header__nav-link">ACCESSORIES</a>
+          <Link to={'/tablets'} className="header__nav-link">
+            TABLETS
+          </Link>
+          <Link to={'/accessories'} className="header__nav-link">ACCESSORIES</Link>
         </nav>
 
         <div className="header__actions">
@@ -77,26 +79,26 @@ export const Header = () => {
                 HOME
               </Link>
               <Link
-                to={'/catalog'}
+                to={'/phones'}
                 className="header__menu-link"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 PHONES
               </Link>
-              <a
+              <Link
                 className="header__menu-link"
-                href="#"
+                to={'/tablets'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 TABLETS
-              </a>
-              <a
+              </Link>
+              <Link
                 className="header__menu-link"
-                href="#"
+                to={'/accessories'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 ACCESSORIES
-              </a>
+              </Link>
             </nav>
             <div className="header__menu-actions">
               <a className="header__menu-icon header__menu-icon--favorite">
