@@ -58,11 +58,11 @@ export const Catalog = () => {
             alt="->"
             className="catalog-img catalog__arrow"
           />
-          <span className="catalog__category">{category}</span>
+          <span className="catalog__category">{categoryName}</span>
         </div>
 
         <div className="catalog__title">
-          <span className="catalog__title-text">{getTitle(category)}</span>
+          <span className="catalog__title-text">{getTitle(categoryName)}</span>
           <span className="catalog__title-number">
             {filteredProducts.length} models
           </span>
