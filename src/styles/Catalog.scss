@@ -1,0 +1,113 @@
+@import './mixins';
+
+.catalog {
+  font-family: Mont, sans-serif;
+
+  &__container {
+    padding: 24px 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    @include tablet-only {
+      gap: 40px;
+    }
+
+    @include desktop-up {
+      gap: 64px;
+    }
+  }
+
+  &__path {
+    font-size: 12px;
+    font-weight: 600;
+
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__category::first-letter {
+    text-transform: uppercase;
+  }
+
+  &__img {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    &-text {
+      font-size: 32px;
+      font-weight: 800;
+
+      display: block;
+
+      @include tablet-only {
+        font-size: 48px;
+      }
+
+      @include desktop-up {
+        font-size: 48px;
+      }
+    }
+
+    &-number {
+      font-size: 14px;
+    }
+  }
+
+  &__filters {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__filter {
+    &-text {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    &-select {
+      width: 136px;
+      height: 40px;
+
+      padding: 10px 12px;
+
+      border-radius: 8px;
+    }
+  }
+  &__products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    @include tablet-only {
+      width: 100%;
+      margin: 0 auto;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 212px);
+      justify-content: center;
+      gap: 40px;
+    }
+
+    @include desktop-up {
+      width: 100%;
+      margin: 0 auto;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 212px);
+      justify-content: center;
+      gap: 40px;
+    }
+  }
+}

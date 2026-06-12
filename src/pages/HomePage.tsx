@@ -17,6 +17,11 @@ export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [newModelsIndex, setNewModelsIndex] = useState(0);
   const [hotPricesIndex, setHotPricesIndex] = useState(0);
+  const [numberOfProducts, setNumberOfProducts] = useState({
+    phones: 0,
+    tablets: 0,
+    accessories: 0,
+  });
 
   const hotPricesProducts = products
     .filter(product => product.fullPrice > product.price) // тільки товари зі знижкою
@@ -32,6 +37,27 @@ export const HomePage = () => {
   useEffect(() => {
     const allProducts = fetchProducts();
 
+    const countsModels = {
+      phones: 0,
+      tablets: 0,
+      accessories: 0,
+    };
+
+    for (const p of allProducts) {
+      switch (p.category) {
+        case 'phones':
+          countsModels.phones++;
+          break;
+        case 'tablets':
+          countsModels.tablets++;
+          break;
+        case 'accessories':
+          countsModels.accessories++;
+          break;
+      }
+    }
+
+    setNumberOfProducts(countsModels);
     setProducts(allProducts);
   }, []);
 
@@ -114,7 +140,7 @@ export const HomePage = () => {
               <div className="home-page__category-description">
                 <div className="home-page__category-name">Mobile phones</div>
                 <div className="home-page__category-number">
-                  number of phones*
+                  {numberOfProducts.phones} models
                 </div>
               </div>
             </div>
@@ -131,7 +157,7 @@ export const HomePage = () => {
               <div className="home-page__category-description">
                 <div className="home-page__category-name">Tablets</div>
                 <div className="home-page__category-number">
-                  number of tablets*
+                  {numberOfProducts.tablets} models
                 </div>
               </div>
             </div>
@@ -148,7 +174,7 @@ export const HomePage = () => {
               <div className="home-page__category-description">
                 <div className="home-page__category-name">Accessories</div>
                 <div className="home-page__category-number">
-                  number of Accessories*
+                  {numberOfProducts.accessories} models
                 </div>
               </div>
             </div>

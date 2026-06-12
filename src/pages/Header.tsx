@@ -47,7 +47,9 @@ export const Header = () => {
           <Link to={'/tablets'} className="header__nav-link">
             TABLETS
           </Link>
-          <Link to={'/accessories'} className="header__nav-link">ACCESSORIES</Link>
+          <Link to={'/accessories'} className="header__nav-link">
+            ACCESSORIES
+          </Link>
         </nav>
 
         <div className="header__actions">
