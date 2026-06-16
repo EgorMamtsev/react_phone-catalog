@@ -44,6 +44,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+
     &-text {
       font-size: 32px;
       font-weight: 800;
@@ -69,21 +70,6 @@
     gap: 16px;
   }
 
-  &__filter {
-    &-text {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    &-select {
-      width: 136px;
-      height: 40px;
-
-      padding: 10px 12px;
-
-      border-radius: 8px;
-    }
-  }
   &__products {
     display: flex;
     flex-direction: column;
@@ -109,5 +95,10 @@
       justify-content: center;
       gap: 40px;
     }
+  }
+
+  &__paggination {
+    display: flex;
+    margin: 0 auto;
   }
 }

@@ -1,32 +1,81 @@
 //#region Imports
 import HomeIcon from '../../public/img/icons/HomeIcon.png';
-import arrowRight from '../../public/img/icons/Chevron.png';
+import arrowRight from '../../public/img/icons/arrowRight.png';
 
 import '../styles/Catalog.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { fetchProducts } from '../utils/fetchProducts';
 
 import { ProductCart } from '../components/ProductCart/ProductCart';
+import { Pagination } from '../components/Pagination/Pagination';
+import { ProductsSort } from '../components/ProductSort/ProductSort';
+import { ProductsPerPage } from '../components/ProductPerPage/ProductPerPage';
+import { NavButton } from '../components/NavButton/NavButton';
 
 import { Product } from '../types/product';
 
 //#endregion
 
 export const Catalog = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const { category: categoryName } = useParams();
 
-  useEffect(() => {
-    const allProducts = fetchProducts();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState<number | 'All'>(4);
 
-    setProducts(allProducts);
+  const [isSortByOpen, setIsSortByOpen] = useState(false);
+  const [isItemPerPageOpen, setIsItemPerPageOpen] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState('Newest');
+  const [sortOption, setSortOption] = useState('year');
+
+  useEffect(() => {
+    const products = fetchProducts();
+
+    setAllProducts(products);
   }, []);
 
-  const filteredProducts = products.filter(product => {
+  useEffect(() => {
+    setSortOption('year');
+    setSelectedOption('Newest');
+    setCurrentPage(1);
+  }, [categoryName]);
+
+  const filteredProducts = allProducts.filter(product => {
     return product.category === categoryName;
   });
+
+  const getSortedProducts = (productsToSort: Product[], sortBy: string) => {
+    const sorted = [...productsToSort];
+
+    switch (sortBy) {
+      case 'year':
+        return sorted.sort((a, b) => b.year - a.year);
+      case 'price-asc':
+        return sorted.sort((a, b) => a.fullPrice - b.fullPrice);
+      case 'price-desc':
+        return sorted.sort((a, b) => b.fullPrice - a.fullPrice);
+      default:
+        return sorted;
+    }
+  };
+
+  const totalProducts = useMemo(() => {
+    return getSortedProducts(filteredProducts, sortOption);
+  }, [filteredProducts, sortOption]);
+
+  const lastPostIndex =
+    postPerPage === 'All'
+      ? totalProducts.length
+      : currentPage * Number(postPerPage);
+  const firstPostIndex =
+    postPerPage === 'All' ? 0 : lastPostIndex - Number(postPerPage);
+
+  const sortedProducts = useMemo(() => {
+    return totalProducts.slice(firstPostIndex, lastPostIndex);
+  }, [totalProducts, firstPostIndex, lastPostIndex]);
 
   const getTitle = (category: string | undefined) => {
     switch (category) {
@@ -69,38 +118,47 @@ export const Catalog = () => {
         </div>
 
         <div className="catalog__filters">
-          <div className="catalog__filter">
-            <span className="catalog__filter-text">Sort by</span>
-            <select className="catalog__filter-select">
-              <option value="newest">Newest</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-            </select>
-          </div>
-          <div className="catalog__filter">
-            <span className="catalog__filter-text">Items on page</span>
-            <select className="catalog__filter-select">
-              <option className="catalog__filter-option" value="16">
-                16
-              </option>
-              <option className="catalog__filter-option" value="32">
-                24
-              </option>
-              <option className="catalog__filter-option" value="64">
-                36
-              </option>
-            </select>
-          </div>
+          <ProductsSort
+            isOpen={isSortByOpen}
+            setIsOpen={setIsSortByOpen}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+          />
+
+          <ProductsPerPage
+            isOpen={isItemPerPageOpen}
+            setIsOpen={setIsItemPerPageOpen}
+            postPerPage={postPerPage}
+            setPostPerPage={setPostPerPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
 
         <div className="catalog__products">
-          {filteredProducts.map(product => (
+          {sortedProducts.map(product => (
             <ProductCart
               key={product.id}
               product={product}
               isDiscounted={false}
             />
           ))}
+        </div>
+        <div className="catalog__paggination">
+          <NavButton
+            direction={'left'}
+            disabled={currentPage === 1 ? true : false}
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+            }}
+          />
+          <Pagination
+            totalPosts={totalProducts.length}
+            postsPerPage={postPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <NavButton direction={'right'} disabled={false} onClick={() => {}} />
         </div>
       </div>
     </div>
