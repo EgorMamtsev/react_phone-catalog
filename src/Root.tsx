@@ -7,7 +7,6 @@ import {
 import { App } from './App';
 import { HomePage } from './pages/HomePage';
 import { Catalog } from './pages/Catalog';
-
 export const Root = () => (
   <Router>
     <Routes>

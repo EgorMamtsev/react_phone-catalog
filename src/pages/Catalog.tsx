@@ -14,6 +14,7 @@ import { ProductsSort } from '../components/ProductSort/ProductSort';
 import { ProductsPerPage } from '../components/ProductPerPage/ProductPerPage';
 import { NavButton } from '../components/NavButton/NavButton';
 import { Loader } from '../components/Loader/Loader';
+import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 
 import { Product } from '../types/product';
 
@@ -33,24 +34,29 @@ export const Catalog = () => {
   const [sortOption, setSortOption] = useState('year');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isError, setIsError] = useState<string | null>(null);
+
+  const loadProducts = async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      //видалити на фіналі
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // throw new Error('Test error');
+
+      const products = fetchProducts();
+
+      setAllProducts(products);
+    } catch {
+      setIsError('Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        const products = fetchProducts();
-
-        setAllProducts(products);
-      } catch {
-        new Error('Error');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    // const products = fetchProducts();
-
-    // setAllProducts(products);
     loadProducts();
   }, [categoryName]);
 
@@ -109,6 +115,10 @@ export const Catalog = () => {
         return 'Catalog';
     }
   };
+
+  if (isError) {
+    return <ErrorPage reload={loadProducts} />;
+  }
 
   return (
     <div className="catalog">

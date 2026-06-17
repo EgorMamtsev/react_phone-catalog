@@ -8,6 +8,7 @@ import { Slider } from '../components/Slider/Slider';
 import { ProductSlider } from '../components/ProductSlider/ProductSlider';
 import { NavButton } from '../components/NavButton/NavButton';
 import { Loader } from '../components/Loader/Loader';
+import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 
 import { Product } from '../types/product';
 
@@ -27,6 +28,8 @@ export const HomePage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isError, setIsError] = useState<string | null>(null);
+
   const hotPricesProducts = products
     .filter(product => product.fullPrice > product.price)
     .sort((a, b) => {
@@ -38,46 +41,47 @@ export const HomePage = () => {
 
   const brandNewProducts = [...products].sort((a, b) => b.year - a.year);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
+  const loadProducts = async () => {
+    setIsLoading(true);
+    setIsError(null);
 
-      try {
-        //видалити на фіналі
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      //видалити на фіналі
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // throw new Error('Test error');
 
-        const allProducts = fetchProducts();
+      const allProducts = fetchProducts();
 
-        const countsModels = {
-          phones: 0,
-          tablets: 0,
-          accessories: 0,
-        };
+      const countsModels = {
+        phones: 0,
+        tablets: 0,
+        accessories: 0,
+      };
 
-        for (const p of allProducts) {
-          switch (p.category) {
-            case 'phones':
-              countsModels.phones++;
-              break;
-            case 'tablets':
-              countsModels.tablets++;
-              break;
-            case 'accessories':
-              countsModels.accessories++;
-              break;
-          }
+      for (const p of allProducts) {
+        switch (p.category) {
+          case 'phones':
+            countsModels.phones++;
+            break;
+          case 'tablets':
+            countsModels.tablets++;
+            break;
+          case 'accessories':
+            countsModels.accessories++;
+            break;
         }
-
-        setNumberOfProducts(countsModels);
-        setProducts(allProducts);
-      } catch (error) {
-        new Error('Error');
-        // тут можна показати повідомлення про помилку
-      } finally {
-        setIsLoading(false);
       }
-    };
 
+      setNumberOfProducts(countsModels);
+      setProducts(allProducts);
+    } catch {
+      setIsError('Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadProducts();
   }, []);
 
@@ -109,6 +113,10 @@ export const HomePage = () => {
   };
 
   //#endregion
+
+  if (isError) {
+    return <ErrorPage reload={loadProducts} />;
+  }
 
   return (
     <main className="home-page">
