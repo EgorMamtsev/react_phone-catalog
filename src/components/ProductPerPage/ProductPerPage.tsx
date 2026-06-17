@@ -3,9 +3,8 @@ import '../ProductPerPage/ProductPerPage.scss';
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  postPerPage: number | 'All';
+  postPerPage: string | number;
   setPostPerPage: (value: number | 'All') => void;
-  setCurrentPage: (value: number) => void;
 };
 
 export const ProductsPerPage = ({
@@ -13,7 +12,6 @@ export const ProductsPerPage = ({
   setIsOpen,
   postPerPage,
   setPostPerPage,
-  setCurrentPage,
 }: Props) => {
   const handleSelectOpen = () => {
     setIsOpen(!isOpen);
@@ -36,7 +34,6 @@ export const ProductsPerPage = ({
               onClick={() => {
                 setPostPerPage(4);
                 setIsOpen(false);
-                setCurrentPage(1);
               }}
             >
               4
@@ -46,7 +43,6 @@ export const ProductsPerPage = ({
               onClick={() => {
                 setPostPerPage(8);
                 setIsOpen(false);
-                setCurrentPage(1);
               }}
             >
               8
@@ -56,7 +52,6 @@ export const ProductsPerPage = ({
               onClick={() => {
                 setPostPerPage(16);
                 setIsOpen(false);
-                setCurrentPage(1);
               }}
             >
               16
@@ -66,7 +61,6 @@ export const ProductsPerPage = ({
               onClick={() => {
                 setPostPerPage('All');
                 setIsOpen(false);
-                setCurrentPage(1);
               }}
             >
               All

@@ -4,7 +4,7 @@ import arrowRight from '../../public/img/icons/arrowRight.png';
 
 import '../styles/Catalog.scss';
 import { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { fetchProducts } from '../utils/fetchProducts';
 
@@ -24,15 +24,17 @@ export const Catalog = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const { category: categoryName } = useParams();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage, setPostPerPage] = useState<number | 'All'>(4);
-
   const [isSortByOpen, setIsSortByOpen] = useState(false);
   const [isItemPerPageOpen, setIsItemPerPageOpen] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState('Newest');
-  const [sortOption, setSortOption] = useState('year');
   const [isLoading, setIsLoading] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortOption = searchParams.get('sort') || 'year';
+  const postPerPage = searchParams.get('perPage') || '4';
+
+  const currentPage = +(searchParams.get('page') || 1);
 
   const [isError, setIsError] = useState<string | null>(null);
 
@@ -42,8 +44,7 @@ export const Catalog = () => {
 
     try {
       //видалити на фіналі
-
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
       // throw new Error('Test error');
 
       const products = fetchProducts();
@@ -56,14 +57,35 @@ export const Catalog = () => {
     }
   };
 
+  const handleSortChange = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('sort', value);
+    params.set('page', '1');
+    setSearchParams(params);
+  };
+
+  const handlePostPerPageChange = (value: number | 'All') => {
+    const params = new URLSearchParams(searchParams);
+
+    params.set('perPage', String(value));
+    params.set('page', '1');
+
+    setSearchParams(params);
+  };
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', String(page));
+    setSearchParams(params);
+  };
+
   useEffect(() => {
     loadProducts();
   }, [categoryName]);
 
   useEffect(() => {
-    setSortOption('year');
+    setSearchParams({ sort: 'year', page: '1' });
     setSelectedOption('Newest');
-    setCurrentPage(1);
   }, [categoryName]);
 
   const filteredProducts = allProducts.filter(product => {
@@ -93,6 +115,7 @@ export const Catalog = () => {
     postPerPage === 'All'
       ? totalProducts.length
       : currentPage * Number(postPerPage);
+
   const firstPostIndex =
     postPerPage === 'All' ? 0 : lastPostIndex - Number(postPerPage);
 
@@ -119,97 +142,106 @@ export const Catalog = () => {
   if (isError) {
     return <ErrorPage reload={loadProducts} />;
   }
-
   return (
     <div className="catalog">
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="catalog__container">
-          <div className="catalog__path">
-            <img
-              className="catalog-img catalog__home-icon "
-              src={HomeIcon}
-              alt="Home"
-            />
-            <img
-              src={arrowRight}
-              alt="->"
-              className="catalog-img catalog__arrow"
-            />
-            <span className="catalog__category">{categoryName}</span>
-          </div>
+        <>
+          {filteredProducts.length === 0 ? (
+            <div className="catalog__container">
+              <h2 className="catalog__title-text">
+                There are no {categoryName} yet
+              </h2>
+            </div>
+          ) : (
+            <div className="catalog__container">
+              <div className="catalog__path">
+                <img
+                  className="catalog-img catalog__home-icon "
+                  src={HomeIcon}
+                  alt="Home"
+                />
+                <img
+                  src={arrowRight}
+                  alt="->"
+                  className="catalog-img catalog__arrow"
+                />
+                <span className="catalog__category">{categoryName}</span>
+              </div>
 
-          <div className="catalog__title">
-            <span className="catalog__title-text">
-              {getTitle(categoryName)}
-            </span>
-            <span className="catalog__title-number">
-              {filteredProducts.length} models
-            </span>
-          </div>
+              <div className="catalog__title">
+                <span className="catalog__title-text">
+                  {getTitle(categoryName)}
+                </span>
+                <span className="catalog__title-number">
+                  {filteredProducts.length} models
+                </span>
+              </div>
 
-          <div className="catalog__filters">
-            <ProductsSort
-              isOpen={isSortByOpen}
-              setIsOpen={setIsSortByOpen}
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              sortOption={sortOption}
-              setSortOption={setSortOption}
-            />
+              <div className="catalog__filters">
+                <ProductsSort
+                  isOpen={isSortByOpen}
+                  setIsOpen={setIsSortByOpen}
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                  sortOption={sortOption}
+                  setSortOption={handleSortChange}
+                />
 
-            <ProductsPerPage
-              isOpen={isItemPerPageOpen}
-              setIsOpen={setIsItemPerPageOpen}
-              postPerPage={postPerPage}
-              setPostPerPage={setPostPerPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </div>
+                <ProductsPerPage
+                  isOpen={isItemPerPageOpen}
+                  setIsOpen={setIsItemPerPageOpen}
+                  postPerPage={postPerPage}
+                  setPostPerPage={handlePostPerPageChange}
+                />
+              </div>
 
-          <div className="catalog__products">
-            {sortedProducts.map(product => (
-              <ProductCart
-                key={product.id}
-                product={product}
-                isDiscounted={false}
-              />
-            ))}
-          </div>
-          <div className="catalog__paggination">
-            {postPerPage !== 'All' && (
-              <NavButton
-                direction={'left'}
-                disabled={currentPage === 1 ? true : false}
-                onClick={() => {
-                  setCurrentPage(currentPage - 1);
-                }}
-              />
-            )}
+              <div className="catalog__products">
+                {sortedProducts.map(product => (
+                  <ProductCart
+                    key={product.id}
+                    product={product}
+                    isDiscounted={false}
+                  />
+                ))}
+              </div>
+              <div className="catalog__paggination">
+                {postPerPage !== 'All' && (
+                  <NavButton
+                    direction={'left'}
+                    disabled={currentPage === 1 ? true : false}
+                    onClick={() => {
+                      handlePageChange(currentPage - 1);
+                    }}
+                  />
+                )}
 
-            <Pagination
-              totalPosts={totalProducts.length}
-              postsPerPage={postPerPage}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
-            {postPerPage !== 'All' && (
-              <NavButton
-                direction={'right'}
-                disabled={
-                  Math.ceil(filteredProducts.length / Number(postPerPage)) <=
-                  currentPage
-                    ? true
-                    : false
-                }
-                onClick={() => {
-                  setCurrentPage(currentPage + 1);
-                }}
-              />
-            )}
-          </div>
-        </div>
+                <Pagination
+                  totalPosts={totalProducts.length}
+                  postsPerPage={postPerPage}
+                  setCurrentPage={handlePageChange}
+                  currentPage={currentPage}
+                />
+                {postPerPage !== 'All' && (
+                  <NavButton
+                    direction={'right'}
+                    disabled={
+                      Math.ceil(
+                        filteredProducts.length / Number(postPerPage),
+                      ) <= currentPage
+                        ? true
+                        : false
+                    }
+                    onClick={() => {
+                      handlePageChange(currentPage + 1);
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
