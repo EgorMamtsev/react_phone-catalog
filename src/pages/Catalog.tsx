@@ -146,19 +146,36 @@ export const Catalog = () => {
           ))}
         </div>
         <div className="catalog__paggination">
-          <NavButton
-            direction={'left'}
-            disabled={currentPage === 1 ? true : false}
-            onClick={() => {
-              setCurrentPage(currentPage - 1);
-            }}
-          />
+          {postPerPage !== 'All' && (
+            <NavButton
+              direction={'left'}
+              disabled={currentPage === 1 ? true : false}
+              onClick={() => {
+                setCurrentPage(currentPage - 1);
+              }}
+            />
+          )}
+
           <Pagination
             totalPosts={totalProducts.length}
             postsPerPage={postPerPage}
             setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
-          <NavButton direction={'right'} disabled={false} onClick={() => {}} />
+          {postPerPage !== 'All' && (
+            <NavButton
+              direction={'right'}
+              disabled={
+                Math.ceil(filteredProducts.length / Number(postPerPage)) <=
+                currentPage
+                  ? true
+                  : false
+              }
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
