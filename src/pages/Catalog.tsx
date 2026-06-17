@@ -13,6 +13,7 @@ import { Pagination } from '../components/Pagination/Pagination';
 import { ProductsSort } from '../components/ProductSort/ProductSort';
 import { ProductsPerPage } from '../components/ProductPerPage/ProductPerPage';
 import { NavButton } from '../components/NavButton/NavButton';
+import { Loader } from '../components/Loader/Loader';
 
 import { Product } from '../types/product';
 
@@ -30,12 +31,28 @@ export const Catalog = () => {
 
   const [selectedOption, setSelectedOption] = useState('Newest');
   const [sortOption, setSortOption] = useState('year');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const products = fetchProducts();
+    const loadProducts = async () => {
+      setIsLoading(true);
 
-    setAllProducts(products);
-  }, []);
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const products = fetchProducts();
+
+        setAllProducts(products);
+      } catch {
+        new Error('Error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    // const products = fetchProducts();
+
+    // setAllProducts(products);
+    loadProducts();
+  }, [categoryName]);
 
   useEffect(() => {
     setSortOption('year');
@@ -95,89 +112,95 @@ export const Catalog = () => {
 
   return (
     <div className="catalog">
-      <div className="catalog__container">
-        <div className="catalog__path">
-          <img
-            className="catalog-img catalog__home-icon "
-            src={HomeIcon}
-            alt="Home"
-          />
-          <img
-            src={arrowRight}
-            alt="->"
-            className="catalog-img catalog__arrow"
-          />
-          <span className="catalog__category">{categoryName}</span>
-        </div>
-
-        <div className="catalog__title">
-          <span className="catalog__title-text">{getTitle(categoryName)}</span>
-          <span className="catalog__title-number">
-            {filteredProducts.length} models
-          </span>
-        </div>
-
-        <div className="catalog__filters">
-          <ProductsSort
-            isOpen={isSortByOpen}
-            setIsOpen={setIsSortByOpen}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-          />
-
-          <ProductsPerPage
-            isOpen={isItemPerPageOpen}
-            setIsOpen={setIsItemPerPageOpen}
-            postPerPage={postPerPage}
-            setPostPerPage={setPostPerPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
-
-        <div className="catalog__products">
-          {sortedProducts.map(product => (
-            <ProductCart
-              key={product.id}
-              product={product}
-              isDiscounted={false}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="catalog__container">
+          <div className="catalog__path">
+            <img
+              className="catalog-img catalog__home-icon "
+              src={HomeIcon}
+              alt="Home"
             />
-          ))}
-        </div>
-        <div className="catalog__paggination">
-          {postPerPage !== 'All' && (
-            <NavButton
-              direction={'left'}
-              disabled={currentPage === 1 ? true : false}
-              onClick={() => {
-                setCurrentPage(currentPage - 1);
-              }}
+            <img
+              src={arrowRight}
+              alt="->"
+              className="catalog-img catalog__arrow"
             />
-          )}
+            <span className="catalog__category">{categoryName}</span>
+          </div>
 
-          <Pagination
-            totalPosts={totalProducts.length}
-            postsPerPage={postPerPage}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-          />
-          {postPerPage !== 'All' && (
-            <NavButton
-              direction={'right'}
-              disabled={
-                Math.ceil(filteredProducts.length / Number(postPerPage)) <=
-                currentPage
-                  ? true
-                  : false
-              }
-              onClick={() => {
-                setCurrentPage(currentPage + 1);
-              }}
+          <div className="catalog__title">
+            <span className="catalog__title-text">
+              {getTitle(categoryName)}
+            </span>
+            <span className="catalog__title-number">
+              {filteredProducts.length} models
+            </span>
+          </div>
+
+          <div className="catalog__filters">
+            <ProductsSort
+              isOpen={isSortByOpen}
+              setIsOpen={setIsSortByOpen}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              sortOption={sortOption}
+              setSortOption={setSortOption}
             />
-          )}
+
+            <ProductsPerPage
+              isOpen={isItemPerPageOpen}
+              setIsOpen={setIsItemPerPageOpen}
+              postPerPage={postPerPage}
+              setPostPerPage={setPostPerPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+
+          <div className="catalog__products">
+            {sortedProducts.map(product => (
+              <ProductCart
+                key={product.id}
+                product={product}
+                isDiscounted={false}
+              />
+            ))}
+          </div>
+          <div className="catalog__paggination">
+            {postPerPage !== 'All' && (
+              <NavButton
+                direction={'left'}
+                disabled={currentPage === 1 ? true : false}
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                }}
+              />
+            )}
+
+            <Pagination
+              totalPosts={totalProducts.length}
+              postsPerPage={postPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
+            {postPerPage !== 'All' && (
+              <NavButton
+                direction={'right'}
+                disabled={
+                  Math.ceil(filteredProducts.length / Number(postPerPage)) <=
+                  currentPage
+                    ? true
+                    : false
+                }
+                onClick={() => {
+                  setCurrentPage(currentPage + 1);
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

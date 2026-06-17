@@ -1,6 +1,6 @@
-import logo from '../../public/img/Logo.png';
-import backToTopbtn from '../../public/img/icons/back to top btn.png';
-import '../styles/Footer.scss';
+import logo from '../../../public/img/Logo.png';
+import backToTopbtn from '../../../public/img/icons/back to top btn.png';
+import './Footer.scss';
 
 export const Footer = () => {
   return (

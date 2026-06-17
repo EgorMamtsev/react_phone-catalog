@@ -1,9 +1,9 @@
-import '../styles/Header.scss';
-import logo from '../../public/img/Logo.png';
-import iconHeart from '../../public/img/icons/Favourites (Heart Like).png';
-import iconBag from '../../public/img/icons/Shopping bag (Cart).png';
-import iconBurger from '../../public/img/icons/Menu.png';
-import iconClose from '../../public/img/icons/Close.png';
+import './Header.scss';
+import logo from '../../../public/img/Logo.png';
+import iconHeart from '../../../public/img/icons/Favourites (Heart Like).png';
+import iconBag from '../../../public/img/icons/Shopping bag (Cart).png';
+import iconBurger from '../../../public/img/icons/Menu.png';
+import iconClose from '../../../public/img/icons/Close.png';
 
 import { Link } from 'react-router-dom';
 
