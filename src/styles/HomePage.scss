@@ -65,6 +65,8 @@
       &-img {
         padding: 16px 0;
         width: 288px;
+        display: block;
+        transition: transform 0.3s ease;
 
         @include tablet-only {
           width: 187px;
@@ -75,6 +77,9 @@
           width: 368px;
           height: 368px;
         }
+      }
+      &-img:hover {
+        transform: scale(1.1);
       }
     }
 
@@ -91,4 +96,15 @@
       font-weight: 600;
     }
   }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

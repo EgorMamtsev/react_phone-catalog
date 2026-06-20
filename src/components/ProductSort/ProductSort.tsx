@@ -37,7 +37,7 @@ export const ProductsSort = ({
               onClick={() => {
                 setSelectedOption('Newest');
                 setIsOpen(false);
-                setSortOption('year');
+                setSortOption('newest');
               }}
             >
               Newest
@@ -45,22 +45,22 @@ export const ProductsSort = ({
             <div
               className="product-sort__option"
               onClick={() => {
-                setSelectedOption('Price: Low to High');
+                setSelectedOption('Alphabetically');
                 setIsOpen(false);
-                setSortOption('price-asc');
+                setSortOption('alphabetically');
               }}
             >
-              Price: Low to High
+              Alphabetically
             </div>
             <div
               className="product-sort__option"
               onClick={() => {
-                setSelectedOption('Price: High to Low');
+                setSelectedOption('Cheapest options');
                 setIsOpen(false);
-                setSortOption('price-desc');
+                setSortOption('price-inc');
               }}
             >
-              Price: High to Low
+              Cheapest options
             </div>
           </div>
         )}

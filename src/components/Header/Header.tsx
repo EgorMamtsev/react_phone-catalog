@@ -5,7 +5,7 @@ import iconBag from '../../../public/img/icons/Shopping bag (Cart).png';
 import iconBurger from '../../../public/img/icons/Menu.png';
 import iconClose from '../../../public/img/icons/Close.png';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { useState } from 'react';
 
@@ -33,23 +33,51 @@ export const Header = () => {
   return (
     <header className="header">
       <div className="header__container">
-        <div className="header__logo">
-          <img className="header__logo-image" src={logo} />
-        </div>
+        <Link to="/" className="header__logo">
+          <img className="header__logo-image" src={logo} alt="Logo" />
+        </Link>
 
         <nav className="header__nav">
-          <Link to="/" className="header__nav-link">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? 'header__nav-link header__nav-link--active'
+                : 'header__nav-link'
+            }
+          >
             HOME
-          </Link>
-          <Link to="/phones" className="header__nav-link">
+          </NavLink>
+          <NavLink
+            to="/phones"
+            className={({ isActive }) =>
+              isActive
+                ? 'header__nav-link header__nav-link--active'
+                : 'header__nav-link'
+            }
+          >
             PHONES
-          </Link>
-          <Link to={'/tablets'} className="header__nav-link">
+          </NavLink>
+          <NavLink
+            to={'/tablets'}
+            className={({ isActive }) =>
+              isActive
+                ? 'header__nav-link header__nav-link--active'
+                : 'header__nav-link'
+            }
+          >
             TABLETS
-          </Link>
-          <Link to={'/accessories'} className="header__nav-link">
+          </NavLink>
+          <NavLink
+            to={'/accessories'}
+            className={({ isActive }) =>
+              isActive
+                ? 'header__nav-link header__nav-link--active'
+                : 'header__nav-link'
+            }
+          >
             ACCESSORIES
-          </Link>
+          </NavLink>
         </nav>
 
         <div className="header__actions">
@@ -73,34 +101,50 @@ export const Header = () => {
             className={`header__menu ${isClosing ? 'header__menu--closing' : ''}`}
           >
             <nav className="header__menu-nav">
-              <Link
+              <NavLink
                 to="/"
-                className="header__menu-link"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'header__menu-link header__menu-link--active'
+                    : 'header__menu-link'
+                }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 HOME
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to={'/phones'}
-                className="header__menu-link"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'header__menu-link header__menu-link--active'
+                    : 'header__menu-link'
+                }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 PHONES
-              </Link>
-              <Link
-                className="header__menu-link"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'header__menu-link header__menu-link--active'
+                    : 'header__menu-link'
+                }
                 to={'/tablets'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 TABLETS
-              </Link>
-              <Link
-                className="header__menu-link"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'header__menu-link header__menu-link--active'
+                    : 'header__menu-link'
+                }
                 to={'/accessories'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 ACCESSORIES
-              </Link>
+              </NavLink>
             </nav>
             <div className="header__menu-actions">
               <a className="header__menu-icon header__menu-icon--favorite">

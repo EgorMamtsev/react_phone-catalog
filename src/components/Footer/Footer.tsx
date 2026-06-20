@@ -3,6 +3,10 @@ import backToTopbtn from '../../../public/img/icons/back to top btn.png';
 import './Footer.scss';
 
 export const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -11,7 +15,11 @@ export const Footer = () => {
         </div>
 
         <div className="footer__info">
-          <a className="footer__info-link" href="">
+          <a
+            className="footer__info-link"
+            target="blank"
+            href="https://github.com/EgorMamtsev"
+          >
             GITHUB
           </a>
           <a className="footer__info-link" href="">
@@ -24,7 +32,7 @@ export const Footer = () => {
 
         <div className="footer__back">
           <span className="footer__back-label">Back to top</span>
-          <button className="footer__back-button">
+          <button className="footer__back-button" onClick={scrollToTop}>
             <img className="footer__back-image" src={backToTopbtn} alt="" />
           </button>
         </div>

@@ -126,7 +126,7 @@ export const HomePage = () => {
         <>
           <div className="home-page__container">
             <div className="home-page__title-block">
-              <h1 className="home-page__title">
+              <h1 className="home-page__title visually-hidden">
                 Welcome to Nice Gadgets store!
               </h1>
             </div>
@@ -168,7 +168,7 @@ export const HomePage = () => {
                     <img
                       className="home-page__category-icon-img"
                       src={categoryPhones}
-                      alt=""
+                      alt="phone"
                     />
                   </div>
                   <div className="home-page__category-description">

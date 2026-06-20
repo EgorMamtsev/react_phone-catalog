@@ -31,7 +31,7 @@ export const Catalog = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortOption = searchParams.get('sort') || 'year';
+  const sortOption = searchParams.get('sort') || 'newest';
   const postPerPage = searchParams.get('perPage') || '4';
 
   const currentPage = +(searchParams.get('page') || 1);
@@ -59,6 +59,7 @@ export const Catalog = () => {
 
   const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
+
     params.set('sort', value);
     params.set('page', '1');
     setSearchParams(params);
@@ -75,6 +76,7 @@ export const Catalog = () => {
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
+
     params.set('page', String(page));
     setSearchParams(params);
   };
@@ -84,7 +86,7 @@ export const Catalog = () => {
   }, [categoryName]);
 
   useEffect(() => {
-    setSearchParams({ sort: 'year', page: '1' });
+    // setSearchParams({ sort: 'newest', page: '1' });
     setSelectedOption('Newest');
   }, [categoryName]);
 
@@ -96,12 +98,12 @@ export const Catalog = () => {
     const sorted = [...productsToSort];
 
     switch (sortBy) {
-      case 'year':
+      case 'newest':
         return sorted.sort((a, b) => b.year - a.year);
-      case 'price-asc':
+      case 'alphabetically':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'price-inc':
         return sorted.sort((a, b) => a.fullPrice - b.fullPrice);
-      case 'price-desc':
-        return sorted.sort((a, b) => b.fullPrice - a.fullPrice);
       default:
         return sorted;
     }
@@ -142,6 +144,7 @@ export const Catalog = () => {
   if (isError) {
     return <ErrorPage reload={loadProducts} />;
   }
+
   return (
     <div className="catalog">
       {isLoading ? (
