@@ -75,8 +75,8 @@
       display: flex;
       justify-content: center;
       position: relative;
-      align-items: center; // ← центрує текст по вертикалі
-      height: 100%; // ← займає всю висоту
+      align-items: center;
+      height: 100%;
       padding: 0;
       font-size: 12px;
       line-height: 11px;
@@ -84,6 +84,7 @@
       text-decoration: none;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      transition: color 0.3s ease;
 
       &:hover {
         color: #313237;
@@ -229,6 +230,7 @@
       text-decoration: none;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      transition: color 0.3s ease;
 
       &:hover {
         color: #313237;

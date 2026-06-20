@@ -55,12 +55,12 @@ export const ProductsSort = ({
             <div
               className="product-sort__option"
               onClick={() => {
-                setSelectedOption('Cheapest options');
+                setSelectedOption('Cheapest');
                 setIsOpen(false);
                 setSortOption('price-inc');
               }}
             >
-              Cheapest options
+              Cheapest
             </div>
           </div>
         )}

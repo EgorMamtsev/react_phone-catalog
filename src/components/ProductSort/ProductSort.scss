@@ -29,6 +29,7 @@
     background-color: white;
     cursor: pointer;
     font-size: 14px;
+    transition: color 0.3s ease;
 
     &:hover {
       border-color: #9ca3af;
@@ -57,6 +58,7 @@
     padding: 6px 12px;
     background-color: #fff;
     cursor: pointer;
+    transition: color 0.3s ease;
 
     &:hover {
       background-color: #fafbfc;

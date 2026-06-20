@@ -162,56 +162,48 @@ export const HomePage = () => {
               <h1 className="home-page__title">Shop by category</h1>
             </div>
             <div className="home-page__categories">
-              <Link to={'/phones'}>
-                <div className="home-page__category">
-                  <div className="home-page__category-icon">
-                    <img
-                      className="home-page__category-icon-img"
-                      src={categoryPhones}
-                      alt="phone"
-                    />
-                  </div>
-                  <div className="home-page__category-description">
-                    <div className="home-page__category-name">
-                      Mobile phones
-                    </div>
-                    <div className="home-page__category-number">
-                      {numberOfProducts.phones} models
-                    </div>
+              <Link to={'/phones'} className="home-page__category">
+                <div className="home-page__category-icon">
+                  <img
+                    className="home-page__category-icon-img"
+                    src={categoryPhones}
+                    alt="phone"
+                  />
+                </div>
+                <div className="home-page__category-description">
+                  <div className="home-page__category-name">Mobile phones</div>
+                  <div className="home-page__category-number">
+                    {numberOfProducts.phones} models
                   </div>
                 </div>
               </Link>
-              <Link to={'/tablets'}>
-                <div className="home-page__category">
-                  <div className="home-page__category-icon">
-                    <img
-                      className="home-page__category-icon-img"
-                      src={categoryTablets}
-                      alt=""
-                    />
-                  </div>
-                  <div className="home-page__category-description">
-                    <div className="home-page__category-name">Tablets</div>
-                    <div className="home-page__category-number">
-                      {numberOfProducts.tablets} models
-                    </div>
+              <Link to={'/tablets'} className="home-page__category">
+                <div className="home-page__category-icon">
+                  <img
+                    className="home-page__category-icon-img"
+                    src={categoryTablets}
+                    alt=""
+                  />
+                </div>
+                <div className="home-page__category-description">
+                  <div className="home-page__category-name">Tablets</div>
+                  <div className="home-page__category-number">
+                    {numberOfProducts.tablets} models
                   </div>
                 </div>
               </Link>
-              <Link to={'/accessories'}>
-                <div className="home-page__category">
-                  <div className="home-page__category-icon">
-                    <img
-                      className="home-page__category-icon-img"
-                      src={categoryAccessories}
-                      alt=""
-                    />
-                  </div>
-                  <div className="home-page__category-description">
-                    <div className="home-page__category-name">Accessories</div>
-                    <div className="home-page__category-number">
-                      {numberOfProducts.accessories} models
-                    </div>
+              <Link to={'/accessories'} className="home-page__category">
+                <div className="home-page__category-icon">
+                  <img
+                    className="home-page__category-icon-img"
+                    src={categoryAccessories}
+                    alt=""
+                  />
+                </div>
+                <div className="home-page__category-description">
+                  <div className="home-page__category-name">Accessories</div>
+                  <div className="home-page__category-number">
+                    {numberOfProducts.accessories} models
                   </div>
                 </div>
               </Link>

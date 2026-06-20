@@ -1,4 +1,4 @@
-@import '../../styles/mixins.scss';
+@import '../../styles/mixinsg';
 
 .slider {
   display: flex;
@@ -90,6 +90,7 @@
       background-color: #fff;
 
       align-self: stretch;
+      transition: color 0.3s ease;
 
       &:hover {
         border-color: #313237;
@@ -109,6 +110,7 @@
       background-color: #fff;
 
       align-self: stretch;
+      transition: color 0.3s ease;
 
       &:hover {
         border-color: #313237;
