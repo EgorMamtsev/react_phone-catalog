@@ -2,6 +2,7 @@ import './ProductCart.scss';
 import { Product } from '../../types/product';
 
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
+import { Link } from 'react-router-dom';
 
 type Props = {
   product: Product;
@@ -11,15 +12,20 @@ type Props = {
 export const ProductCart = ({ product, isDiscounted }: Props) => {
   return (
     <div className="product-cart">
-      <div className="product-cart__image--container">
+      <Link
+        to={`/product/${product.itemId}`}
+        className="product-cart__image--container"
+      >
         <img
           className="product-cart__img"
           src={product.image}
           alt="product image"
         />
-      </div>
+      </Link>
 
-      <div className="product-cart__name">{product.name}</div>
+      <Link to={`/product/${product.itemId}`} className="product-cart__name">
+        {product.name}
+      </Link>
       {isDiscounted ? (
         <div className="product-cart__price">
           <span className="product-cart__price--current">${product.price}</span>

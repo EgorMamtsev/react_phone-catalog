@@ -7,6 +7,7 @@ import {
 import { App } from './App';
 import { HomePage } from './pages/HomePage';
 import { Catalog } from './pages/Catalog';
+import { ProductDetailPage } from './pages/ProductDetailsPage';
 export const Root = () => (
   <Router>
     <Routes>
@@ -14,6 +15,10 @@ export const Root = () => (
         <Route path="home" element={<Navigate to="/" replace />} />
         <Route index element={<HomePage />} />
         <Route path=":category" element={<Catalog />} />
+        <Route
+          path="product/:productId"
+          element={<ProductDetailPage />}
+        ></Route>
       </Route>
     </Routes>
   </Router>

@@ -86,8 +86,7 @@ export const Catalog = () => {
   }, [categoryName]);
 
   useEffect(() => {
-    // setSearchParams({ sort: 'newest', page: '1' });
-    setSelectedOption('Newest');
+    setSelectedOption(sortOption);
   }, [categoryName]);
 
   const filteredProducts = allProducts.filter(product => {
