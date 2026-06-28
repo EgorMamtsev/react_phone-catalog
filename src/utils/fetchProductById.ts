@@ -3,7 +3,13 @@ import { fetchTablets } from './fetchTablets';
 import { fetchAccessories } from './fetchAccessories';
 import { fetchProducts } from './fetchProducts';
 
-export function fetchProductById(productId: string) {
+import { Phone } from '../types/phone';
+import { Tablet } from '../types/tablet';
+import { Accessory } from '../types/accessorie';
+
+export function fetchProductById(
+  productId: string,
+): Phone | Tablet | Accessory | undefined {
   const allProducts = fetchProducts();
   const productInfo = allProducts.find(p => p.itemId === productId);
 

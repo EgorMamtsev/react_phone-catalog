@@ -1,15 +1,28 @@
+//# region Imports
+
 import '../styles/ProductDetailsPage.scss';
 import arrowRight from '../../public/img/icons/arrowRight.png';
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
-
+import HomeIcon from '../../public/img/icons/HomeIcon.png';
+import backArrow from '../../public/img/icons/arrowRight.png';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../utils/fetchProductById';
+import { ColorMap } from '../utils/colorMap';
 
-import HomeIcon from '../../public/img/icons/HomeIcon.png';
+// import { NavButton } from '../components/NavButton/NavButton';
+// import { ProductSlider } from '../components/ProductSlider/ProductSlider';
+// import { Product } from '../types/product';
+
+import { useState } from 'react';
+
+//#endregion
 
 export const ProductDetailPage = () => {
   const { productId } = useParams();
   const product = fetchProductById(productId || '');
+  const [activeImage, setActiveImage] = useState(product?.images[0]);
+  const [activeColor, setActiveColor] = useState(product?.color);
+  const [activeCapacity, setActiveCapacity] = useState(product?.capacity);
 
   if (!product) {
     return <h2>Product was not found</h2>;
@@ -18,84 +31,170 @@ export const ProductDetailPage = () => {
   return (
     <div className="product-details">
       <div className="product-details__container">
+        {/* Breadcrumbs */}
         <div className="product-details__breadcrumbs">
-          <img src={HomeIcon} alt="home" />
-          <img src={arrowRight} alt=">" />
-          <span>{product.category}</span>
-          <img src={arrowRight} alt=">" />
-          <span>{product.name}</span>
+          <img
+            className="product-details__breadcrumbs-icon"
+            src={HomeIcon}
+            alt="home"
+          />
+          <img
+            className="product-details__breadcrumbs-icon"
+            src={arrowRight}
+            alt=">"
+          />
+          <span className="product-details__breadcrumbs-link">
+            {product.category}
+          </span>
+          <img
+            className="product-details__breadcrumbs-icon"
+            src={arrowRight}
+            alt=">"
+          />
+          <span
+            className="product-details__breadcrumbs-link 
+          product-details__breadcrumbs-link--active"
+          >
+            {product.name}
+          </span>
         </div>
 
-        <div className="product-details__name">{product.name}</div>
+        <div className="product-details__back">
+          <div className="product-details__icon">
+            <img
+              className="product-details__arrow"
+              src={backArrow}
+              alt="Back icon"
+            />
+          </div>
+          <span className="product-details__text">Back</span>
+        </div>
+
+        <h1 className="product-details__name">{product.name}</h1>
 
         <div className="product-details__information">
-          <div className="product-details__galery">
-            <div className="product-details__image">
+          <div className="product-details__gallery">
+            <div className="product-details__main">
               <img
-                className="product-details__image image-main"
-                src={product.images[0]}
-                alt=""
+                className="product-details__image-main"
+                src={activeImage}
+                alt={product.name}
               />
             </div>
-            <div className="product-details__images">
-              {product.images.map((img, index) => (
-                <img className="product-details__img" key={index} src={img} />
-              ))}
+
+            <div className="product-details__viewport">
+              <div className="product-details__images">
+                {product.images.map((img, index) => (
+                  <img
+                    onClick={() => setActiveImage(img)}
+                    key={index}
+                    className={`product-details__images-item ${
+                      img === activeImage
+                        ? 'product-details__images-item--active'
+                        : ''
+                    }`}
+                    src={img}
+                    alt={`${product.name} ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
           <div className="product-details__options">
             <div className="product-details__colors">
-              <div className="product-details__colors-availible">
-                <span className="product-details__text">Availible colors</span>
-                <span className="product-details__text">id:</span>
+              <div className="product-details__colors-header">
+                <span>Available colors</span>
+                <span>ID: {product.id}</span>
               </div>
-              <div className="product-details__palitra">
+              <div className="product-details__colors-list">
                 {product.colorsAvailable.map((color, index) => (
-                  <div
+                  <label
+                    aria-label={`Color ${color}`} 
+                    onClick={() => setActiveColor(color)}
                     key={index}
-                    className="product-details__color"
-                    style={{ backgroundColor: color }}
-                  ></div>
+                    className={`product-details__colors-label ${
+                      color === activeColor
+                        ? 'product-details__colors-label--active'
+                        : ''
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      value={color}
+                      defaultChecked={color === product.color}
+                      className="product-details__colors-radio"
+                    />
+                    <span
+                      className="product-details__colors-item"
+                      style={{ backgroundColor: ColorMap[color] || '#cccccc' }}
+                    />
+                  </label>
                 ))}
               </div>
+              <div className="product-details__divider" />
             </div>
+
             <div className="product-details__capacity">
-              <span className="product-details__text">Select capacity</span>
+              <span className="product-details__capacity-label">
+                Select capacity
+              </span>
               <div className="product-details__capacity-options">
                 {product.capacityAvailable.map((c, index) => (
-                  <div key={index} className="product-details__capacity-option">
-                    {c}
-                  </div>
+                  <label
+                    key={index}
+                    onClick={() => setActiveCapacity(c)}
+                    className={`product-details__capacity-label-wrapper ${
+                      c === activeCapacity
+                        ? 'product-details__capacity-label-wrapper--active'
+                        : ''
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="capacity"
+                      value={c}
+                      className="product-details__capacity-radio"
+                      defaultChecked={c === product.capacity}
+                    />
+                    <span
+                      className={`product-details__capacity-option ${
+                        c === activeCapacity
+                          ? 'product-details__capacity-option--active'
+                          : ''
+                      }`}
+                    >
+                      {c}
+                    </span>
+                  </label>
                 ))}
               </div>
+              <div className="product-details__divider" />
             </div>
-            <div className="product-details__prise">
-              <div className="product-details__current">
+
+            <div className="product-details__price">
+              <span className="product-details__price-current">
                 ${product.priceDiscount}
-              </div>
-              <div className="product-details__full">
-                {product.priceRegular}
-              </div>
+              </span>
+              <span className="product-details__price-full">
+                ${product.priceRegular}
+              </span>
             </div>
+
             <div className="product-details__buttons">
-              <button
-                className="product-details__button
-               product-details__button--add"
-              >
+              <button className="product-details__buttons-add">
                 Add to cart
               </button>
-              <button
-                className="product-details__button 
-              product-details__button--heart"
-              >
+              <button className="product-details__buttons-heart">
                 <img
-                  className="product-details__heart-icon"
+                  className="product-details__buttons-heart-icon"
                   src={heartIcon}
-                  alt=""
+                  alt="like"
                 />
               </button>
             </div>
+
             <div className="product-details__params">
               <div className="product-details__param">
                 <span className="product-details__param-title">Screen</span>
@@ -125,61 +224,87 @@ export const ProductDetailPage = () => {
           </div>
         </div>
 
-        <div className="product-details__about">
-          <div className="product-details__about-title">About</div>
-          {product.description.map((desc, index) => (
-            <div key={index} className="product-details__description">
-              <div className="product-details__description-title ">
-                {desc.title}
+        <div className="product-details__info-all">
+          <div className="product-details__about">
+            <h2 className="product-details__about-title">About</h2>
+            <div className="product-details__divider" />
+
+            {product.description.map((desc, index) => (
+              <div key={index} className="product-details__description">
+                <h3 className="product-details__description-title">
+                  {desc.title}
+                </h3>
+                {desc.text.map((paragraph, i) => (
+                  <p key={i} className="product-details__description-text">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
-              <div className="product-details__description-text">
-                {desc.text}
-              </div>
+            ))}
+          </div>
+
+          {/* Tech specs */}
+          <div className="product-details__techs">
+            <h2 className="product-details__techs-title">Tech specs</h2>
+            <div className="product-details__divider" />
+
+            <div className="product-details__tech">
+              <span className="product-details__tech-title">Screen</span>
+              <span className="product-details__tech-value">
+                {product.screen}
+              </span>
             </div>
-          ))}
+            <div className="product-details__tech">
+              <span className="product-details__tech-title">Resolution</span>
+              <span className="product-details__tech-value">
+                {product.resolution}
+              </span>
+            </div>
+            <div className="product-details__tech">
+              <span className="product-details__tech-title">Processor</span>
+              <span className="product-details__tech-value">
+                {product.processor}
+              </span>
+            </div>
+            <div className="product-details__tech">
+              <span className="product-details__tech-title">RAM</span>
+              <span className="product-details__tech-value">{product.ram}</span>
+            </div>
+
+            {'camera' in product && (
+              <div className="product-details__tech">
+                <span className="product-details__tech-title">Camera</span>
+                <span className="product-details__tech-value">
+                  {product.camera}
+                </span>
+              </div>
+            )}
+
+            {'zoom' in product && (
+              <div className="product-details__tech">
+                <span className="product-details__tech-title">Zoom</span>
+                <span className="product-details__tech-value">
+                  {product.zoom}
+                </span>
+              </div>
+            )}
+
+            <div className="product-details__tech">
+              <span className="product-details__tech-title">Cell</span>
+              <span className="product-details__tech-value">
+                {product.cell.join(', ')}
+              </span>
+            </div>
+          </div>
+
+          <div className="product-details__divider" />
         </div>
 
-        <div className="product-details__techs">
-          <div className="product-details__tech-title">Tech specs</div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">Screen</span>
-            <span className="product-details__tech-value">
-              {product.screen}
-            </span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">Resolution</span>
-            <span className="product-details__tech-value">
-              {product.resolution}
-            </span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">Processor</span>
-            <span className="product-details__tech-value">
-              {product.processor}
-            </span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">Ram</span>
-            <span className="product-details__tech-value">{product.ram}</span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">Built in memory</span>
-            <span className="product-details__tech-value">
-              *обране capasity*
-            </span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">camera</span>
-            <span className="product-details__tech-value">camera</span>
-          </div>
-          <div className="product-details__tech">
-            <span className="product-details__tech-title">cell</span>
-            <span className="product-details__tech-value">cell</span>
-          </div>
+        {/* Offers */}
+        <div className="product-details__offers">
+          <h2 className="product-details__about-title">You may also like</h2>
+          {/* Тут буде компонент ProductSlider */}
         </div>
-
-        <div className="product-details__offers">offers</div>
       </div>
     </div>
   );
