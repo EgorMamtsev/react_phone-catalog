@@ -110,7 +110,7 @@ export const ProductDetailPage = () => {
               <div className="product-details__colors-list">
                 {product.colorsAvailable.map((color, index) => (
                   <label
-                    aria-label={`Color ${color}`} 
+                    aria-label={`Color ${color}`}
                     onClick={() => setActiveColor(color)}
                     key={index}
                     className={`product-details__colors-label ${

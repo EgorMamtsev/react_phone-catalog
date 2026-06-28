@@ -37,7 +37,7 @@ export const ProductsSort = ({
               onClick={() => {
                 setSelectedOption('Newest');
                 setIsOpen(false);
-                setSortOption('newest');
+                setSortOption('Newest');
               }}
             >
               Newest
@@ -47,7 +47,7 @@ export const ProductsSort = ({
               onClick={() => {
                 setSelectedOption('Alphabetically');
                 setIsOpen(false);
-                setSortOption('alphabetically');
+                setSortOption('Alphabetically');
               }}
             >
               Alphabetically
@@ -57,7 +57,7 @@ export const ProductsSort = ({
               onClick={() => {
                 setSelectedOption('Cheapest');
                 setIsOpen(false);
-                setSortOption('price-inc');
+                setSortOption('Cheapest');
               }}
             >
               Cheapest

@@ -31,7 +31,7 @@ export const Catalog = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortOption = searchParams.get('sort') || 'newest';
+  const sortOption = searchParams.get('sort') || 'Newest';
   const postPerPage = searchParams.get('perPage') || '4';
 
   const currentPage = +(searchParams.get('page') || 1);
@@ -97,11 +97,11 @@ export const Catalog = () => {
     const sorted = [...productsToSort];
 
     switch (sortBy) {
-      case 'newest':
+      case 'Newest':
         return sorted.sort((a, b) => b.year - a.year);
-      case 'alphabetically':
+      case 'Alphabetically':
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
-      case 'price-inc':
+      case 'Cheapest':
         return sorted.sort((a, b) => a.fullPrice - b.fullPrice);
       default:
         return sorted;
