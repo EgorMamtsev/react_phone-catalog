@@ -1,6 +1,4 @@
 //#region Imports
-import HomeIcon from '../../public/img/icons/HomeIcon.png';
-import arrowRight from '../../public/img/icons/arrowRight.png';
 
 import '../styles/Catalog.scss';
 import { useEffect, useState, useMemo } from 'react';
@@ -15,6 +13,7 @@ import { ProductsPerPage } from '../components/ProductPerPage/ProductPerPage';
 import { NavButton } from '../components/NavButton/NavButton';
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 
 import { Product } from '../types/product';
 
@@ -158,7 +157,8 @@ export const Catalog = () => {
             </div>
           ) : (
             <div className="catalog__container">
-              <div className="catalog__path">
+              <Breadcrumbs category={categoryName} />
+              {/* <div className="catalog__path">
                 <img
                   className="catalog-img catalog__home-icon "
                   src={HomeIcon}
@@ -170,7 +170,7 @@ export const Catalog = () => {
                   className="catalog-img catalog__arrow"
                 />
                 <span className="catalog__category">{categoryName}</span>
-              </div>
+              </div> */}
 
               <div className="catalog__title">
                 <span className="catalog__title-text">
