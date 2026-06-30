@@ -15,32 +15,21 @@
     }
   }
 
-  &__breadcrumbs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    margin-bottom: 16px;
-
-    &-link {
-      color: #89939a;
-      text-decoration: none;
-
-      &--active {
-        color: #0f0f11;
-      }
-    }
-
-    &-icon {
-      width: 16px;
-      height: 16px;
-    }
-  }
-
   &__back {
     display: flex;
     gap: 4px;
     align-items: center;
+  }
+
+  &__back-link {
+    list-style: none;
+    text-decoration: none;
+  }
+
+  &__link-text {
+    font-size: 12px;
+    color: #89939a;
+    font-weight: 700;
   }
   &__icon {
     width: 16px;

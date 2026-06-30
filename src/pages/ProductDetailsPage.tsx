@@ -1,9 +1,7 @@
 //# region Imports
 
 import '../styles/ProductDetailsPage.scss';
-import arrowRight from '../../public/img/icons/arrowRight.png';
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
-import HomeIcon from '../../public/img/icons/HomeIcon.png';
 import backArrow from '../../public/img/icons/arrowRight.png';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../utils/fetchProductById';
@@ -15,11 +13,13 @@ import { Accessory } from '../types/accessorie';
 
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 // import { NavButton } from '../components/NavButton/NavButton';
 // import { ProductSlider } from '../components/ProductSlider/ProductSlider';
 // import { Product } from '../types/product';
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 //#endregion
 
@@ -77,32 +77,7 @@ export const ProductDetailPage = () => {
         <Loader />
       ) : (
         <div className="product-details__container">
-          <div className="product-details__breadcrumbs">
-            <img
-              className="product-details__breadcrumbs-icon"
-              src={HomeIcon}
-              alt="home"
-            />
-            <img
-              className="product-details__breadcrumbs-icon"
-              src={arrowRight}
-              alt=">"
-            />
-            <span className="product-details__breadcrumbs-link">
-              {product.category}
-            </span>
-            <img
-              className="product-details__breadcrumbs-icon"
-              src={arrowRight}
-              alt=">"
-            />
-            <span
-              className="product-details__breadcrumbs-link 
-          product-details__breadcrumbs-link--active"
-            >
-              {product.name}
-            </span>
-          </div>
+          <Breadcrumbs category={product.category} productName={product.name} />
 
           <div className="product-details__back">
             <div className="product-details__icon">
@@ -112,7 +87,9 @@ export const ProductDetailPage = () => {
                 alt="Back icon"
               />
             </div>
-            <span className="product-details__text">Back</span>
+            <Link to={`/${product.category}`} className='product-details__back-link'>
+              <span className="product-details__link-text">Back</span>
+            </Link>
           </div>
 
           <h1 className="product-details__name">{product.name}</h1>

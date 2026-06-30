@@ -18,21 +18,21 @@
   &__link {
     color: #89939a;
     text-decoration: none;
-    text-transform: capitalize;
+    text-transform: capitalize; // ← додай
 
     &:hover,
     &:focus,
     &:visited,
     &:active {
       text-decoration: none;
-      text-transform: capitalize;
+      text-transform: capitalize; // ← додай
     }
 
     &--active {
       color: #0f0f11;
       cursor: default;
       text-decoration: none !important;
-      text-transform: capitalize;
+      text-transform: capitalize; // ← додай
     }
   }
 }

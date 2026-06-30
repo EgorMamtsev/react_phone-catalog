@@ -8,11 +8,16 @@ type Props = {
   productName?: string;
 };
 
+const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1);
+
 export const Breadcrumbs = ({ category, productName }: Props) => {
   return (
     <div className="breadcrumbs">
-      <img className="breadcrumbs__home" src={homeIcon} alt="home" />
-      <img className="breadcrumbs__arrow" src={arrowRight} alt=">" />
+      <Link to={'/'}>
+        <img className="breadcrumbs__home" src={homeIcon} alt="home" />
+        <img className="breadcrumbs__arrow" src={arrowRight} alt=">" />
+      </Link>
 
       {category && (
         <>
@@ -20,7 +25,7 @@ export const Breadcrumbs = ({ category, productName }: Props) => {
             to={`/${category}`}
             className={` breadcrumbs__link ${productName ? '' : 'breadcrumbs__link--active'}`}
           >
-            {category}
+            {capitalize(category)}
           </Link>
         </>
       )}
@@ -29,7 +34,7 @@ export const Breadcrumbs = ({ category, productName }: Props) => {
         <>
           <img className="breadcrumbs__arrow" src={arrowRight} alt=">" />
           <span className="breadcrumbs__link breadcrumbs__link--active">
-            {productName}
+            {capitalize(productName)}
           </span>
         </>
       )}
