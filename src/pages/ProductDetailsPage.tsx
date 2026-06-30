@@ -3,7 +3,7 @@
 import '../styles/ProductDetailsPage.scss';
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
 import backArrow from '../../public/img/icons/arrowRight.png';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchProductById } from '../utils/fetchProductById';
 import { ColorMap } from '../utils/colorMap';
 
@@ -14,12 +14,13 @@ import { Accessory } from '../types/accessorie';
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
-// import { NavButton } from '../components/NavButton/NavButton';
-// import { ProductSlider } from '../components/ProductSlider/ProductSlider';
-// import { Product } from '../types/product';
+import { getRandomProducts } from '../utils/getRandomProducts';
+
+import { NavButton } from '../components/NavButton/NavButton';
+import { ProductSlider } from '../components/ProductSlider/ProductSlider';
+import { Product } from '../types/product';
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 //#endregion
 
@@ -32,6 +33,20 @@ export const ProductDetailPage = () => {
   const [activeCapacity, setActiveCapacity] = useState(product?.capacity);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string | null>(null);
+  const [offers, setOffers] = useState<Product[]>([]);
+  const [offersIndex, setOffersIndex] = useState(0);
+
+  const slideOffersNext = () => {
+    if (offersIndex < offers.length - 1) {
+      setOffersIndex(offersIndex + 1);
+    }
+  };
+
+  const slideOffersPrev = () => {
+    if (offersIndex > 0) {
+      setOffersIndex(offersIndex - 1);
+    }
+  };
 
   const loadProduct = async () => {
     setIsLoading(true);
@@ -56,10 +71,13 @@ export const ProductDetailPage = () => {
   }, [productId]);
 
   useEffect(() => {
-    if (product) {
+    if (product && productId) {
       setActiveImage(product.images[0]);
       setActiveColor(product.color);
       setActiveCapacity(product.capacity);
+      const randomProducts = getRandomProducts(productId);
+
+      setOffers(randomProducts);
     }
   }, [product]);
 
@@ -87,7 +105,10 @@ export const ProductDetailPage = () => {
                 alt="Back icon"
               />
             </div>
-            <Link to={`/${product.category}`} className='product-details__back-link'>
+            <Link
+              to={`/${product.category}`}
+              className="product-details__back-link"
+            >
               <span className="product-details__link-text">Back</span>
             </Link>
           </div>
@@ -330,11 +351,31 @@ export const ProductDetailPage = () => {
             <div className="product-details__divider" />
           </div>
 
-          {/* Offers */}
           <div className="product-details__offers">
-            <h2 className="product-details__about-title">You may also like</h2>
-            {/* Тут буде компонент ProductSlider */}
+            <div className="product-details__offers-title">
+              <h2 className="product-details__about-title">
+                You may also like
+              </h2>
+            </div>
+            <div className="product-details__nav">
+              <NavButton
+                direction="left"
+                disabled={offersIndex === 0}
+                onClick={slideOffersPrev}
+              />
+              <NavButton
+                direction="right"
+                disabled={offersIndex >= offers.length}
+                onClick={slideOffersNext}
+              />
+            </div>
           </div>
+          <ProductSlider
+            FilterredProducts={offers}
+            isDiscounted={true}
+            currentIndex={offersIndex}
+            onSlide={setOffersIndex}
+          />
         </div>
       )}
     </div>

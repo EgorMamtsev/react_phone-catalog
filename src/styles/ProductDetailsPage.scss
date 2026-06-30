@@ -495,5 +495,18 @@
   // ===== Offers =====
   &__offers {
     margin-top: 56px;
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__offers-title {
+    display: flex;
+    align-items: center;
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
   }
 }
