@@ -11,8 +11,12 @@
       padding: 80px 24px 0;
     }
 
+    @include desktop-only {
+      padding: 56px 32px 0;
+    }
+
     @include desktop-up {
-      padding: 120px 32px 0;
+      padding: 56px 152px 0;
     }
   }
 
@@ -32,6 +36,9 @@
       font-size: 48px;
     }
 
+    @include desktop-only {
+      font-size: 48px;
+    }
     @include desktop-up {
       font-size: 48px;
     }
@@ -48,8 +55,12 @@
       justify-content: space-between;
     }
 
-    @include desktop-up {
+    @include desktop-only {
       display: flex;
+      justify-content: space-between;
+    }
+
+    @include desktop-up {
       justify-content: space-between;
     }
   }
@@ -73,6 +84,11 @@
         @include tablet-only {
           width: 187px;
           height: 187px;
+        }
+
+        @include desktop-only {
+          width: 368px;
+          height: 368px;
         }
 
         @include desktop-up {

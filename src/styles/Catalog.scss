@@ -13,11 +13,19 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+
     @include tablet-only {
+      padding: 24px 32px;
       gap: 40px;
     }
 
+    @include desktop-only {
+      padding: 24px 32px;
+      gap: 64px;
+    }
+
     @include desktop-up {
+      padding: 24px 152px;
       gap: 64px;
     }
   }
@@ -55,6 +63,9 @@
         font-size: 48px;
       }
 
+      @include desktop-only {
+        font-size: 48px;
+      }
       @include desktop-up {
         font-size: 48px;
       }
@@ -87,6 +98,16 @@
       gap: 40px;
     }
 
+    @include desktop-only {
+      width: 100%;
+      margin: 0 auto;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 212px);
+      justify-content: center;
+      gap: 40px;
+    }
+
     @include desktop-up {
       width: 100%;
       margin: 0 auto;
@@ -103,6 +124,4 @@
     margin: 0 auto;
     gap: 16px;
   }
-
-  
 }

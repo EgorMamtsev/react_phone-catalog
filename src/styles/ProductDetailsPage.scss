@@ -7,11 +7,15 @@
     padding: 24px 16px;
 
     @include tablet-only {
-      padding: 16px 24px;
+      padding: 24px 32px;
+    }
+
+    @include desktop-only {
+      padding: 24px 32px;
     }
 
     @include desktop-up {
-      padding: 16px 32px;
+      padding: 24px 152px;
     }
   }
 
@@ -40,7 +44,6 @@
     transform: rotate(180deg);
   }
 
-  // ===== Заголовок =====
   &__name {
     font-size: 22px;
     font-weight: 800;
@@ -48,7 +51,6 @@
     margin-bottom: 24px;
   }
 
-  // ===== Основна інформація =====
   &__information {
     display: flex;
     flex-direction: column;
@@ -60,6 +62,11 @@
       gap: 40px;
     }
 
+    @include desktop-only {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
     @include desktop-up {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -67,7 +74,6 @@
     }
   }
 
-  // ===== Галерея =====
   &__gallery {
     display: flex;
     flex-direction: column;
@@ -81,6 +87,11 @@
       gap: 16px;
     }
 
+    @include desktop-only {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+    }
     @include desktop-up {
       flex-direction: row;
       align-items: flex-start;
@@ -99,6 +110,10 @@
       max-width: 70%;
     }
 
+    @include desktop-only {
+      width: 70%;
+      max-width: 70%;
+    }
     @include desktop-up {
       width: 70%;
       max-width: 70%;
@@ -125,6 +140,13 @@
       box-sizing: border-box;
       overflow: visible;
     }
+    @include desktop-only {
+      order: -1;
+      width: auto;
+      box-sizing: border-box;
+      overflow: visible;
+    }
+
     @include desktop-up {
       order: -1;
       width: auto;
@@ -146,6 +168,13 @@
       overflow-y: auto;
       width: 35px;
     }
+    @include desktop-only {
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      width: 80px;
+    }
+
     @include desktop-up {
       flex-direction: column;
       gap: 8px;
@@ -154,7 +183,6 @@
     }
 
     &-item {
-      // width: 49px;
       height: 49px;
       border: 1px solid #e2e6e9;
       border-radius: 8px;
@@ -168,9 +196,11 @@
         object-fit: contain;
       }
 
+      @include desktop-only {
+        height: 80px;
+        object-fit: contain;
+      }
       @include desktop-up {
-        // flex: 0 0 80px;
-        // width: 80px;
         height: 80px;
         object-fit: contain;
       }
@@ -181,7 +211,6 @@
     }
   }
 
-  // ===== Блок опцій (кольори, ємність, ціна, кнопки, параметри) =====
   &__options {
     display: flex;
     flex-direction: column;
@@ -189,7 +218,6 @@
     justify-content: space-between;
   }
 
-  // ===== Кольори =====
   &__colors {
     &-header {
       display: flex;
@@ -246,27 +274,18 @@
     }
   }
 
-  // ===== Роздільник =====
   &__divider {
     height: 1px;
     background-color: #e2e6e9;
     margin: 24px 0;
   }
 
-  // ===== Ємність =====
   &__capacity {
     &-label {
       display: block;
       font-size: 12px;
       color: #89939a;
       margin-bottom: 8px;
-
-      // @include tablet-only {
-      //   margin-bottom: 56px;
-      // }
-      // @include desktop-up {
-      //   margin-bottom: 56px;
-      // }
     }
 
     &-options {
@@ -311,41 +330,13 @@
         color: #fff;
       }
     }
-
-    // &-option {
-    //   width: 56px;
-    //   height: 32px;
-    //   border-radius: 4px;
-    //   border: 1px solid #b4bdc3;
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    //   font-size: 14px;
-    //   font-weight: 600;
-    //   color: #0f0f11;
-    //   cursor: pointer;
-
-    //   &--active {
-    //     background-color: #0f0f11;
-    //     color: #fff;
-    //     border-color: #0f0f11;
-    //   }
-    // }
   }
 
-  // ===== Ціна =====
   &__price {
     display: flex;
     align-items: center;
     gap: 8px;
     margin: 8px 0;
-
-    // @include tablet-only {
-    //   margin-bottom: 32px;
-    // }
-    // @include desktop-up {
-    //   margin-bottom: 32px;
-    // }
 
     &-current {
       font-size: 32px;
@@ -361,7 +352,6 @@
     }
   }
 
-  // ===== Кнопки =====
   &__buttons {
     display: flex;
     gap: 8px;
@@ -405,7 +395,6 @@
     }
   }
 
-  // ===== Параметри =====
   &__params {
     display: flex;
     flex-direction: column;
@@ -428,6 +417,12 @@
   }
 
   &__info-all {
+    @include desktop-only {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
     @include desktop-up {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -460,7 +455,6 @@
     }
   }
 
-  // ===== Tech specs =====
   &__techs {
     margin-top: 32px;
 
@@ -488,11 +482,10 @@
       color: #0f0f11;
       font-weight: 600;
 
-      max-width: 60%; // ← обмежує ширину
+      max-width: 60%;
     }
   }
 
-  // ===== Offers =====
   &__offers {
     margin-top: 56px;
     display: flex;

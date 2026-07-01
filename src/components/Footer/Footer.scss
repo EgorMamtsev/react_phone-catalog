@@ -28,6 +28,17 @@
       padding: 32px 24px;
     }
 
+    @include desktop-only {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 0;
+
+      padding: 32px 152px;
+    }
+
     @include desktop-up {
       display: flex;
       flex-direction: row;
@@ -54,6 +65,10 @@
       flex-direction: row;
     }
 
+    @include desktop-only {
+      flex-direction: row;
+    }
+
     @include desktop-up {
       flex-direction: row;
     }
@@ -75,6 +90,10 @@
     margin: 0 auto;
 
     @include tablet-only {
+      margin: 0;
+    }
+
+    @include desktop-only {
       margin: 0;
     }
 

@@ -23,6 +23,10 @@
       font-size: 48px;
     }
 
+    @include desktop-only {
+      font-size: 48px;
+    }
+
     @include desktop-up {
       font-size: 48px;
     }

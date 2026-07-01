@@ -158,19 +158,6 @@ export const Catalog = () => {
           ) : (
             <div className="catalog__container">
               <Breadcrumbs category={categoryName} />
-              {/* <div className="catalog__path">
-                <img
-                  className="catalog-img catalog__home-icon "
-                  src={HomeIcon}
-                  alt="Home"
-                />
-                <img
-                  src={arrowRight}
-                  alt="->"
-                  className="catalog-img catalog__arrow"
-                />
-                <span className="catalog__category">{categoryName}</span>
-              </div> */}
 
               <div className="catalog__title">
                 <span className="catalog__title-text">
