@@ -26,12 +26,16 @@ export const ProductSlider = ({
   // Визначаємо кількість видимих карток
   useEffect(() => {
     const updateVisibleCount = () => {
-      if (!viewportRef.current || !trackRef.current) return;
+      if (!viewportRef.current || !trackRef.current) {
+        return;
+      }
 
       const viewportWidth = viewportRef.current.offsetWidth;
       const firstCard = trackRef.current.children[0] as HTMLElement;
 
-      if (!firstCard) return;
+      if (!firstCard) {
+        return;
+      }
 
       const cardWidth = firstCard.offsetWidth;
       const gap = 12;
@@ -42,12 +46,14 @@ export const ProductSlider = ({
 
     updateVisibleCount();
     window.addEventListener('resize', updateVisibleCount);
+
     return () => window.removeEventListener('resize', updateVisibleCount);
   }, [products]);
 
   // Оновлюємо maxIndex
   useEffect(() => {
     const newMaxIndex = Math.max(0, products.length - visibleCount);
+
     setMaxIndex(newMaxIndex);
     if (onMaxIndexChange) {
       onMaxIndexChange(newMaxIndex);
@@ -62,10 +68,15 @@ export const ProductSlider = ({
   }, [currentIndex, maxIndex, onSlide]);
 
   const getTranslateX = () => {
-    if (!trackRef.current) return 0;
+    if (!trackRef.current) {
+      return 0;
+    }
 
     const firstCard = trackRef.current.children[0] as HTMLElement;
-    if (!firstCard) return 0;
+
+    if (!firstCard) {
+      return 0;
+    }
 
     const cardWidth = firstCard.offsetWidth;
     const gap = 12;

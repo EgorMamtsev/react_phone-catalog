@@ -4,7 +4,7 @@
   font-family: Mont, sans-serif;
   box-sizing: border-box;
   width: 212px;
-  height: 439px;
+  height: 440px;
 
   padding: 32px;
 
@@ -18,6 +18,16 @@
   @include tablet-only {
     width: 237px;
     height: 512px;
+  }
+
+  @include desktop-only {
+    width: 272px;
+    height: 506px;
+  }
+
+  @include desktop-up {
+    width: 272px;
+    height: 506px;
   }
 
   &__image--container {

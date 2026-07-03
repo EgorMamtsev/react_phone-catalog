@@ -7,9 +7,35 @@ import { Link } from 'react-router-dom';
 type Props = {
   product: Product;
   isDiscounted: boolean;
+  onToggleFavorite?: (product: Product) => void;
 };
 
-export const ProductCart = ({ product, isDiscounted }: Props) => {
+export const ProductCart = ({
+  product,
+  isDiscounted,
+  onToggleFavorite,
+}: Props) => {
+  const handleToggle = () => {
+    if (onToggleFavorite) {
+      onToggleFavorite(product);
+
+      return;
+    }
+
+    const stored = localStorage.getItem('favorites');
+    let favorites: Product[] = stored ? JSON.parse(stored) : [];
+
+    const exists = favorites.some(p => p.id === product.id);
+
+    if (exists) {
+      favorites = favorites.filter(p => p.id !== product.id);
+    } else {
+      favorites = [...favorites, product];
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  };
+
   return (
     <div className="product-cart">
       <Link
@@ -60,7 +86,10 @@ export const ProductCart = ({ product, isDiscounted }: Props) => {
         <button className="product-cart__button product-cart__button--add">
           Add to cart
         </button>
-        <button className="product-cart__button product-cart__button--like">
+        <button
+          onClick={handleToggle}
+          className="product-cart__button product-cart__button--like"
+        >
           <img
             src={heartIcon}
             alt="heart"

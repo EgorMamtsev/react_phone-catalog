@@ -81,12 +81,15 @@ export const Header = () => {
         </nav>
 
         <div className="header__actions">
-          <a className="header__icon header__icon--favorite">
+          <Link
+            to={'/favorites'}
+            className="header__icon header__icon--favorite"
+          >
             <img className="header__icon-image" src={iconHeart} alt="" />
-          </a>
-          <a className="header__icon header__icon--bag">
+          </Link>
+          <Link to={'/cart'} className="header__icon header__icon--bag">
             <img className="header__icon-image" src={iconBag} alt="" />
-          </a>
+          </Link>
           <button className="header__burger" onClick={toggleMenu}>
             {isMenuOpen ? (
               <img className="header__burger-image" src={iconClose} alt="" />
@@ -147,12 +150,20 @@ export const Header = () => {
               </NavLink>
             </nav>
             <div className="header__menu-actions">
-              <a className="header__menu-icon header__menu-icon--favorite">
+              <Link
+                to={'/favorites'}
+                className="header__menu-icon header__menu-icon--favorite"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
                 <img className="header__menu-image" src={iconHeart} alt="" />
-              </a>
-              <a className="header__menu-icon header__menu-icon--bag">
+              </Link>
+              <Link
+                to={'/cart'}
+                className="header__menu-icon header__menu-icon--bag"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
                 <img className="header__menu-image" src={iconBag} alt="" />
-              </a>
+              </Link>
             </div>
           </div>
         )}
