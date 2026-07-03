@@ -21,6 +21,8 @@ export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [newModelsIndex, setNewModelsIndex] = useState(0);
   const [hotPricesIndex, setHotPricesIndex] = useState(0);
+  const [newModelsMaxIndex, setNewModelsMaxIndex] = useState(0);
+  const [hotPricesMaxIndex, setHotPricesMaxIndex] = useState(0);
   const [numberOfProducts, setNumberOfProducts] = useState({
     phones: 0,
     tablets: 0,
@@ -47,7 +49,7 @@ export const HomePage = () => {
 
     try {
       //видалити на фіналі
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
       // throw new Error('Test error');
 
       const allProducts = fetchProducts();
@@ -88,8 +90,8 @@ export const HomePage = () => {
   //#region Функції для навігації слайдерів
   // Функції для Brand new models
   const slideNewModelsNext = () => {
-    if (newModelsIndex < brandNewProducts.length - 1) {
-      setNewModelsIndex(newModelsIndex + 1);
+    if (newModelsIndex < newModelsMaxIndex) {
+      setNewModelsIndex(prev => prev + 1);
     }
   };
 
@@ -101,8 +103,8 @@ export const HomePage = () => {
 
   // Функції для Hot Prices
   const slideHotPricesNext = () => {
-    if (hotPricesIndex < hotPricesProducts.length - 1) {
-      setHotPricesIndex(hotPricesIndex + 1);
+    if (hotPricesIndex < hotPricesMaxIndex) {
+      setHotPricesIndex(prev => prev + 1);
     }
   };
 
@@ -145,7 +147,7 @@ export const HomePage = () => {
                 />
                 <NavButton
                   direction="right"
-                  disabled={newModelsIndex >= brandNewProducts.length - 4}
+                  disabled={newModelsIndex >= newModelsMaxIndex}
                   onClick={slideNewModelsNext}
                 />
               </div>
@@ -156,6 +158,7 @@ export const HomePage = () => {
               currentIndex={newModelsIndex}
               onSlide={setNewModelsIndex}
               isDiscounted={false}
+              onMaxIndexChange={setNewModelsMaxIndex}
             />
 
             <div className="home-page__title-block">
@@ -219,7 +222,7 @@ export const HomePage = () => {
                 />
                 <NavButton
                   direction="right"
-                  disabled={hotPricesIndex >= brandNewProducts.length - 4}
+                  disabled={hotPricesIndex >= hotPricesMaxIndex}
                   onClick={slideHotPricesNext}
                 />
               </div>
@@ -230,6 +233,7 @@ export const HomePage = () => {
               currentIndex={hotPricesIndex}
               onSlide={setHotPricesIndex}
               isDiscounted={true}
+              onMaxIndexChange={setHotPricesMaxIndex}
             />
           </div>
         </>

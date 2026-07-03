@@ -26,7 +26,6 @@ import { useState, useEffect } from 'react';
 
 export const ProductDetailPage = () => {
   const { productId } = useParams();
-  // const product = fetchProductById(productId || '');
   const [product, setProduct] = useState<Phone | Tablet | Accessory>();
   const [activeImage, setActiveImage] = useState(product?.images[0]);
   const [activeColor, setActiveColor] = useState(product?.color);
@@ -35,16 +34,17 @@ export const ProductDetailPage = () => {
   const [isError, setIsError] = useState<string | null>(null);
   const [offers, setOffers] = useState<Product[]>([]);
   const [offersIndex, setOffersIndex] = useState(0);
+  const [offersMaxIndex, setOffersMaxIndex] = useState(0);
 
   const slideOffersNext = () => {
-    if (offersIndex < offers.length - 1) {
-      setOffersIndex(offersIndex + 1);
+    if (offersIndex < offersMaxIndex) {
+      setOffersIndex(prev => prev + 1);
     }
   };
 
   const slideOffersPrev = () => {
     if (offersIndex > 0) {
-      setOffersIndex(offersIndex - 1);
+      setOffersIndex(prev => prev - 1);
     }
   };
 
@@ -365,7 +365,7 @@ export const ProductDetailPage = () => {
               />
               <NavButton
                 direction="right"
-                disabled={offersIndex >= offers.length}
+                disabled={offersIndex >= offersMaxIndex}
                 onClick={slideOffersNext}
               />
             </div>
@@ -375,6 +375,7 @@ export const ProductDetailPage = () => {
             isDiscounted={true}
             currentIndex={offersIndex}
             onSlide={setOffersIndex}
+            onMaxIndexChange={setOffersMaxIndex}
           />
         </div>
       )}

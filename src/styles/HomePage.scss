@@ -61,6 +61,8 @@
     }
 
     @include desktop-up {
+      display: flex;
+
       justify-content: space-between;
     }
   }
