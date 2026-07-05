@@ -35,23 +35,31 @@
   &__items {
     padding: 32px 0;
     display: flex;
-    flex-wrap: wrap; // ← дозволяє переносити картки
-    justify-content: center; // ← центрує по горизонталі
-    gap: 40px; // ← проміжок між картками
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
 
     @include tablet-only {
       padding: 40px 0;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(237px, 1fr));
+      justify-content: center;
     }
 
     @include desktop-only {
       padding: 40px 0;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+      justify-content: center;
+      gap: 40px;
     }
 
     @include desktop-up {
       padding: 40px 0;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+      justify-content: center;
+      gap: 40px;
     }
   }
 }

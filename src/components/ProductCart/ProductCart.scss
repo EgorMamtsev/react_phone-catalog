@@ -109,6 +109,7 @@
     height: 40px;
     border: none;
     padding: 0;
+    cursor: pointer;
 
     &--add {
       flex: 1;
@@ -127,6 +128,10 @@
       border: 1px solid #b4bdc3;
       background-color: #fff;
       flex-shrink: 0;
+
+      &:hover {
+        border: 1px solid #0f0f11;
+      }
     }
 
     &--heart-icon {

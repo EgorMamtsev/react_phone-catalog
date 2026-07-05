@@ -2,7 +2,10 @@ import './ProductCart.scss';
 import { Product } from '../../types/product';
 
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
+import heartIconFilled from '../../../public/img/icons/heartIconFilled.png';
+
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 type Props = {
   product: Product;
@@ -15,6 +18,17 @@ export const ProductCart = ({
   isDiscounted,
   onToggleFavorite,
 }: Props) => {
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('favorites');
+    if (stored) {
+      const favorites: Product[] = JSON.parse(stored);
+      const exists = favorites.some(p => p.id === product.id);
+      setIsActive(exists);
+    }
+  }, [product.id]);
+
   const handleToggle = () => {
     if (onToggleFavorite) {
       onToggleFavorite(product);
@@ -29,8 +43,10 @@ export const ProductCart = ({
 
     if (exists) {
       favorites = favorites.filter(p => p.id !== product.id);
+      setIsActive(false);
     } else {
       favorites = [...favorites, product];
+      setIsActive(true);
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -90,11 +106,19 @@ export const ProductCart = ({
           onClick={handleToggle}
           className="product-cart__button product-cart__button--like"
         >
-          <img
-            src={heartIcon}
-            alt="heart"
-            className="product-cart__button--heart-icon"
-          />
+          {isActive ? (
+            <img
+              src={heartIconFilled}
+              alt="heart"
+              className="product-cart__button--heart-icon"
+            />
+          ) : (
+            <img
+              src={heartIcon}
+              alt="heart"
+              className="product-cart__button--heart-icon"
+            />
+          )}
         </button>
       </div>
     </div>
