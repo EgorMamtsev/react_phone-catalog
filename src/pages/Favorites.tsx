@@ -31,6 +31,7 @@ export const Favorites = () => {
 
     setFavorites(updated);
     localStorage.setItem('favorites', JSON.stringify(updated));
+    window.dispatchEvent(new Event('storage'));
   };
 
   useEffect(() => {

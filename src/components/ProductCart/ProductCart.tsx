@@ -22,9 +22,11 @@ export const ProductCart = ({
 
   useEffect(() => {
     const stored = localStorage.getItem('favorites');
+
     if (stored) {
       const favorites: Product[] = JSON.parse(stored);
       const exists = favorites.some(p => p.id === product.id);
+
       setIsActive(exists);
     }
   }, [product.id]);
@@ -50,6 +52,7 @@ export const ProductCart = ({
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites));
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (

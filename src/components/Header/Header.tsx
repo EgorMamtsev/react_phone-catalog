@@ -7,11 +7,34 @@ import iconClose from '../../../public/img/icons/Close.png';
 
 import { Link, NavLink } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [favoritesCount, setFavoritesCount] = useState(0);
+
+  const getFavoritesCount = () => {
+    const favFromLocal = localStorage.getItem('favorites');
+
+    if (!favFromLocal) {
+      return;
+    }
+
+    const parsed = JSON.parse(favFromLocal);
+
+    setFavoritesCount(parsed.length);
+  };
+
+  useEffect(() => {
+    getFavoritesCount();
+
+    window.addEventListener('storage', getFavoritesCount);
+
+    return () => {
+      window.removeEventListener('storage', getFavoritesCount);
+    };
+  }, []);
 
   const closeMenu = () => {
     setIsClosing(true);
@@ -81,15 +104,34 @@ export const Header = () => {
         </nav>
 
         <div className="header__actions">
-          <Link
-            to={'/favorites'}
-            className="header__icon header__icon--favorite"
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              `header__icon header__icon--favorite ${
+                isActive ? 'header__icon--active' : ''
+              }`
+            }
           >
-            <img className="header__icon-image" src={iconHeart} alt="" />
-          </Link>
-          <Link to={'/cart'} className="header__icon header__icon--bag">
-            <img className="header__icon-image" src={iconBag} alt="" />
-          </Link>
+            <span className="header__icon-wrapper">
+              <img className="header__icon-image" src={iconHeart} alt="" />
+
+              {favoritesCount > 0 && (
+                <span className="header__icon-badge">{favoritesCount}</span>
+              )}
+            </span>
+          </NavLink>
+          <NavLink
+            to={'/cart'}
+            className={({ isActive }) =>
+              `header__icon header__icon--bag ${
+                isActive ? 'header__icon--active' : ''
+              }`
+            }
+          >
+            <span className="header__icon-wrapper">
+              <img className="header__icon-image" src={iconBag} alt="" />
+            </span>
+          </NavLink>
           <button className="header__burger" onClick={toggleMenu}>
             {isMenuOpen ? (
               <img className="header__burger-image" src={iconClose} alt="" />
@@ -150,20 +192,34 @@ export const Header = () => {
               </NavLink>
             </nav>
             <div className="header__menu-actions">
-              <Link
+              <NavLink
                 to={'/favorites'}
-                className="header__menu-icon header__menu-icon--favorite"
+                className={({ isActive }) =>
+                  `header__menu-icon header__menu-icon--favorite ${
+                    isActive ? 'header__menu-icon--active' : ''
+                  }`
+                }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <img className="header__menu-image" src={iconHeart} alt="" />
-              </Link>
-              <Link
+                {' '}
+                <span className="header__icon-wrapper">
+                  <img className="header__menu-image" src={iconHeart} alt="" />
+                  {favoritesCount > 0 && (
+                    <span className="header__icon-badge">{favoritesCount}</span>
+                  )}
+                </span>
+              </NavLink>
+              <NavLink
                 to={'/cart'}
-                className="header__menu-icon header__menu-icon--bag"
+                className={({ isActive }) =>
+                  `header__menu-icon header__menu-icon--bag ${
+                    isActive ? 'header__menu-icon--active' : ''
+                  }`
+                }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <img className="header__menu-image" src={iconBag} alt="" />
-              </Link>
+              </NavLink>
             </div>
           </div>
         )}
