@@ -1,6 +1,5 @@
 import { Product } from '../types/product';
 
-
 export const AddToFavorites = (
   product: Product,
 ): { favorites: Product[]; isActive: boolean } => {

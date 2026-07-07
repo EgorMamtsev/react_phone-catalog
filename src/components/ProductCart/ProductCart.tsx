@@ -1,6 +1,7 @@
 import './ProductCart.scss';
 import { Product } from '../../types/product';
 import { AddToFavorites } from '../../utils/AddToFavorite';
+// import { AddToCart } from '../../utils/AddToCart';
 
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 import heartIconFilled from '../../../public/img/icons/heartIconFilled.png';
@@ -35,10 +36,12 @@ export const ProductCart = ({
   const handleToggle = () => {
     if (onToggleFavorite) {
       onToggleFavorite(product);
+
       return;
     }
 
     const result = AddToFavorites(product);
+
     setIsActive(result.isActive);
   };
 
