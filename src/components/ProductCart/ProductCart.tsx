@@ -1,5 +1,6 @@
 import './ProductCart.scss';
 import { Product } from '../../types/product';
+import { AddToFavorites } from '../../utils/AddToFavorite';
 
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 import heartIconFilled from '../../../public/img/icons/heartIconFilled.png';
@@ -34,25 +35,11 @@ export const ProductCart = ({
   const handleToggle = () => {
     if (onToggleFavorite) {
       onToggleFavorite(product);
-
       return;
     }
 
-    const stored = localStorage.getItem('favorites');
-    let favorites: Product[] = stored ? JSON.parse(stored) : [];
-
-    const exists = favorites.some(p => p.id === product.id);
-
-    if (exists) {
-      favorites = favorites.filter(p => p.id !== product.id);
-      setIsActive(false);
-    } else {
-      favorites = [...favorites, product];
-      setIsActive(true);
-    }
-
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    window.dispatchEvent(new Event('storage'));
+    const result = AddToFavorites(product);
+    setIsActive(result.isActive);
   };
 
   return (

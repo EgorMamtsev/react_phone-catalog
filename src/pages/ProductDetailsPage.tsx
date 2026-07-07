@@ -3,6 +3,7 @@
 import '../styles/ProductDetailsPage.scss';
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
 import backArrow from '../../public/img/icons/arrowRight.png';
+import heartIconFilled from '../../public/img/icons/heartIconFilled.png';
 import { useParams, Link } from 'react-router-dom';
 import { fetchProductById } from '../utils/fetchProductById';
 import { ColorMap } from '../utils/colorMap';
@@ -15,6 +16,8 @@ import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 import { getRandomProducts } from '../utils/getRandomProducts';
+import { AddToFavorites } from '../utils/AddToFavorite';
+import { fetchProducts } from '../utils/fetchProducts';
 
 import { NavButton } from '../components/NavButton/NavButton';
 import { ProductSlider } from '../components/ProductSlider/ProductSlider';
@@ -35,6 +38,8 @@ export const ProductDetailPage = () => {
   const [offers, setOffers] = useState<Product[]>([]);
   const [offersIndex, setOffersIndex] = useState(0);
   const [offersMaxIndex, setOffersMaxIndex] = useState(0);
+  const [catalogProduct, setCatalogProduct] = useState<Product>();
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const slideOffersNext = () => {
     if (offersIndex < offersMaxIndex) {
@@ -64,6 +69,22 @@ export const ProductDetailPage = () => {
     } finally {
       setIsLoading(false);
     }
+
+    const productFromCatalog = fetchProducts().find(
+      p => p.itemId === productId,
+    );
+
+    setCatalogProduct(productFromCatalog);
+  };
+
+  const handleToggleFavorite = () => {
+    if (!catalogProduct) {
+      return;
+    }
+
+    const result = AddToFavorites(catalogProduct);
+
+    setIsFavorite(result.isActive);
   };
 
   useEffect(() => {
@@ -80,6 +101,17 @@ export const ProductDetailPage = () => {
       setOffers(randomProducts);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (!catalogProduct) {
+      return;
+    }
+
+    const stored = localStorage.getItem('favorites');
+    const favorites: Product[] = stored ? JSON.parse(stored) : [];
+
+    setIsFavorite(favorites.some(item => item.id === catalogProduct.id));
+  }, [catalogProduct]);
 
   if (!product) {
     return <h2>Product was not found</h2>;
@@ -231,12 +263,23 @@ export const ProductDetailPage = () => {
                 <button className="product-details__buttons-add">
                   Add to cart
                 </button>
-                <button className="product-details__buttons-heart">
-                  <img
-                    className="product-details__buttons-heart-icon"
-                    src={heartIcon}
-                    alt="like"
-                  />
+                <button
+                  onClick={handleToggleFavorite}
+                  className="product-details__buttons-heart"
+                >
+                  {isFavorite ? (
+                    <img
+                      src={heartIconFilled}
+                      alt="heart"
+                      className="product-cart__button--heart-icon"
+                    />
+                  ) : (
+                    <img
+                      src={heartIcon}
+                      alt="heart"
+                      className="product-cart__button--heart-icon"
+                    />
+                  )}
                 </button>
               </div>
 

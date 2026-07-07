@@ -26,7 +26,7 @@ export const Favorites = () => {
     if (exists) {
       updated = favorites.filter(p => p.id !== product.id); // ← видаляємо
     } else {
-      updated = [...favorites, product]; // ← додаємо
+      updated = [...favorites, product];
     }
 
     setFavorites(updated);
@@ -52,7 +52,7 @@ export const Favorites = () => {
               key={item.id}
               product={item}
               isDiscounted={true}
-              onToggleFavorite={() => handleToggleFavorite(item)}
+              onToggleFavorite={handleToggleFavorite}
             />
           ))}
         </div>
