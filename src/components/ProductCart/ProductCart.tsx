@@ -123,7 +123,7 @@ export const ProductCart = ({
           onClick={handleToggleCart}
           className="product-cart__button product-cart__button--add"
         >
-          {inCart ? 'Added to cart' : 'Add to cart'}
+          {inCart ? 'Added' : 'Add to cart'}
         </button>
         <button
           onClick={handleToggleFavorite}

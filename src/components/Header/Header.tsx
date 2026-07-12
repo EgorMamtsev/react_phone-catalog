@@ -13,6 +13,7 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [favoritesCount, setFavoritesCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
 
   const getFavoritesCount = () => {
     const favFromLocal = localStorage.getItem('favorites');
@@ -26,13 +27,39 @@ export const Header = () => {
     setFavoritesCount(parsed.length);
   };
 
+  const getCartCount = () => {
+    const cartFromLocal = localStorage.getItem('cart');
+
+    if (!cartFromLocal) {
+      return;
+    }
+
+    const parsed = JSON.parse(cartFromLocal);
+    setCartCount(parsed.length);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     getFavoritesCount();
+    getCartCount();
 
     window.addEventListener('storage', getFavoritesCount);
+    window.addEventListener('storage', getCartCount);
 
     return () => {
       window.removeEventListener('storage', getFavoritesCount);
+      window.removeEventListener('storage', getCartCount);
     };
   }, []);
 
@@ -130,6 +157,10 @@ export const Header = () => {
           >
             <span className="header__icon-wrapper">
               <img className="header__icon-image" src={iconBag} alt="" />
+
+              {cartCount > 0 && (
+                <span className="header__icon-badge">{cartCount}</span>
+              )}
             </span>
           </NavLink>
           <button className="header__burger" onClick={toggleMenu}>
@@ -201,7 +232,6 @@ export const Header = () => {
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {' '}
                 <span className="header__icon-wrapper">
                   <img className="header__menu-image" src={iconHeart} alt="" />
                   {favoritesCount > 0 && (
@@ -218,7 +248,12 @@ export const Header = () => {
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <img className="header__menu-image" src={iconBag} alt="" />
+                <span className="header__icon-wrapper">
+                  <img className="header__menu-image" src={iconBag} alt="" />
+                  {cartCount > 0 && (
+                    <span className="header__icon-badge">{cartCount}</span>
+                  )}
+                </span>
               </NavLink>
             </div>
           </div>
