@@ -366,10 +366,12 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+    }
 
-      &:hover {
-        background-color: #e05a00;
-      }
+    &--incart {
+      border: 1px solid #e2e6e9;
+      background-color: #fff;
+      color: #f86800;
     }
 
     &-heart {

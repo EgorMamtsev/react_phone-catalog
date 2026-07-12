@@ -11,12 +11,14 @@ import { ColorMap } from '../utils/colorMap';
 import { Phone } from '../types/phone';
 import { Tablet } from '../types/tablet';
 import { Accessory } from '../types/accessorie';
+import { CartItem } from '../types/cartItem';
 
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 import { getRandomProducts } from '../utils/getRandomProducts';
 import { AddToFavorites } from '../utils/AddToFavorite';
+import { AddToCart } from '../utils/AddToCart';
 import { fetchProducts } from '../utils/fetchProducts';
 
 import { NavButton } from '../components/NavButton/NavButton';
@@ -40,6 +42,7 @@ export const ProductDetailPage = () => {
   const [offersMaxIndex, setOffersMaxIndex] = useState(0);
   const [catalogProduct, setCatalogProduct] = useState<Product>();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
 
   const slideOffersNext = () => {
     if (offersIndex < offersMaxIndex) {
@@ -77,6 +80,12 @@ export const ProductDetailPage = () => {
     setCatalogProduct(productFromCatalog);
   };
 
+  const handleToggleCart = () => {
+    if (!catalogProduct) return;
+
+    const result = AddToCart(catalogProduct);
+    setIsInCart(result.inCart);
+  };
   const handleToggleFavorite = () => {
     if (!catalogProduct) {
       return;
@@ -111,6 +120,19 @@ export const ProductDetailPage = () => {
     const favorites: Product[] = stored ? JSON.parse(stored) : [];
 
     setIsFavorite(favorites.some(item => item.id === catalogProduct.id));
+  }, [catalogProduct]);
+
+  useEffect(() => {
+    if (!catalogProduct) return;
+
+    const stored = localStorage.getItem('cart');
+    if (stored) {
+      const cartItems: CartItem[] = JSON.parse(stored);
+      const exists = cartItems.some(
+        item => item.product.id === catalogProduct.id,
+      );
+      setIsInCart(exists);
+    }
   }, [catalogProduct]);
 
   if (!product) {
@@ -260,8 +282,11 @@ export const ProductDetailPage = () => {
               </div>
 
               <div className="product-details__buttons">
-                <button className="product-details__buttons-add">
-                  Add to cart
+                <button
+                  onClick={handleToggleCart}
+                  className={`product-details__buttons-add ${isInCart ? 'product-details__buttons-add product-details__buttons--incart' : ''}`}
+                >
+                  {isInCart ? 'Added' : 'Add to cart'}
                 </button>
                 <button
                   onClick={handleToggleFavorite}
@@ -335,7 +360,6 @@ export const ProductDetailPage = () => {
               ))}
             </div>
 
-            {/* Tech specs */}
             <div className="product-details__techs">
               <h2 className="product-details__techs-title">Tech specs</h2>
               <div className="product-details__divider" />

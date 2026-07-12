@@ -121,7 +121,11 @@ export const ProductCart = ({
       <div className="product-cart__actions">
         <button
           onClick={handleToggleCart}
-          className="product-cart__button product-cart__button--add"
+          className={
+            inCart
+              ? 'product-cart__button product-cart__button--cart'
+              : 'product-cart__button product-cart__button--add'
+          }
         >
           {inCart ? 'Added' : 'Add to cart'}
         </button>

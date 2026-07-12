@@ -35,6 +35,7 @@ export const Header = () => {
     }
 
     const parsed = JSON.parse(cartFromLocal);
+
     setCartCount(parsed.length);
   };
 
