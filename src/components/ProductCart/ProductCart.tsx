@@ -1,5 +1,7 @@
 import './ProductCart.scss';
 import { Product } from '../../types/product';
+import { CartItem } from '../../types/cartItem';
+
 import { AddToFavorites } from '../../utils/AddToFavorite';
 import { AddToCart } from '../../utils/AddToCart';
 
@@ -37,8 +39,10 @@ export const ProductCart = ({
     }
 
     if (incart) {
-      const cart: Product[] = JSON.parse(incart);
-      const existsInCart = cart.some(p => p.id === product.id);
+      const cart: CartItem[] = JSON.parse(incart);
+      const existsInCart = cart.some(
+        (item: CartItem) => item.product.id === product.id,
+      );
 
       setInCart(existsInCart);
     }
@@ -47,21 +51,25 @@ export const ProductCart = ({
   const handleToggleFavorite = () => {
     if (onToggleFavorite) {
       onToggleFavorite(product);
+
       return;
     }
 
     const result = AddToFavorites(product);
+
     setIsActive(result.isActive);
   };
 
   const handleToggleCart = () => {
     if (onToggleCart) {
       onToggleCart(product);
+
       return;
     }
 
     const result = AddToCart(product);
-    setInCart(result.isActive);
+
+    setInCart(result.inCart);
   };
 
   return (

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Product } from '../types/product';
 import '../styles/Cart.scss';
 import { Link } from 'react-router-dom';
+import { CartItem } from '../types/cartItem';
+import { updateCartQuantity } from '../utils/updateCartQuntity';
 
 import CloseIcon from '../../public/img/icons/Close.png';
 import backArrow from '../../public/img/icons/arrowRight.png';
 
 export const Cart = () => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
     const storred = localStorage.getItem('cart');
@@ -18,6 +19,43 @@ export const Cart = () => {
       setCart(inCart);
     }
   }, []);
+
+  const removeFromCart = (item: CartItem) => {
+    const stored = localStorage.getItem('cart');
+
+    if (!stored) {
+      return;
+    }
+
+    const inCart: CartItem[] = JSON.parse(stored);
+
+    const updatedCart = inCart.filter(p => p.product.id !== item.product.id);
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
+  const increaseCount = (productID: number) => {
+    const result = updateCartQuantity(productID, 1);
+
+    setCart(result.cart);
+  };
+
+  const decreaseCount = (productID: number) => {
+    const result = updateCartQuantity(productID, -1);
+
+    setCart(result.cart);
+  };
+
+  const getTotalPrice = () => {
+    let total = 0;
+
+    for (const item of cart) {
+      total += item.product.fullPrice * item.quantity;
+    }
+
+    return total;
+  };
 
   return (
     <div className="cart">
@@ -40,10 +78,13 @@ export const Cart = () => {
         <div className="cart__wrapper">
           <div className="cart__items">
             {cart.map(item => (
-              <div className="cart__item" key={item.id}>
+              <div className="cart__item" key={item.product.id}>
                 <div className="cart__info">
                   <div className="cart__remove-btn">
-                    <button className="cart__remove">
+                    <button
+                      onClick={() => removeFromCart(item)}
+                      className="cart__remove"
+                    >
                       <img
                         className="cart__close-icon"
                         src={CloseIcon}
@@ -52,27 +93,45 @@ export const Cart = () => {
                     </button>
                   </div>
                   <div className="cart__item-picture">
-                    <img className="cart__image" src={item.image} alt="" />
+                    <img
+                      className="cart__image"
+                      src={item.product.image}
+                      alt=""
+                    />
                   </div>
                   <div className="cart__item-name">
-                    <span className="cart__name">{item.name}</span>
+                    <span className="cart__name">{item.product.name}</span>
                   </div>
                 </div>
                 <div className="cart__actions">
                   <div className="cart__product-count">
-                    <button className="cart__decrease cart__button">-</button>
-                    <div className="cart__number-of-product">1</div>
-                    <button className="cart__increase cart__button">+</button>
+                    <button
+                      onClick={() => decreaseCount(item.product.id)}
+                      className="cart__decrease cart__button"
+                    >
+                      -
+                    </button>
+                    <div className="cart__number-of-product">
+                      {item.quantity}
+                    </div>
+                    <button
+                      onClick={() => increaseCount(item.product.id)}
+                      className="cart__increase cart__button"
+                    >
+                      +
+                    </button>
                   </div>
-                  <div className="cart__items-prise">${item.fullPrice}</div>
+                  <div className="cart__items-prise">
+                    $${item.product.fullPrice * item.quantity}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
           <div className="cart__total">
-            <div className="cart__price">$2000</div>
+            <div className="cart__price">${getTotalPrice()}</div>
             <div className="cart__items-count">
-              <div className="cart__count">total for 3 items</div>
+              <div className="cart__count">Total for {cart.length} items</div>
             </div>
             <div className="cart__separator"></div>
             <div className="cart__order-btn">

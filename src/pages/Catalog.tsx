@@ -86,7 +86,7 @@ export const Catalog = () => {
 
   useEffect(() => {
     setSelectedOption(sortOption);
-  }, [categoryName]);
+  }, [categoryName, sortOption]);
 
   const filteredProducts = allProducts.filter(product => {
     return product.category === categoryName;
