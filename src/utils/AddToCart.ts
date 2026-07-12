@@ -15,5 +15,5 @@ export const AddToCart = (product: Product) => {
   localStorage.setItem('cart', JSON.stringify(cart));
   window.dispatchEvent(new Event('storage'));
 
-  return { cart };
+  return { cart, isActive: !exists };
 };

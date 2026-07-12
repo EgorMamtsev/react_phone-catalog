@@ -1,7 +1,7 @@
 import './ProductCart.scss';
 import { Product } from '../../types/product';
 import { AddToFavorites } from '../../utils/AddToFavorite';
-// import { AddToCart } from '../../utils/AddToCart';
+import { AddToCart } from '../../utils/AddToCart';
 
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 import heartIconFilled from '../../../public/img/icons/heartIconFilled.png';
@@ -13,17 +13,21 @@ type Props = {
   product: Product;
   isDiscounted: boolean;
   onToggleFavorite?: (product: Product) => void;
+  onToggleCart?: (product: Product) => void;
 };
 
 export const ProductCart = ({
   product,
   isDiscounted,
   onToggleFavorite,
+  onToggleCart,
 }: Props) => {
   const [isActive, setIsActive] = useState(false);
+  const [inCart, setInCart] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem('favorites');
+    const incart = localStorage.getItem('cart');
 
     if (stored) {
       const favorites: Product[] = JSON.parse(stored);
@@ -31,18 +35,33 @@ export const ProductCart = ({
 
       setIsActive(exists);
     }
+
+    if (incart) {
+      const cart: Product[] = JSON.parse(incart);
+      const existsInCart = cart.some(p => p.id === product.id);
+
+      setInCart(existsInCart);
+    }
   }, [product.id]);
 
-  const handleToggle = () => {
+  const handleToggleFavorite = () => {
     if (onToggleFavorite) {
       onToggleFavorite(product);
-
       return;
     }
 
     const result = AddToFavorites(product);
-
     setIsActive(result.isActive);
+  };
+
+  const handleToggleCart = () => {
+    if (onToggleCart) {
+      onToggleCart(product);
+      return;
+    }
+
+    const result = AddToCart(product);
+    setInCart(result.isActive);
   };
 
   return (
@@ -92,11 +111,14 @@ export const ProductCart = ({
       </div>
 
       <div className="product-cart__actions">
-        <button className="product-cart__button product-cart__button--add">
-          Add to cart
+        <button
+          onClick={handleToggleCart}
+          className="product-cart__button product-cart__button--add"
+        >
+          {inCart ? 'Added to cart' : 'Add to cart'}
         </button>
         <button
-          onClick={handleToggle}
+          onClick={handleToggleFavorite}
           className="product-cart__button product-cart__button--like"
         >
           {isActive ? (
