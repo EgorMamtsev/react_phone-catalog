@@ -1,5 +1,6 @@
 import arrowDown from '../../../public/img/icons/ArrowDown.png';
-import '../ProductPerPage/ProductPerPage.scss';
+import styles from './ProductPerPage.module.scss';
+
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
@@ -18,19 +19,24 @@ export const ProductsPerPage = ({
   };
 
   return (
-    <div className="products-per-page__filter">
-      <span className="products-per-page__filter-text">Items on page</span>
-      <div className="products-per-page__select">
-        <div className="products-per-page__trigger" onClick={handleSelectOpen}>
-          <span className="products-per-page__trigger-text">{postPerPage}</span>
-          <div className="products-per-page__trigger-arrow">
+    <div className={styles.productsPerPage__filter}>
+      <span className={styles.productsPerPage__filterText}>Items on page</span>
+      <div className={styles.productsPerPage__select}>
+        <div
+          className={styles.productsPerPage__trigger}
+          onClick={handleSelectOpen}
+        >
+          <span className={styles.productsPerPage__triggerText}>
+            {postPerPage}
+          </span>
+          <div className={styles.productsPerPage__triggerArrow}>
             <img src={arrowDown} alt="Arrow Down" />
           </div>
         </div>
         {isOpen && (
-          <div className="products-per-page__options">
+          <div className={styles.productsPerPage__options}>
             <div
-              className="products-per-page__option"
+              className={styles.productsPerPage__option}
               onClick={() => {
                 setPostPerPage(4);
                 setIsOpen(false);
@@ -39,7 +45,7 @@ export const ProductsPerPage = ({
               4
             </div>
             <div
-              className="products-per-page__option"
+              className={styles.productsPerPage__option}
               onClick={() => {
                 setPostPerPage(8);
                 setIsOpen(false);
@@ -48,7 +54,7 @@ export const ProductsPerPage = ({
               8
             </div>
             <div
-              className="products-per-page__option"
+              className={styles.productsPerPage__option}
               onClick={() => {
                 setPostPerPage(16);
                 setIsOpen(false);
@@ -57,7 +63,7 @@ export const ProductsPerPage = ({
               16
             </div>
             <div
-              className="products-per-page__option"
+              className={styles.productsPerPage__option}
               onClick={() => {
                 setPostPerPage('All');
                 setIsOpen(false);

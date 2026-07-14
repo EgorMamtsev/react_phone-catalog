@@ -1,15 +1,12 @@
-import './ProductCart.scss';
 import { Product } from '../../types/product';
 import { CartItem } from '../../types/cartItem';
-
 import { AddToFavorites } from '../../utils/AddToFavorite';
 import { AddToCart } from '../../utils/AddToCart';
-
 import heartIcon from '../../../public/img/icons/Favourites (Heart Like).png';
 import heartIconFilled from '../../../public/img/icons/heartIconFilled.png';
-
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import styles from './ProductCart.module.scss';
 
 type Props = {
   product: Product;
@@ -73,77 +70,89 @@ export const ProductCart = ({
   };
 
   return (
-    <div className="product-cart">
+    <div className={styles.productCart}>
       <Link
         to={`/product/${product.itemId}`}
-        className="product-cart__image--container"
+        className={styles.productCart__imageContainer}
       >
         <img
-          className="product-cart__img"
+          className={styles.productCart__img}
           src={product.image}
           alt="product image"
         />
       </Link>
 
-      <Link to={`/product/${product.itemId}`} className="product-cart__name">
+      <Link
+        to={`/product/${product.itemId}`}
+        className={styles.productCart__name}
+      >
         {product.name}
       </Link>
+
       {isDiscounted ? (
-        <div className="product-cart__price">
-          <span className="product-cart__price--current">${product.price}</span>
-          <span className="product-cart__price--full">
+        <div className={styles.productCart__price}>
+          <span className={styles.productCart__priceCurrent}>
+            ${product.price}
+          </span>
+          <span className={styles.productCart__priceFull}>
             ${product.fullPrice}
           </span>
         </div>
       ) : (
-        <div className="product-cart__price">
-          <span className="product-cart__price--current">${product.price}</span>
+        <div className={styles.productCart__price}>
+          <span className={styles.productCart__priceCurrent}>
+            ${product.price}
+          </span>
         </div>
       )}
 
-      <span className="product-cart__separator"></span>
+      <span className={styles.productCart__separator}></span>
 
-      <div className="product-cart__specs">
-        <div className="product-cart__spec">
-          <div className="product-cart__spec-title">Screen</div>
-          <div className="product-cart__spec-value">{product.screen}</div>
+      <div className={styles.productCart__specs}>
+        <div className={styles.productCart__spec}>
+          <span className={styles.productCart__specTitle}>Screen</span>
+          <span className={styles.productCart__specValue}>
+            {product.screen}
+          </span>
         </div>
-        <div className="product-cart__spec">
-          <div className="product-cart__spec-title">Capacity</div>
-          <div className="product-cart__spec-value">{product.capacity}</div>
+        <div className={styles.productCart__spec}>
+          <span className={styles.productCart__specTitle}>Capacity</span>
+          <span className={styles.productCart__specValue}>
+            {product.capacity}
+          </span>
         </div>
-        <div className="product-cart__spec">
-          <div className="product-cart__spec-title">RAM</div>
-          <div className="product-cart__spec-value">{product.ram}</div>
+        <div className={styles.productCart__spec}>
+          <span className={styles.productCart__specTitle}>RAM</span>
+          <span className={styles.productCart__specValue}>{product.ram}</span>
         </div>
       </div>
 
-      <div className="product-cart__actions">
+      <div className={styles.productCart__actions}>
         <button
           onClick={handleToggleCart}
           className={
             inCart
-              ? 'product-cart__button product-cart__button--cart'
-              : 'product-cart__button product-cart__button--add'
+              ? `${styles.productCart__button} ${styles.productCart__buttonCart}`
+              : `${styles.productCart__button} ${styles.productCart__buttonAdd}`
           }
         >
           {inCart ? 'Added' : 'Add to cart'}
         </button>
         <button
           onClick={handleToggleFavorite}
-          className="product-cart__button product-cart__button--like"
+          className={`${styles.productCart__button} ${styles.productCart__buttonLike}`}
         >
           {isActive ? (
             <img
               src={heartIconFilled}
               alt="heart"
-              className="product-cart__button--heart-icon"
+              className={styles.productCart__buttonHeartIcon}
             />
           ) : (
             <img
               src={heartIcon}
               alt="heart"
-              className="product-cart__button--heart-icon"
+              className={styles.productCart__buttonHeartIcon}
             />
           )}
         </button>

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 import { ProductCart } from '../components/ProductCart/ProductCart';
-import '../styles/Favorites.scss';
 import { Product } from '../types/product';
-
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import styles from '../styles/Favorites.module.scss';
 
 export const Favorites = () => {
   const [favorites, setFavorites] = useState<Product[]>([]);
@@ -20,6 +19,8 @@ export const Favorites = () => {
       const fav = localStorage.getItem('favorites');
 
       if (!fav) {
+        setFavorites([]);
+
         return;
       }
 
@@ -38,7 +39,7 @@ export const Favorites = () => {
     let updated: Product[];
 
     if (exists) {
-      updated = favorites.filter(p => p.id !== product.id); // ← видаляємо
+      updated = favorites.filter(p => p.id !== product.id);
     } else {
       updated = [...favorites, product];
     }
@@ -57,17 +58,19 @@ export const Favorites = () => {
   }
 
   return (
-    <div className="favorites">
+    <div className={styles.favorites}>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="favorites__container">
-          <Breadcrumbs category={'Favorites'} />
+        <div className={styles.favorites__container}>
+          <Breadcrumbs category="Favorites" />
 
-          <h1 className="favorites__title">Favorites</h1>
-          <span className="favorites__count">{`${favorites.length} items`}</span>
+          <h1 className={styles.favorites__title}>Favorites</h1>
+          <span className={styles.favorites__count}>
+            {favorites.length} items
+          </span>
 
-          <div className="favorites__items">
+          <div className={styles.favorites__items}>
             {favorites.map(item => (
               <ProductCart
                 key={item.id}

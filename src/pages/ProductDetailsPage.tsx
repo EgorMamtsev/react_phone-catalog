@@ -1,6 +1,5 @@
 //# region Imports
 
-import '../styles/ProductDetailsPage.scss';
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
 import backArrow from '../../public/img/icons/arrowRight.png';
 import heartIconFilled from '../../public/img/icons/heartIconFilled.png';
@@ -26,6 +25,8 @@ import { ProductSlider } from '../components/ProductSlider/ProductSlider';
 import { Product } from '../types/product';
 
 import { useState, useEffect } from 'react';
+
+import styles from '../styles/ProductDetailsPage.module.scss';
 
 //#endregion
 
@@ -61,9 +62,6 @@ export const ProductDetailPage = () => {
     setIsError(null);
 
     try {
-      //видалити на фіналі
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-      // throw new Error('Test error');
       const getProduct = fetchProductById(productId || '');
 
       setProduct(getProduct);
@@ -102,7 +100,7 @@ export const ProductDetailPage = () => {
 
   useEffect(() => {
     loadProduct();
-  }, [productId]);
+  }, [productId, loadProduct]);
 
   useEffect(() => {
     if (product && productId) {
@@ -113,7 +111,7 @@ export const ProductDetailPage = () => {
 
       setOffers(randomProducts);
     }
-  }, [product]);
+  }, [product, productId]);
 
   useEffect(() => {
     if (!catalogProduct) {
@@ -152,50 +150,50 @@ export const ProductDetailPage = () => {
   }
 
   return (
-    <div className="product-details">
+    <div className={styles.productDetails}>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="product-details__container">
+        <div className={styles.productDetails__container}>
           <Breadcrumbs category={product.category} productName={product.name} />
 
-          <div className="product-details__back">
-            <div className="product-details__icon">
+          <div className={styles.productDetails__back}>
+            <div className={styles.productDetails__icon}>
               <img
-                className="product-details__arrow"
+                className={styles.productDetails__arrow}
                 src={backArrow}
                 alt="Back icon"
               />
             </div>
             <Link
               to={`/${product.category}`}
-              className="product-details__back-link"
+              className={styles.productDetails__backLink}
             >
-              <span className="product-details__link-text">Back</span>
+              <span className={styles.productDetails__linkText}>Back</span>
             </Link>
           </div>
 
-          <h1 className="product-details__name">{product.name}</h1>
+          <h1 className={styles.productDetails__name}>{product.name}</h1>
 
-          <div className="product-details__information">
-            <div className="product-details__gallery">
-              <div className="product-details__main">
+          <div className={styles.productDetails__information}>
+            <div className={styles.productDetails__gallery}>
+              <div className={styles.productDetails__main}>
                 <img
-                  className="product-details__image-main"
+                  className={styles.productDetails__imageMain}
                   src={activeImage}
                   alt={product.name}
                 />
               </div>
 
-              <div className="product-details__viewport">
-                <div className="product-details__images">
+              <div className={styles.productDetails__viewport}>
+                <div className={styles.productDetails__images}>
                   {product.images.map((img, index) => (
                     <img
                       onClick={() => setActiveImage(img)}
                       key={index}
-                      className={`product-details__images-item ${
+                      className={`${styles.productDetails__imagesItem} ${
                         img === activeImage
-                          ? 'product-details__images-item--active'
+                          ? styles['productDetails__imagesItem--active']
                           : ''
                       }`}
                       src={img}
@@ -206,21 +204,21 @@ export const ProductDetailPage = () => {
               </div>
             </div>
 
-            <div className="product-details__options">
-              <div className="product-details__colors">
-                <div className="product-details__colors-header">
+            <div className={styles.productDetails__options}>
+              <div className={styles.productDetails__colors}>
+                <div className={styles.productDetails__colorsHeader}>
                   <span>Available colors</span>
                   <span>ID: {product.id}</span>
                 </div>
-                <div className="product-details__colors-list">
+                <div className={styles.productDetails__colorsList}>
                   {product.colorsAvailable.map((color, index) => (
                     <label
                       aria-label={`Color ${color}`}
                       onClick={() => setActiveColor(color)}
                       key={index}
-                      className={`product-details__colors-label ${
+                      className={`${styles.productDetails__colorsLabel} ${
                         color === activeColor
-                          ? 'product-details__colors-label--active'
+                          ? styles['productDetails__colorsLabel--active']
                           : ''
                       }`}
                     >
@@ -229,10 +227,10 @@ export const ProductDetailPage = () => {
                         name="color"
                         value={color}
                         defaultChecked={color === product.color}
-                        className="product-details__colors-radio"
+                        className={styles.productDetails__colorsRadio}
                       />
                       <span
-                        className="product-details__colors-item"
+                        className={styles.productDetails__colorsItem}
                         style={{
                           backgroundColor: ColorMap[color] || '#cccccc',
                         }}
@@ -240,35 +238,31 @@ export const ProductDetailPage = () => {
                     </label>
                   ))}
                 </div>
-                <div className="product-details__divider" />
+                <div className={styles.productDetails__divider} />
               </div>
 
-              <div className="product-details__capacity">
-                <span className="product-details__capacity-label">
+              <div className={styles.productDetails__capacity}>
+                <span className={styles.productDetails__capacityLabel}>
                   Select capacity
                 </span>
-                <div className="product-details__capacity-options">
+                <div className={styles.productDetails__capacityOptions}>
                   {product.capacityAvailable.map((c, index) => (
                     <label
                       key={index}
                       onClick={() => setActiveCapacity(c)}
-                      className={`product-details__capacity-label-wrapper ${
-                        c === activeCapacity
-                          ? 'product-details__capacity-label-wrapper--active'
-                          : ''
-                      }`}
+                      className={`${styles.productDetails__capacityLabelWrapper}${c === activeCapacity ? styles['productDetails__capacityLabelWrapper--active'] : ''}`}
                     >
                       <input
                         type="radio"
                         name="capacity"
                         value={c}
-                        className="product-details__capacity-radio"
+                        className={styles.productDetails__capacityRadio}
                         defaultChecked={c === product.capacity}
                       />
                       <span
-                        className={`product-details__capacity-option ${
+                        className={`${styles.productDetails__capacityOption} ${
                           c === activeCapacity
-                            ? 'product-details__capacity-option--active'
+                            ? styles['productDetails__capacityOption--active']
                             : ''
                         }`}
                       >
@@ -277,71 +271,75 @@ export const ProductDetailPage = () => {
                     </label>
                   ))}
                 </div>
-                <div className="product-details__divider" />
+                <div className={styles.productDetails__divider} />
               </div>
 
-              <div className="product-details__price">
-                <span className="product-details__price-current">
+              <div className={styles.productDetails__price}>
+                <span className={styles.productDetails__priceCurrent}>
                   ${product.priceDiscount}
                 </span>
-                <span className="product-details__price-full">
+                <span className={styles.productDetails__priceFull}>
                   ${product.priceRegular}
                 </span>
               </div>
 
-              <div className="product-details__buttons">
+              <div className={styles.productDetails__buttons}>
                 <button
                   onClick={handleToggleCart}
-                  className={`product-details__buttons-add ${isInCart ? 'product-details__buttons-add product-details__buttons--incart' : ''}`}
+                  className={`${styles.productDetails__buttonsAdd} ${
+                    isInCart ? styles['productDetails__buttons--incart'] : ''
+                  }`}
                 >
                   {isInCart ? 'Added' : 'Add to cart'}
                 </button>
                 <button
                   onClick={handleToggleFavorite}
-                  className="product-details__buttons-heart"
+                  className={styles.productDetails__buttonsHeart}
                 >
                   {isFavorite ? (
                     <img
                       src={heartIconFilled}
                       alt="heart"
-                      className="product-cart__button--heart-icon"
+                      className={styles.productDetails__buttonsHeartIcon}
                     />
                   ) : (
                     <img
                       src={heartIcon}
                       alt="heart"
-                      className="product-cart__button--heart-icon"
+                      className={styles.productDetails__buttonsHeartIcon}
                     />
                   )}
                 </button>
               </div>
 
-              <div className="product-details__params">
-                <div className="product-details__param">
-                  <span className="product-details__param-title">Screen</span>
-                  <span className="product-details__param-value">
+              <div className={styles.productDetails__params}>
+                <div className={styles.productDetails__param}>
+                  <span className={styles.productDetails__paramTitle}>
+                    Screen
+                  </span>
+                  <span className={styles.productDetails__paramValue}>
                     {product.screen}
                   </span>
                 </div>
-                <div className="product-details__param">
-                  <span className="product-details__param-title">
+                <div className={styles.productDetails__param}>
+                  <span className={styles.productDetails__paramTitle}>
                     Resolution
                   </span>
-                  <span className="product-details__param-value">
+                  <span className={styles.productDetails__paramValue}>
                     {product.resolution}
                   </span>
                 </div>
-                <div className="product-details__param">
-                  <span className="product-details__param-title">
+                <div className={styles.productDetails__param}>
+                  <span className={styles.productDetails__paramTitle}>
                     Processor
                   </span>
-                  <span className="product-details__param-value">
+                  <span className={styles.productDetails__paramValue}>
                     {product.processor}
                   </span>
                 </div>
-                <div className="product-details__param">
-                  <span className="product-details__param-title">RAM</span>
-                  <span className="product-details__param-value">
+                <div className={styles.productDetails__param}>
+                  <span className={styles.productDetails__paramTitle}>RAM</span>
+                  <span className={styles.productDetails__paramValue}>
                     {product.ram}
                   </span>
                 </div>
@@ -349,18 +347,21 @@ export const ProductDetailPage = () => {
             </div>
           </div>
 
-          <div className="product-details__info-all">
-            <div className="product-details__about">
-              <h2 className="product-details__about-title">About</h2>
-              <div className="product-details__divider" />
+          <div className={styles.productDetails__infoAll}>
+            <div className={styles.productDetails__about}>
+              <h2 className={styles.productDetails__aboutTitle}>About</h2>
+              <div className={styles.productDetails__divider} />
 
               {product.description.map((desc, index) => (
-                <div key={index} className="product-details__description">
-                  <h3 className="product-details__description-title">
+                <div key={index} className={styles.productDetails__description}>
+                  <h3 className={styles.productDetails__descriptionTitle}>
                     {desc.title}
                   </h3>
                   {desc.text.map((paragraph, i) => (
-                    <p key={i} className="product-details__description-text">
+                    <p
+                      key={i}
+                      className={styles.productDetails__descriptionText}
+                    >
                       {paragraph}
                     </p>
                   ))}
@@ -368,71 +369,77 @@ export const ProductDetailPage = () => {
               ))}
             </div>
 
-            <div className="product-details__techs">
-              <h2 className="product-details__techs-title">Tech specs</h2>
-              <div className="product-details__divider" />
+            <div className={styles.productDetails__techs}>
+              <h2 className={styles.productDetails__techsTitle}>Tech specs</h2>
+              <div className={styles.productDetails__divider} />
 
-              <div className="product-details__tech">
-                <span className="product-details__tech-title">Screen</span>
-                <span className="product-details__tech-value">
+              <div className={styles.productDetails__tech}>
+                <span className={styles.productDetails__techTitle}>Screen</span>
+                <span className={styles.productDetails__techValue}>
                   {product.screen}
                 </span>
               </div>
-              <div className="product-details__tech">
-                <span className="product-details__tech-title">Resolution</span>
-                <span className="product-details__tech-value">
+              <div className={styles.productDetails__tech}>
+                <span className={styles.productDetails__techTitle}>
+                  Resolution
+                </span>
+                <span className={styles.productDetails__techValue}>
                   {product.resolution}
                 </span>
               </div>
-              <div className="product-details__tech">
-                <span className="product-details__tech-title">Processor</span>
-                <span className="product-details__tech-value">
+              <div className={styles.productDetails__tech}>
+                <span className={styles.productDetails__techTitle}>
+                  Processor
+                </span>
+                <span className={styles.productDetails__techValue}>
                   {product.processor}
                 </span>
               </div>
-              <div className="product-details__tech">
-                <span className="product-details__tech-title">RAM</span>
-                <span className="product-details__tech-value">
+              <div className={styles.productDetails__tech}>
+                <span className={styles.productDetails__techTitle}>RAM</span>
+                <span className={styles.productDetails__techValue}>
                   {product.ram}
                 </span>
               </div>
 
               {'camera' in product && (
-                <div className="product-details__tech">
-                  <span className="product-details__tech-title">Camera</span>
-                  <span className="product-details__tech-value">
+                <div className={styles.productDetails__tech}>
+                  <span className={styles.productDetails__techTitle}>
+                    Camera
+                  </span>
+                  <span className={styles.productDetails__techValue}>
                     {product.camera}
                   </span>
                 </div>
               )}
 
               {'zoom' in product && (
-                <div className="product-details__tech">
-                  <span className="product-details__tech-title">Zoom</span>
-                  <span className="product-details__tech-value">
+                <div className={styles.productDetails__tech}>
+                  <span className={styles.productDetails__techTitle}>Zoom</span>
+                  <span className={styles.productDetails__techValue}>
                     {product.zoom}
                   </span>
                 </div>
               )}
 
-              <div className="product-details__tech">
-                <span className="product-details__tech-title">Cell</span>
-                <span className="product-details__tech-value">
+              <div className={styles.productDetails__tech}>
+                <span className={styles.productDetails__techTitle}>Cell</span>
+                <span className={styles.productDetails__techValue}>
                   {product.cell.join(', ')}
                 </span>
               </div>
             </div>
 
-            <div className="product-details__divider" />
+            <div className={styles.productDetails__divider} />
           </div>
 
-          <div className="product-details__offers">
-            <div className="product-details__offers-title">
-              <h2 className="product-details__about-title">
+          <div className={styles.productDetails__offers}>
+            <div className={styles.productDetails__offersTitle}>
+              <h2 className={styles.productDetails__aboutTitle}>
                 You may also like
               </h2>
             </div>
-            <div className="product-details__nav">
+            <div className={styles.productDetails__nav}>
               <NavButton
                 direction="left"
                 disabled={offersIndex === 0}

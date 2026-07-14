@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import '../styles/Cart.scss';
 import { Link } from 'react-router-dom';
 import { CartItem } from '../types/cartItem';
 import { updateCartQuantity } from '../utils/updateCartQuntity';
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
-
 import CloseIcon from '../../public/img/icons/Close.png';
 import backArrow from '../../public/img/icons/arrowRight.png';
+import styles from '../styles/Cart.module.scss';
 
 export const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -19,10 +18,10 @@ export const Cart = () => {
     setIsError(null);
 
     try {
-      const storred = localStorage.getItem('cart');
+      const stored = localStorage.getItem('cart');
 
-      if (storred) {
-        const inCart = JSON.parse(storred);
+      if (stored) {
+        const inCart = JSON.parse(stored);
 
         setCart(inCart);
       }
@@ -45,7 +44,6 @@ export const Cart = () => {
     }
 
     const inCart: CartItem[] = JSON.parse(stored);
-
     const updatedCart = inCart.filter(p => p.product.id !== item.product.id);
 
     localStorage.setItem('cart', JSON.stringify(updatedCart));
@@ -79,38 +77,40 @@ export const Cart = () => {
   }
 
   return (
-    <div className="cart">
+    <div className={styles.cart}>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="cart__container">
-          <div className="product-details__back">
-            <div className="product-details__icon">
+        <div className={styles.cart__container}>
+          <div className={styles.cart__back}>
+            <div className={styles.cart__icon}>
               <img
-                className="product-details__arrow"
+                className={styles.cart__arrow}
                 src={backArrow}
                 alt="Back icon"
               />
             </div>
-            <Link to={`/`} className="product-details__back-link">
-              <span className="product-details__link-text">Back</span>
+            <Link to="/" className={styles.cart__backLink}>
+              <span className={styles.cart__linkText}>Back</span>
             </Link>
           </div>
-          <div className="cart__title">
-            <h1 className="cart__title-text">Cart</h1>
+
+          <div className={styles.cart__title}>
+            <h1 className={styles.cart__titleText}>Cart</h1>
           </div>
-          <div className="cart__wrapper">
-            <div className="cart__items">
+
+          <div className={styles.cart__wrapper}>
+            <div className={styles.cart__items}>
               {cart.map(item => (
-                <div className="cart__item" key={item.product.id}>
-                  <div className="cart__info">
-                    <div className="cart__remove-btn">
+                <div className={styles.cart__item} key={item.product.id}>
+                  <div className={styles.cart__info}>
+                    <div className={styles.cart__removeBtn}>
                       <button
                         onClick={() => removeFromCart(item)}
-                        className="cart__remove"
+                        className={styles.cart__remove}
                       >
                         <img
-                          className="cart__close-icon"
+                          className={styles.cart__closeIcon}
                           src={CloseIcon}
                           alt="x"
                         />
@@ -118,55 +118,61 @@ export const Cart = () => {
                     </div>
                     <Link
                       to={`/product/${item.product.itemId}`}
-                      className="cart__item-picture"
+                      className={styles.cart__itemPicture}
                     >
                       <img
-                        className="cart__image"
+                        className={styles.cart__image}
                         src={item.product.image}
                         alt=""
                       />
                     </Link>
                     <Link
                       to={`/product/${item.product.itemId}`}
-                      className="cart__item-name"
+                      className={styles.cart__itemName}
                     >
-                      <span className="cart__name">{item.product.name}</span>
+                      <span className={styles.cart__name}>
+                        {item.product.name}
+                      </span>
                     </Link>
                   </div>
-                  <div className="cart__actions">
-                    <div className="cart__product-count">
+
+                  <div className={styles.cart__actions}>
+                    <div className={styles.cart__productCount}>
                       <button
                         onClick={() => decreaseCount(item.product.id)}
-                        className="cart__decrease cart__button"
+                        className={`${styles.cart__button} ${styles.cart__decrease}`}
                         disabled={item.quantity <= 1}
                       >
                         -
                       </button>
-                      <div className="cart__number-of-product">
+                      <div className={styles.cart__numberOfProduct}>
                         {item.quantity}
                       </div>
                       <button
                         onClick={() => increaseCount(item.product.id)}
-                        className="cart__increase cart__button"
+                        className={`${styles.cart__button} ${styles.cart__increase}`}
                       >
                         +
                       </button>
                     </div>
-                    <div className="cart__items-prise">
-                      $${item.product.fullPrice * item.quantity}
+                    <div className={styles.cart__itemsPrice}>
+                      ${item.product.fullPrice * item.quantity}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="cart__total">
-              <div className="cart__price">${getTotalPrice()}</div>
-              <div className="cart__items-count">
-                <div className="cart__count">Total for {cart.length} items</div>
+
+            <div className={styles.cart__total}>
+              <div className={styles.cart__price}>${getTotalPrice()}</div>
+              <div className={styles.cart__itemsCount}>
+                <div className={styles.cart__count}>
+                  Total for {cart.length} items
+                </div>
               </div>
-              <div className="cart__separator"></div>
-              <div className="cart__order-btn">
-                <button className="cart__order">Checkout</button>
+              <div className={styles.cart__separator}></div>
+              <div className={styles.cart__orderBtn}>
+                <button className={styles.cart__order}>Checkout</button>
               </div>
             </div>
           </div>

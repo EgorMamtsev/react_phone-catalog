@@ -1,9 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import '../Slider/Slider.scss';
-
-// import phoneBanner1 from '../../public/img/slider/BannerPhone1.p';
 import Banner1 from '../../../public/img/slider/Banner1.png';
 import phoneBanner1 from '../../../public/img/slider/BannerPhone1.png';
+import styles from './Slider.module.scss';
 
 const SLIDES = [
   {
@@ -50,23 +48,23 @@ export const Slider = () => {
   }, [nextSlide]);
 
   return (
-    <div className="slider">
-      <div className="slider__container">
+    <div className={styles.slider}>
+      <div className={styles.slider__container}>
         <button
-          className="slider__button slider__button--prev"
+          className={`${styles.slider__button} ${styles['slider__button--prev']}`}
           onClick={prevSlide}
         >
           ←
         </button>
 
-        <div className="slider__viewport">
+        <div className={styles.slider__viewport}>
           <div
-            className="slider__track"
+            className={styles.slider__track}
             style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
             {SLIDES.map((slide, index) => (
-              <div key={slide.alt} className="slider__slide">
-                <picture className="slider__picture">
+              <div key={slide.alt} className={styles.slider__slide}>
+                <picture className={styles.slider__picture}>
                   <source
                     media="(min-width: 1200px)"
                     srcSet={slide.images.desktop}
@@ -76,7 +74,7 @@ export const Slider = () => {
                     srcSet={slide.images.tablet}
                   />
                   <img
-                    className="slider__image"
+                    className={styles.slider__image}
                     src={slide.images.mobile}
                     alt={slide.alt}
                     loading={index === 0 ? 'eager' : 'lazy'}
@@ -88,19 +86,19 @@ export const Slider = () => {
         </div>
 
         <button
-          className="slider__button slider__button--next"
+          className={`${styles.slider__button} ${styles['slider__button--next']}`}
           onClick={nextSlide}
         >
           →
         </button>
       </div>
 
-      <div className="slider__dots">
+      <div className={styles.slider__dots}>
         {SLIDES.map((_, index) => (
           <button
             key={index}
-            className={`slider__dot ${
-              index === activeSlide ? 'slider__dot--active' : ''
+            className={`${styles.slider__dot} ${
+              index === activeSlide ? styles['slider__dot--active'] : ''
             }`}
             onClick={() => setActiveSlide(index)}
           />

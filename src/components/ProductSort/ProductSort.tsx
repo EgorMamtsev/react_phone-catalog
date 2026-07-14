@@ -1,5 +1,6 @@
 import arrowDown from '../../../public/img/icons/ArrowDown.png';
-import '../ProductSort/ProductSort.scss';
+import styles from './ProductSort.module.scss';
+
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
@@ -21,19 +22,21 @@ export const ProductsSort = ({
   };
 
   return (
-    <div className="product-sort__filter">
-      <span className="product-sort__filter-text">Sort by</span>
-      <div className="product-sort__select">
-        <div className="product-sort__trigger" onClick={handleSelectOpen}>
-          <span className="product-sort__trigger-text">{selectedOption}</span>
-          <div className="product-sort__trigger-arrow">
+    <div className={styles.productSort__filter}>
+      <span className={styles.productSort__filterText}>Sort by</span>
+      <div className={styles.productSort__select}>
+        <div className={styles.productSort__trigger} onClick={handleSelectOpen}>
+          <span className={styles.productSort__triggerText}>
+            {selectedOption}
+          </span>
+          <div className={styles.productSort__triggerArrow}>
             <img src={arrowDown} alt="Arrow Down" />
           </div>
         </div>
         {isOpen && (
-          <div className="product-sort__options">
+          <div className={styles.productSort__options}>
             <div
-              className="product-sort__option"
+              className={styles.productSort__option}
               onClick={() => {
                 setSelectedOption('Newest');
                 setIsOpen(false);
@@ -43,7 +46,7 @@ export const ProductsSort = ({
               Newest
             </div>
             <div
-              className="product-sort__option"
+              className={styles.productSort__option}
               onClick={() => {
                 setSelectedOption('Alphabetically');
                 setIsOpen(false);
@@ -53,7 +56,7 @@ export const ProductsSort = ({
               Alphabetically
             </div>
             <div
-              className="product-sort__option"
+              className={styles.productSort__option}
               onClick={() => {
                 setSelectedOption('Cheapest');
                 setIsOpen(false);

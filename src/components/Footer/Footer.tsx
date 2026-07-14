@@ -1,6 +1,6 @@
 import logo from '../../../public/img/Logo.png';
 import backToTopbtn from '../../../public/img/icons/back to top btn.png';
-import './Footer.scss';
+import styles from './Footer.module.scss';
 
 export const Footer = () => {
   const scrollToTop = () => {
@@ -8,32 +8,37 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="footer">
-      <div className="footer__container">
-        <div className="footer__logo">
-          <img className="footer__logo-image" src={logo} alt="" />
+    <footer className={styles.footer}>
+      <div className={styles.footer__container}>
+        <div className={styles.footer__logo}>
+          <img className={styles.footer__logoImage} src={logo} alt="Logo" />
         </div>
 
-        <div className="footer__info">
+        <div className={styles.footer__info}>
           <a
-            className="footer__info-link"
-            target="blank"
+            className={styles.footer__infoLink}
+            target="_blank"
+            rel="noopener noreferrer"
             href="https://github.com/EgorMamtsev"
           >
             GITHUB
           </a>
-          <a className="footer__info-link" href="">
+          <a className={styles.footer__infoLink} href="">
             CONTACTS
           </a>
-          <a className="footer__info-link" href="">
+          <a className={styles.footer__infoLink} href="">
             RIGHTS
           </a>
         </div>
 
-        <div className="footer__back">
-          <button className="footer__back-button" onClick={scrollToTop}>
-            <span className="footer__back-label">Back to top</span>
-            <img className="footer__back-image" src={backToTopbtn} alt="" />
+        <div className={styles.footer__back}>
+          <button className={styles.footer__backButton} onClick={scrollToTop}>
+            <span className={styles.footer__backLabel}>Back to top</span>
+            <img
+              className={styles.footer__backImage}
+              src={backToTopbtn}
+              alt="Back to top"
+            />
           </button>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import './Header.scss';
 import logo from '../../../public/img/Logo.png';
 import iconHeart from '../../../public/img/icons/Favourites (Heart Like).png';
 import iconBag from '../../../public/img/icons/Shopping bag (Cart).png';
@@ -8,6 +7,7 @@ import iconClose from '../../../public/img/icons/Close.png';
 import { Link, NavLink } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
+import styles from './Header.module.scss';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,19 +82,19 @@ export const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="header__container">
-        <Link to="/" className="header__logo">
-          <img className="header__logo-image" src={logo} alt="Logo" />
+    <header className={styles.header}>
+      <div className={styles.header__container}>
+        <Link to="/" className={styles.header__logo}>
+          <img className={styles.header__logoImage} src={logo} alt="Logo" />
         </Link>
 
-        <nav className="header__nav">
+        <nav className={styles.header__nav}>
           <NavLink
             to="/"
             className={({ isActive }) =>
               isActive
-                ? 'header__nav-link header__nav-link--active'
-                : 'header__nav-link'
+                ? `${styles.header__navLink} ${styles['header__navLink--active']}`
+                : styles.header__navLink
             }
           >
             HOME
@@ -103,8 +103,8 @@ export const Header = () => {
             to="/phones"
             className={({ isActive }) =>
               isActive
-                ? 'header__nav-link header__nav-link--active'
-                : 'header__nav-link'
+                ? `${styles.header__navLink} ${styles['header__navLink--active']}`
+                : styles.header__navLink
             }
           >
             PHONES
@@ -113,8 +113,8 @@ export const Header = () => {
             to={'/tablets'}
             className={({ isActive }) =>
               isActive
-                ? 'header__nav-link header__nav-link--active'
-                : 'header__nav-link'
+                ? `${styles.header__navLink} ${styles['header__navLink--active']}`
+                : styles.header__navLink
             }
           >
             TABLETS
@@ -123,67 +123,81 @@ export const Header = () => {
             to={'/accessories'}
             className={({ isActive }) =>
               isActive
-                ? 'header__nav-link header__nav-link--active'
-                : 'header__nav-link'
+                ? `${styles.header__navLink} ${styles['header__navLink--active']}`
+                : styles.header__navLink
             }
           >
             ACCESSORIES
           </NavLink>
         </nav>
 
-        <div className="header__actions">
+        <div className={styles.header__actions}>
           <NavLink
             to="/favorites"
             className={({ isActive }) =>
-              `header__icon header__icon--favorite ${
-                isActive ? 'header__icon--active' : ''
+              `${styles.header__icon} ${styles['header__icon--favorite']} ${
+                isActive ? styles['header__icon--active'] : ''
               }`
             }
           >
-            <span className="header__icon-wrapper">
-              <img className="header__icon-image" src={iconHeart} alt="" />
+            <span className={styles.header__iconWrapper}>
+              <img
+                className={styles.header__iconImage}
+                src={iconHeart}
+                alt=""
+              />
 
               {favoritesCount > 0 && (
-                <span className="header__icon-badge">{favoritesCount}</span>
+                <span className={styles.header__iconBadge}>
+                  {favoritesCount}
+                </span>
               )}
             </span>
           </NavLink>
           <NavLink
             to={'/cart'}
             className={({ isActive }) =>
-              `header__icon header__icon--bag ${
-                isActive ? 'header__icon--active' : ''
+              `${styles.header__icon} ${styles['header__icon--bag']} ${
+                isActive ? styles['header__icon--active'] : ''
               }`
             }
           >
-            <span className="header__icon-wrapper">
-              <img className="header__icon-image" src={iconBag} alt="" />
+            <span className={styles.header__iconWrapper}>
+              <img className={styles.header__iconImage} src={iconBag} alt="" />
 
               {cartCount > 0 && (
-                <span className="header__icon-badge">{cartCount}</span>
+                <span className={styles.header__iconBadge}>{cartCount}</span>
               )}
             </span>
           </NavLink>
-          <button className="header__burger" onClick={toggleMenu}>
+          <button className={styles.header__burger} onClick={toggleMenu}>
             {isMenuOpen ? (
-              <img className="header__burger-image" src={iconClose} alt="" />
+              <img
+                className={styles.header__burgerImage}
+                src={iconClose}
+                alt=""
+              />
             ) : (
-              <img className="header__burger-image" src={iconBurger} alt="" />
+              <img
+                className={styles.header__burgerImage}
+                src={iconBurger}
+                alt=""
+              />
             )}
           </button>
         </div>
 
         {isMenuOpen && (
           <div
-            className={`header__menu ${isClosing ? 'header__menu--closing' : ''}`}
+            className={`${styles.header__menu} ${isClosing ? styles['header__menu--closing'] : ''}`}
           >
-            <nav className="header__menu-nav">
+            <nav className={styles.header__menuNav}>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? 'header__menu-link header__menu-link--active'
-                    : 'header__menu-link'
+                    ? `${styles.header__menuLink} ${styles['header__menuLink--active']}`
+                    : styles.header__menuLink
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
@@ -193,8 +207,8 @@ export const Header = () => {
                 to={'/phones'}
                 className={({ isActive }) =>
                   isActive
-                    ? 'header__menu-link header__menu-link--active'
-                    : 'header__menu-link'
+                    ? `${styles.header__menuLink} ${styles['header__menuLink--active']}`
+                    : styles.header__menuLink
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
@@ -203,8 +217,8 @@ export const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'header__menu-link header__menu-link--active'
-                    : 'header__menu-link'
+                    ? `${styles.header__menuLink} ${styles['header__menuLink--active']}`
+                    : styles.header__menuLink
                 }
                 to={'/tablets'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -214,8 +228,8 @@ export const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'header__menu-link header__menu-link--active'
-                    : 'header__menu-link'
+                    ? `${styles.header__menuLink} ${styles['header__menuLink--active']}`
+                    : styles.header__menuLink
                 }
                 to={'/accessories'}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -223,36 +237,48 @@ export const Header = () => {
                 ACCESSORIES
               </NavLink>
             </nav>
-            <div className="header__menu-actions">
+            <div className={styles.header__menuActions}>
               <NavLink
                 to={'/favorites'}
                 className={({ isActive }) =>
-                  `header__menu-icon header__menu-icon--favorite ${
-                    isActive ? 'header__menu-icon--active' : ''
+                  `${styles.header__menuIcon} ${styles['header__menuIcon--favorite']} ${
+                    isActive ? styles['header__menuIcon--active'] : ''
                   }`
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <span className="header__icon-wrapper">
-                  <img className="header__menu-image" src={iconHeart} alt="" />
+                <span className={styles.header__iconWrapper}>
+                  <img
+                    className={styles.header__menuImage}
+                    src={iconHeart}
+                    alt=""
+                  />
                   {favoritesCount > 0 && (
-                    <span className="header__icon-badge">{favoritesCount}</span>
+                    <span className={styles.header__iconBadge}>
+                      {favoritesCount}
+                    </span>
                   )}
                 </span>
               </NavLink>
               <NavLink
                 to={'/cart'}
                 className={({ isActive }) =>
-                  `header__menu-icon header__menu-icon--bag ${
-                    isActive ? 'header__menu-icon--active' : ''
+                  `${styles.header__menuIcon} ${styles['header__menuIcon--bag']} ${
+                    isActive ? styles['header__menuIcon--active'] : ''
                   }`
                 }
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <span className="header__icon-wrapper">
-                  <img className="header__menu-image" src={iconBag} alt="" />
+                <span className={styles.header__iconWrapper}>
+                  <img
+                    className={styles.header__menuImage}
+                    src={iconBag}
+                    alt=""
+                  />
                   {cartCount > 0 && (
-                    <span className="header__icon-badge">{cartCount}</span>
+                    <span className={styles.header__iconBadge}>
+                      {cartCount}
+                    </span>
                   )}
                 </span>
               </NavLink>

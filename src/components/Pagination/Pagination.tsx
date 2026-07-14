@@ -1,4 +1,4 @@
-import '../Pagination/Pagination.scss';
+import styles from './Pagination.module.scss';
 
 type Props = {
   totalPosts: number;
@@ -16,7 +16,7 @@ export const Pagination = ({
   const totalPages = [];
 
   if (postsPerPage !== 'All') {
-    const perPage = Number(postsPerPage); // ← можна залишити локальну змінну
+    const perPage = Number(postsPerPage);
 
     for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
       totalPages.push(i);
@@ -38,11 +38,11 @@ export const Pagination = ({
   const visiblePages = totalPages.slice(start - 1, end);
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       {visiblePages.map(page => (
         <button
-          className={`pagination__button ${
-            page === currentPage ? 'pagination__button--active' : ''
+          className={`${styles.pagination__button} ${
+            page === currentPage ? styles['pagination__button--active'] : ''
           }`}
           key={page}
           onClick={() => setCurrentPage(page)}

@@ -1,5 +1,4 @@
 //#region imports
-import '../styles/HomePage.scss';
 import { fetchProducts } from '../utils/fetchProducts';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,6 +14,8 @@ import { Product } from '../types/product';
 import categoryPhones from '../../public/img/category-phones.webp';
 import categoryTablets from '../../public/img/category-tablets.webp';
 import categoryAccessories from '../../public/img/category-accessories.webp';
+
+import styles from '../styles/HomePage.module.scss';
 //#endregion
 
 export const HomePage = () => {
@@ -29,7 +30,6 @@ export const HomePage = () => {
     accessories: 0,
   });
   const [isLoading, setIsLoading] = useState(false);
-
   const [isError, setIsError] = useState<string | null>(null);
 
   const hotPricesProducts = products
@@ -38,7 +38,7 @@ export const HomePage = () => {
       const discountA = a.fullPrice - a.price;
       const discountB = b.fullPrice - b.price;
 
-      return discountB - discountA; // сортування за спаданням (найбільша знижка першою)
+      return discountB - discountA;
     });
 
   const brandNewProducts = [...products].sort((a, b) => b.year - a.year);
@@ -48,10 +48,6 @@ export const HomePage = () => {
     setIsError(null);
 
     try {
-      //видалити на фіналі
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-      // throw new Error('Test error');
-
       const allProducts = fetchProducts();
 
       const countsModels = {
@@ -87,8 +83,6 @@ export const HomePage = () => {
     loadProducts();
   }, []);
 
-  //#region Функції для навігації слайдерів
-  // Функції для Brand new models
   const slideNewModelsNext = () => {
     if (newModelsIndex < newModelsMaxIndex) {
       setNewModelsIndex(prev => prev + 1);
@@ -101,7 +95,6 @@ export const HomePage = () => {
     }
   };
 
-  // Функції для Hot Prices
   const slideHotPricesNext = () => {
     if (hotPricesIndex < hotPricesMaxIndex) {
       setHotPricesIndex(prev => prev + 1);
@@ -114,21 +107,19 @@ export const HomePage = () => {
     }
   };
 
-  //#endregion
-
   if (isError) {
     return <ErrorPage reload={loadProducts} />;
   }
 
   return (
-    <main className="home-page">
+    <main className={styles.homePage}>
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <div className="home-page__container">
-            <div className="home-page__title-block">
-              <h1 className="home-page__title visually-hidden">
+          <div className={styles.homePage__container}>
+            <div className={styles.homePage__titleBlock}>
+              <h1 className={styles.visuallyHidden}>
                 Welcome to Nice Gadgets store!
               </h1>
             </div>
@@ -136,10 +127,10 @@ export const HomePage = () => {
 
           <Slider />
 
-          <div className="home-page__container">
-            <div className="home-page__title-block">
-              <h1 className="home-page__title">Brand new models</h1>
-              <div className="home-page__nav">
+          <div className={styles.homePage__container}>
+            <div className={styles.homePage__titleBlock}>
+              <h1 className={styles.homePage__title}>Brand new models</h1>
+              <div className={styles.homePage__nav}>
                 <NavButton
                   direction="left"
                   disabled={newModelsIndex === 0}
@@ -161,60 +152,67 @@ export const HomePage = () => {
               onMaxIndexChange={setNewModelsMaxIndex}
             />
 
-            <div className="home-page__title-block">
-              <h1 className="home-page__title">Shop by category</h1>
+            <div className={styles.homePage__titleBlock}>
+              <h1 className={styles.homePage__title}>Shop by category</h1>
             </div>
-            <div className="home-page__categories">
-              <Link to={'/phones'} className="home-page__category">
-                <div className="home-page__category-icon">
+
+            <div className={styles.homePage__categories}>
+              <Link to="/phones" className={styles.homePage__category}>
+                <div className={styles.homePage__categoryIcon}>
                   <img
-                    className="home-page__category-icon-img"
+                    className={styles.homePage__categoryIconImg}
                     src={categoryPhones}
                     alt="phone"
                   />
                 </div>
-                <div className="home-page__category-description">
-                  <div className="home-page__category-name">Mobile phones</div>
-                  <div className="home-page__category-number">
+                <div className={styles.homePage__categoryDescription}>
+                  <div className={styles.homePage__categoryName}>
+                    Mobile phones
+                  </div>
+                  <div className={styles.homePage__categoryNumber}>
                     {numberOfProducts.phones} models
                   </div>
                 </div>
               </Link>
-              <Link to={'/tablets'} className="home-page__category">
-                <div className="home-page__category-icon">
+
+              <Link to="/tablets" className={styles.homePage__category}>
+                <div className={styles.homePage__categoryIcon}>
                   <img
-                    className="home-page__category-icon-img"
+                    className={styles.homePage__categoryIconImg}
                     src={categoryTablets}
                     alt=""
                   />
                 </div>
-                <div className="home-page__category-description">
-                  <div className="home-page__category-name">Tablets</div>
-                  <div className="home-page__category-number">
+                <div className={styles.homePage__categoryDescription}>
+                  <div className={styles.homePage__categoryName}>Tablets</div>
+                  <div className={styles.homePage__categoryNumber}>
                     {numberOfProducts.tablets} models
                   </div>
                 </div>
               </Link>
-              <Link to={'/accessories'} className="home-page__category">
-                <div className="home-page__category-icon">
+
+              <Link to="/accessories" className={styles.homePage__category}>
+                <div className={styles.homePage__categoryIcon}>
                   <img
-                    className="home-page__category-icon-img"
+                    className={styles.homePage__categoryIconImg}
                     src={categoryAccessories}
                     alt=""
                   />
                 </div>
-                <div className="home-page__category-description">
-                  <div className="home-page__category-name">Accessories</div>
-                  <div className="home-page__category-number">
+                <div className={styles.homePage__categoryDescription}>
+                  <div className={styles.homePage__categoryName}>
+                    Accessories
+                  </div>
+                  <div className={styles.homePage__categoryNumber}>
                     {numberOfProducts.accessories} models
                   </div>
                 </div>
               </Link>
             </div>
 
-            <div className="home-page__title-block">
-              <h1 className="home-page__title">Hot Prices</h1>
-              <div className="home-page__nav">
+            <div className={styles.homePage__titleBlock}>
+              <h1 className={styles.homePage__title}>Hot Prices</h1>
+              <div className={styles.homePage__nav}>
                 <NavButton
                   direction="left"
                   disabled={hotPricesIndex === 0}

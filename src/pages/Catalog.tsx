@@ -1,6 +1,5 @@
 //#region Imports
 
-import '../styles/Catalog.scss';
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -16,6 +15,8 @@ import { ErrorPage } from '../components/ErrorPage/ErrorPage';
 import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
 
 import { Product } from '../types/product';
+
+import styles from '../styles/Catalog.module.scss';
 
 //#endregion
 
@@ -42,10 +43,6 @@ export const Catalog = () => {
     setIsError(null);
 
     try {
-      //видалити на фіналі
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-      // throw new Error('Test error');
-
       const products = fetchProducts();
 
       setAllProducts(products);
@@ -69,7 +66,6 @@ export const Catalog = () => {
 
     params.set('perPage', String(value));
     params.set('page', '1');
-
     setSearchParams(params);
   };
 
@@ -127,13 +123,10 @@ export const Catalog = () => {
     switch (category) {
       case 'phones':
         return 'Mobile Phones';
-        break;
       case 'tablets':
         return 'Tablets';
-        break;
       case 'accessories':
         return 'Accessories';
-        break;
       default:
         return 'Catalog';
     }
@@ -144,31 +137,31 @@ export const Catalog = () => {
   }
 
   return (
-    <div className="catalog">
+    <div className={styles.catalog}>
       {isLoading ? (
         <Loader />
       ) : (
         <>
           {filteredProducts.length === 0 ? (
-            <div className="catalog__container">
-              <h2 className="catalog__title-text">
+            <div className={styles.catalog__container}>
+              <h2 className={styles.catalog__titleText}>
                 There are no {categoryName} yet
               </h2>
             </div>
           ) : (
-            <div className="catalog__container">
+            <div className={styles.catalog__container}>
               <Breadcrumbs category={categoryName} />
 
-              <div className="catalog__title">
-                <span className="catalog__title-text">
+              <div className={styles.catalog__title}>
+                <span className={styles.catalog__titleText}>
                   {getTitle(categoryName)}
                 </span>
-                <span className="catalog__title-number">
+                <span className={styles.catalog__titleNumber}>
                   {filteredProducts.length} models
                 </span>
               </div>
 
-              <div className="catalog__filters">
+              <div className={styles.catalog__filters}>
                 <ProductsSort
                   isOpen={isSortByOpen}
                   setIsOpen={setIsSortByOpen}
@@ -186,7 +179,7 @@ export const Catalog = () => {
                 />
               </div>
 
-              <div className="catalog__products">
+              <div className={styles.catalog__products}>
                 {sortedProducts.map(product => (
                   <ProductCart
                     key={product.id}
@@ -195,14 +188,13 @@ export const Catalog = () => {
                   />
                 ))}
               </div>
-              <div className="catalog__paggination">
+
+              <div className={styles.catalog__paggination}>
                 {postPerPage !== 'All' && (
                   <NavButton
-                    direction={'left'}
-                    disabled={currentPage === 1 ? true : false}
-                    onClick={() => {
-                      handlePageChange(currentPage - 1);
-                    }}
+                    direction="left"
+                    disabled={currentPage === 1}
+                    onClick={() => handlePageChange(currentPage - 1)}
                   />
                 )}
 
@@ -212,19 +204,16 @@ export const Catalog = () => {
                   setCurrentPage={handlePageChange}
                   currentPage={currentPage}
                 />
+
                 {postPerPage !== 'All' && (
                   <NavButton
-                    direction={'right'}
+                    direction="right"
                     disabled={
                       Math.ceil(
                         filteredProducts.length / Number(postPerPage),
                       ) <= currentPage
-                        ? true
-                        : false
                     }
-                    onClick={() => {
-                      handlePageChange(currentPage + 1);
-                    }}
+                    onClick={() => handlePageChange(currentPage + 1)}
                   />
                 )}
               </div>

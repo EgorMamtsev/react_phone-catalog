@@ -1,7 +1,7 @@
 import homeIcon from '../../../public/img/icons/HomeIcon.png';
 import arrowRight from '../../../public/img/icons/arrowRight.png';
 import { Link } from 'react-router-dom';
-import './Breadcrumps.scss';
+import styles from './Breadcrumps.module.scss';
 
 type Props = {
   category?: string;
@@ -13,17 +13,17 @@ const capitalize = (text: string) =>
 
 export const Breadcrumbs = ({ category, productName }: Props) => {
   return (
-    <div className="breadcrumbs">
+    <div className={styles.breadcrumbs}>
       <Link to={'/'}>
-        <img className="breadcrumbs__home" src={homeIcon} alt="home" />
-        <img className="breadcrumbs__arrow" src={arrowRight} alt=">" />
+        <img className={styles.breadcrumbs__home} src={homeIcon} alt="home" />
+        <img className={styles.breadcrumbs__arrow} src={arrowRight} alt=">" />
       </Link>
 
       {category && (
         <>
           <Link
             to={`/${category}`}
-            className={` breadcrumbs__link ${productName ? '' : 'breadcrumbs__link--active'}`}
+            className={`${styles.breadcrumbs__link} ${productName ? '' : styles['breadcrumbs__link--active']}`}
           >
             {capitalize(category)}
           </Link>
@@ -32,8 +32,10 @@ export const Breadcrumbs = ({ category, productName }: Props) => {
 
       {productName && (
         <>
-          <img className="breadcrumbs__arrow" src={arrowRight} alt=">" />
-          <span className="breadcrumbs__link breadcrumbs__link--active">
+          <img className={styles.breadcrumbs__arrow} src={arrowRight} alt=">" />
+          <span
+            className={`${styles.breadcrumbs__link} ${styles['breadcrumbs__link--active']}`}
+          >
             {capitalize(productName)}
           </span>
         </>
