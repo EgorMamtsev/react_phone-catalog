@@ -250,7 +250,7 @@ export const ProductDetailPage = () => {
                     <label
                       key={index}
                       onClick={() => setActiveCapacity(c)}
-                      className={`${styles.productDetails__capacityLabelWrapper}${c === activeCapacity ? styles['productDetails__capacityLabelWrapper--active'] : ''}`}
+                      className={`${styles.productDetails__capacityLabelWrapper} ${c === activeCapacity ? styles['productDetails__capacityLabelWrapper--active'] : ''}`}
                     >
                       <input
                         type="radio"
