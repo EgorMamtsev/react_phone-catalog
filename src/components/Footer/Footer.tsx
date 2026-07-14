@@ -31,8 +31,8 @@ export const Footer = () => {
         </div>
 
         <div className="footer__back">
-          <span className="footer__back-label">Back to top</span>
           <button className="footer__back-button" onClick={scrollToTop}>
+            <span className="footer__back-label">Back to top</span>
             <img className="footer__back-image" src={backToTopbtn} alt="" />
           </button>
         </div>

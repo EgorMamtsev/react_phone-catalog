@@ -109,6 +109,8 @@
     width: 176px;
     min-width: 0;
     flex: 1;
+    text-decoration: none;
+    color: inherit;
   }
 
   &__name {
@@ -138,6 +140,10 @@
     border-radius: 50%;
     border: 1px solid #e2e6e9;
     background-color: #fff;
+
+    &:hover {
+      border-color: #0f0f11;
+    }
   }
   &__number-of-product {
     font-size: 14px;
@@ -196,5 +202,10 @@
     color: #fff;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 3px 13px rgba(23, 32, 49, 0.4);
+    }
   }
 }

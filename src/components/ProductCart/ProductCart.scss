@@ -121,6 +121,10 @@
       padding: 0 16px;
       text-align: center;
       white-space: nowrap;
+
+      &:hover {
+        box-shadow: 0 3px 13px rgba(23, 32, 49, 0.4);
+      }
     }
 
     &--like {
@@ -145,6 +149,10 @@
       padding: 0 16px;
       text-align: center;
       white-space: nowrap;
+
+      &:hover {
+        box-shadow: 0 3px 13px rgba(23, 32, 49, 0.4);
+      }
     }
 
     &--heart-icon {

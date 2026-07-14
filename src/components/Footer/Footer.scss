@@ -79,6 +79,11 @@
       color: #89939a;
       text-decoration: none;
       text-transform: uppercase;
+      cursor: pointer;
+
+      &:hover {
+        color: #0f0f11;
+      }
     }
   }
 
@@ -101,10 +106,25 @@
       margin: 0;
     }
 
+    &-label {
+      color: #89939a;
+      font-size: 12px;
+      font-weight: 600;
+
+      &:hover {
+        color: #0f0f11;
+      }
+    }
+
     &-button {
       border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
 
       background-color: #fff;
+      cursor: pointer;
     }
 
     &-image {

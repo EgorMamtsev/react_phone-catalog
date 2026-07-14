@@ -81,11 +81,15 @@ export const ProductDetailPage = () => {
   };
 
   const handleToggleCart = () => {
-    if (!catalogProduct) return;
+    if (!catalogProduct) {
+      return;
+    }
 
     const result = AddToCart(catalogProduct);
+
     setIsInCart(result.inCart);
   };
+
   const handleToggleFavorite = () => {
     if (!catalogProduct) {
       return;
@@ -123,14 +127,18 @@ export const ProductDetailPage = () => {
   }, [catalogProduct]);
 
   useEffect(() => {
-    if (!catalogProduct) return;
+    if (!catalogProduct) {
+      return;
+    }
 
     const stored = localStorage.getItem('cart');
+
     if (stored) {
       const cartItems: CartItem[] = JSON.parse(stored);
       const exists = cartItems.some(
         item => item.product.id === catalogProduct.id,
       );
+
       setIsInCart(exists);
     }
   }, [catalogProduct]);

@@ -366,6 +366,10 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 3px 13px rgba(23, 32, 49, 0.4);
+      }
     }
 
     &--incart {

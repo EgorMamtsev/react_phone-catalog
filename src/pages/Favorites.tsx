@@ -4,19 +4,33 @@ import { ProductCart } from '../components/ProductCart/ProductCart';
 import '../styles/Favorites.scss';
 import { Product } from '../types/product';
 
+import { Loader } from '../components/Loader/Loader';
+import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+
 export const Favorites = () => {
   const [favorites, setFavorites] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState<string | null>(null);
 
   const getFavorites = () => {
-    const fav = localStorage.getItem('favorites');
+    setIsLoading(true);
+    setIsError(null);
 
-    if (!fav) {
-      return;
+    try {
+      const fav = localStorage.getItem('favorites');
+
+      if (!fav) {
+        return;
+      }
+
+      const parsed = JSON.parse(fav);
+
+      setFavorites(parsed);
+    } catch {
+      setIsError('Something went wrong');
+    } finally {
+      setIsLoading(false);
     }
-
-    const parsed = JSON.parse(fav);
-
-    setFavorites(parsed);
   };
 
   const handleToggleFavorite = (product: Product) => {
@@ -38,25 +52,33 @@ export const Favorites = () => {
     getFavorites();
   }, []);
 
+  if (isError) {
+    return <ErrorPage reload={getFavorites} />;
+  }
+
   return (
     <div className="favorites">
-      <div className="favorites__container">
-        <Breadcrumbs category={'Favorites'} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="favorites__container">
+          <Breadcrumbs category={'Favorites'} />
 
-        <h1 className="favorites__title">Favorites</h1>
-        <span className="favorites__count">{`${favorites.length} items`}</span>
+          <h1 className="favorites__title">Favorites</h1>
+          <span className="favorites__count">{`${favorites.length} items`}</span>
 
-        <div className="favorites__items">
-          {favorites.map(item => (
-            <ProductCart
-              key={item.id}
-              product={item}
-              isDiscounted={true}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          ))}
+          <div className="favorites__items">
+            {favorites.map(item => (
+              <ProductCart
+                key={item.id}
+                product={item}
+                isDiscounted={true}
+                onToggleFavorite={handleToggleFavorite}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

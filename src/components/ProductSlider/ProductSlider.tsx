@@ -23,6 +23,31 @@ export const ProductSlider = ({
   const [visibleCount, setVisibleCount] = useState(4);
   const [maxIndex, setMaxIndex] = useState(0);
 
+  //cлайд на мобільному
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (trackRef.current?.offsetLeft || 0));
+    setScrollLeft(trackRef.current?.scrollLeft || 0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const x = e.touches[0].pageX - (trackRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 1.5;
+    if (trackRef.current) {
+      trackRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   // Визначаємо кількість видимих карток
   useEffect(() => {
     const updateVisibleCount = () => {
@@ -90,7 +115,13 @@ export const ProductSlider = ({
     <div className="new-models">
       <div className="new-models__container">
         <div className="new-models__slider">
-          <div className="new-models__viewport" ref={viewportRef}>
+          <div
+            className="new-models__viewport"
+            ref={viewportRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className="new-models__track"
               ref={trackRef}
