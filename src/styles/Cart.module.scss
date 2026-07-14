@@ -255,3 +255,41 @@
     margin: 32px 0;
   }
 }
+
+.cart__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cart__emptyTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: #313237;
+  margin-bottom: 8px;
+}
+
+.cart__emptyText {
+  font-size: 16px;
+  color: #89939a;
+  margin-bottom: 32px;
+}
+
+.cart__emptyLink {
+  display: inline-block;
+  padding: 12px 32px;
+  background-color: #f86800;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.cart__emptyLink:hover {
+  background-color: #e05a00;
+}

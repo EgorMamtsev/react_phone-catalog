@@ -5,14 +5,14 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { fetchProducts } from '../utils/fetchProducts';
 
-import { ProductCart } from '../components/ProductCart/ProductCart';
-import { Pagination } from '../components/Pagination/Pagination';
-import { ProductsSort } from '../components/ProductSort/ProductSort';
-import { ProductsPerPage } from '../components/ProductPerPage/ProductPerPage';
-import { NavButton } from '../components/NavButton/NavButton';
-import { Loader } from '../components/Loader/Loader';
-import { ErrorPage } from '../components/ErrorPage/ErrorPage';
-import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
+import { ProductCart } from '../components/ProductCart';
+import { Pagination } from '../components/Pagination';
+import { ProductsSort } from '../components/ProductSort';
+import { ProductsPerPage } from '../components/ProductPerPage';
+import { NavButton } from '../components/NavButton';
+import { Loader } from '../components/Loader';
+import { ErrorPage } from '../components/ErrorPage';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 
 import { Product } from '../types/product';
 

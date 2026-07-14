@@ -3,7 +3,7 @@
 import heartIcon from '../../public/img/icons/Favourites (Heart Like).png';
 import backArrow from '../../public/img/icons/arrowRight.png';
 import heartIconFilled from '../../public/img/icons/heartIconFilled.png';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../utils/fetchProductById';
 import { ColorMap } from '../utils/colorMap';
 
@@ -14,7 +14,7 @@ import { CartItem } from '../types/cartItem';
 
 import { Loader } from '../components/Loader/Loader';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
-import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { getRandomProducts } from '../utils/getRandomProducts';
 import { AddToFavorites } from '../utils/AddToFavorite';
 import { AddToCart } from '../utils/AddToCart';
@@ -165,12 +165,12 @@ export const ProductDetailPage = () => {
                 alt="Back icon"
               />
             </div>
-            <Link
-              to={`/${product.category}`}
-              className={styles.productDetails__backLink}
+            <button
+              onClick={() => window.history.back()}
+              className={styles.productDetails__backButton}
             >
               <span className={styles.productDetails__linkText}>Back</span>
-            </Link>
+            </button>
           </div>
 
           <h1 className={styles.productDetails__name}>{product.name}</h1>

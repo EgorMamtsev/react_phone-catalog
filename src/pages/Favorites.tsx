@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
-import { ProductCart } from '../components/ProductCart/ProductCart';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { ProductCart } from '../components/ProductCart';
 import { Product } from '../types/product';
-import { Loader } from '../components/Loader/Loader';
-import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import { Loader } from '../components/Loader';
+import { ErrorPage } from '../components/ErrorPage';
 import styles from '../styles/Favorites.module.scss';
 
 export const Favorites = () => {

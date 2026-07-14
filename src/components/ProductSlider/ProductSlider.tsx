@@ -1,4 +1,4 @@
-import { ProductCart } from '../ProductCart/ProductCart';
+import { ProductCart } from '../ProductCart';
 import { Product } from '../../types/product';
 import { useRef, useState, useEffect } from 'react';
 import styles from './ProductSlider.module.scss';

@@ -3,11 +3,11 @@ import { fetchProducts } from '../utils/fetchProducts';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Slider } from '../components/Slider/Slider';
-import { ProductSlider } from '../components/ProductSlider/ProductSlider';
-import { NavButton } from '../components/NavButton/NavButton';
-import { Loader } from '../components/Loader/Loader';
-import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import { Slider } from '../components/Slider';
+import { ProductSlider } from '../components/ProductSlider';
+import { NavButton } from '../components/NavButton';
+import { Loader } from '../components/Loader';
+import { ErrorPage } from '../components/ErrorPage';
 
 import { Product } from '../types/product';
 
