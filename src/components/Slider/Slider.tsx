@@ -1,12 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
 import Banner1 from '../../../public/img/slider/Banner1.png';
-import phoneBanner1 from '../../../public/img/slider/BannerPhone1.png';
+import Banner2 from '../../../public/img/slider/Banner2.png';
+import Banner3 from '../../../public/img/slider/Banner3.png';
+import BannerPhone1 from '../../../public/img/slider/BannerPhone1.jpeg';
+import BannerPhone2 from '../../../public/img/slider/BannerPhone2.jpeg';
+import BannerPhone3 from '../../../public/img/slider/BannerPhone3.png';
 import styles from './Slider.module.scss';
 
 const SLIDES = [
   {
     images: {
-      mobile: phoneBanner1,
+      mobile: BannerPhone1,
       tablet: Banner1,
       desktop: Banner1,
     },
@@ -14,17 +18,17 @@ const SLIDES = [
   },
   {
     images: {
-      mobile: phoneBanner1,
-      tablet: Banner1,
-      desktop: Banner1,
+      mobile: BannerPhone2,
+      tablet: Banner2,
+      desktop: Banner2,
     },
     alt: 'iPhone 14 Pro',
   },
   {
     images: {
-      mobile: phoneBanner1,
-      tablet: Banner1,
-      desktop: Banner1,
+      mobile: BannerPhone3,
+      tablet: Banner3,
+      desktop: Banner3,
     },
     alt: 'iPhone 14 Pro Max',
   },
