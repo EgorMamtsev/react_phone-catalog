@@ -119,9 +119,7 @@ export const HomePage = () => {
         <>
           <div className={styles.homePage__container}>
             <div className={styles.homePage__titleBlock}>
-              <h1 className={styles.visuallyHidden}>
-                Welcome to Nice Gadgets store!
-              </h1>
+              <h1 className={styles.visuallyHidden}>Product Catalog</h1>
             </div>
           </div>
 

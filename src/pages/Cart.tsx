@@ -78,11 +78,17 @@ export const Cart = () => {
     );
 
     if (confirmed) {
-      // Очищаємо кошик
       localStorage.removeItem('cart');
       setCart([]);
     }
-    // Якщо Cancel — нічого не робимо
+  };
+
+  const getTotalItems = () => {
+    let total = 0;
+    for (const item of cart) {
+      total += item.quantity;
+    }
+    return total;
   };
 
   if (isError) {
@@ -211,7 +217,7 @@ export const Cart = () => {
             <div className={styles.cart__price}>${getTotalPrice()}</div>
             <div className={styles.cart__itemsCount}>
               <div className={styles.cart__count}>
-                Total for {cart.length} items
+                Total for {getTotalItems()} items
               </div>
             </div>
             <div className={styles.cart__separator}></div>

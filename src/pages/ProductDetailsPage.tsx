@@ -25,6 +25,7 @@ import { ProductSlider } from '../components/ProductSlider/ProductSlider';
 import { Product } from '../types/product';
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from '../styles/ProductDetailsPage.module.scss';
 
@@ -44,6 +45,8 @@ export const ProductDetailPage = () => {
   const [catalogProduct, setCatalogProduct] = useState<Product>();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
 
   const slideOffersNext = () => {
     if (offersIndex < offersMaxIndex) {
@@ -58,6 +61,8 @@ export const ProductDetailPage = () => {
   };
 
   const loadProduct = async () => {
+    window.scrollTo(0, 0);
+
     setIsLoading(true);
     setIsError(null);
 
@@ -96,6 +101,37 @@ export const ProductDetailPage = () => {
     const result = AddToFavorites(catalogProduct);
 
     setIsFavorite(result.isActive);
+  };
+
+  const handleColorChange = (color: string) => {
+    if (!product || !allProducts.length) return;
+
+    setActiveColor(color);
+
+    const capacity = product.capacity.toLowerCase();
+    const newItemId = `${product.namespaceId}-${capacity}-${color}`;
+
+    const newProduct = allProducts.find(p => p.itemId === newItemId);
+
+    if (newProduct && newProduct.itemId !== product.id) {
+      navigate(`/product/${newProduct.itemId}`);
+    }
+  };
+
+  const handleCapacityChange = (capacity: string) => {
+    if (!product || !allProducts.length) return;
+
+    setActiveCapacity(capacity);
+
+    const color = product.color;
+    const formattedCapacity = capacity.toLowerCase();
+    const newItemId = `${product.namespaceId}-${formattedCapacity}-${color}`;
+
+    const newProduct = allProducts.find(p => p.itemId === newItemId);
+
+    if (newProduct && newProduct.itemId !== product.id) {
+      navigate(`/product/${newProduct.itemId}`);
+    }
   };
 
   useEffect(() => {
@@ -140,6 +176,11 @@ export const ProductDetailPage = () => {
       setIsInCart(exists);
     }
   }, [catalogProduct]);
+
+  useEffect(() => {
+    const products = fetchProducts();
+    setAllProducts(products);
+  }, []);
 
   if (!product) {
     return <h2>Product was not found</h2>;
@@ -214,7 +255,7 @@ export const ProductDetailPage = () => {
                   {product.colorsAvailable.map((color, index) => (
                     <label
                       aria-label={`Color ${color}`}
-                      onClick={() => setActiveColor(color)}
+                      onClick={() => handleColorChange(color)}
                       key={index}
                       className={`${styles.productDetails__colorsLabel} ${
                         color === activeColor
@@ -249,7 +290,7 @@ export const ProductDetailPage = () => {
                   {product.capacityAvailable.map((c, index) => (
                     <label
                       key={index}
-                      onClick={() => setActiveCapacity(c)}
+                      onClick={() => handleCapacityChange(c)}
                       className={`${styles.productDetails__capacityLabelWrapper} ${c === activeCapacity ? styles['productDetails__capacityLabelWrapper--active'] : ''}`}
                     >
                       <input
