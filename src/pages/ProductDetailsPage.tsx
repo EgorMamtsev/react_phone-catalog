@@ -104,7 +104,9 @@ export const ProductDetailPage = () => {
   };
 
   const handleColorChange = (color: string) => {
-    if (!product || !allProducts.length) return;
+    if (!product || !allProducts.length) {
+      return;
+    }
 
     setActiveColor(color);
 
@@ -119,7 +121,9 @@ export const ProductDetailPage = () => {
   };
 
   const handleCapacityChange = (capacity: string) => {
-    if (!product || !allProducts.length) return;
+    if (!product || !allProducts.length) {
+      return;
+    }
 
     setActiveCapacity(capacity);
 
@@ -179,6 +183,7 @@ export const ProductDetailPage = () => {
 
   useEffect(() => {
     const products = fetchProducts();
+
     setAllProducts(products);
   }, []);
 
