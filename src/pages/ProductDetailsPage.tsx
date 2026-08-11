@@ -61,7 +61,10 @@ export const ProductDetailPage = () => {
   };
 
   const loadProduct = async () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
 
     setIsLoading(true);
     setIsError(null);
@@ -103,6 +106,9 @@ export const ProductDetailPage = () => {
     setIsFavorite(result.isActive);
   };
 
+  const createSlug = (value: string) =>
+    value.toLowerCase().trim().replace(/\s+/g, '-');
+
   const handleColorChange = (color: string) => {
     if (!product || !allProducts.length) {
       return;
@@ -110,8 +116,10 @@ export const ProductDetailPage = () => {
 
     setActiveColor(color);
 
-    const capacity = product.capacity.toLowerCase();
-    const newItemId = `${product.namespaceId}-${capacity}-${color}`;
+    const capacity = createSlug(product.capacity);
+    const colorSlug = createSlug(color);
+
+    const newItemId = `${product.namespaceId}-${capacity}-${colorSlug}`;
 
     const newProduct = allProducts.find(p => p.itemId === newItemId);
 
@@ -127,9 +135,10 @@ export const ProductDetailPage = () => {
 
     setActiveCapacity(capacity);
 
-    const color = product.color;
-    const formattedCapacity = capacity.toLowerCase();
-    const newItemId = `${product.namespaceId}-${formattedCapacity}-${color}`;
+    const colorSlug = createSlug(product.color);
+    const capacitySlug = createSlug(capacity);
+
+    const newItemId = `${product.namespaceId}-${capacitySlug}-${colorSlug}`;
 
     const newProduct = allProducts.find(p => p.itemId === newItemId);
 

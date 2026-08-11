@@ -18,6 +18,7 @@ export const ColorMap: Record<string, string> = {
   rosegold: '#e8c4b8',
   coral: '#ff6b6b',
   gold: '#ffd700',
+  pink: '#FF1493',
 
   // Додаткові
   skyblue: '#87ceeb',

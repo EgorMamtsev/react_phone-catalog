@@ -95,7 +95,7 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1439px) {
+@media (width: 1200px) {
   .slider__container {
     padding: 0 32px;
   }
@@ -120,9 +120,9 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1201px) {
   .slider__container {
-    padding: 0 32px;
+    padding: 0 152px;
   }
 
   .slider__slide {

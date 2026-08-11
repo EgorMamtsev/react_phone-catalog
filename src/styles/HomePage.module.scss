@@ -101,7 +101,7 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1439px) {
+@media (width: 1200px) {
   .homePage__container {
     padding: 56px 32px 0;
   }
@@ -121,7 +121,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1201px) {
   .homePage__container {
     padding: 56px 152px 0;
   }
